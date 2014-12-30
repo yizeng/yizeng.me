@@ -1,0 +1,527 @@
+.unit-article header {
+	border-bottom: 5px solid $color-text;
+	margin-bottom: 8px;
+
+	h1 {
+		color: $color-text;
+		margin-top: 0;
+		margin-bottom: 0;
+
+		a {
+			float: right;
+			border-bottom: none !important;
+			margin-top: 0.7em;
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+.unit-article {
+	iframe {
+		display: block;
+		height: 180px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 100%;
+	}
+
+	a {
+		@include link-colors(#0077CC, $visited:#4A6B82, $hover:$color-text);
+		font-size: .95em;
+		padding: 1px 2px;
+		border-bottom: 1px dotted #FFD18D;
+
+		&:hover {
+			@include transition(all .3s ease-in-out);
+			background-color: $color-hover-transparent;
+		}
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		a {
+			padding: 0px
+		}
+	}
+
+	.show-hidden,
+	.button,
+	button {
+		@include background-clip(padding-box);
+		@include transition(all .3s ease-in-out);
+		background: transparent;
+		border: 2px solid $color-text;
+		color: $color-text;
+		cursor: pointer;
+		display: inline-block;
+		line-height: 1.45em;
+		margin-left: 8px;
+		padding: 2px 24px;
+		outline: 0;
+		text-align: center;
+		text-decoration: none;
+		text-shadow: none;
+		vertical-align: inherit;
+		white-space: nowrap;
+
+		&:hover {
+			background-color: #FFF;
+			border-color: $color-hover;
+			color: $color-hover;
+		}
+	}
+
+	.center-block {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.meta {
+		border-bottom: 1px dotted rgba(21, 25, 25, 0.8);
+		margin-bottom: 26px;
+		.list-linear a:hover {
+				color: $color-meta-link-hover !important
+		}
+	}
+	.meta a,
+	.toc a,
+	.unit-foot a {
+		@include link-colors($color-text, $hover:$color-text)
+	}
+
+	.post-list {
+		list-style-type: disc;
+		margin: 0;
+		padding: 0;
+	}
+	.posts a {
+		@include link-colors($color-text, $hover:$color-text);
+		font-size: 1em;
+		border-bottom: none;
+		line-height: 1.875em;
+	}
+
+	.image-link {
+		&:link {
+			border-bottom: none
+		}
+		&:hover {
+			background-color: transparent
+		}
+		&:visited {
+			border-bottom: none
+		}
+		img {
+			margin-bottom: 0em
+		}
+	}
+
+	blockquote {
+		background-color: $color-inline-code-background;
+		border-left: .7em solid $color-box-border;
+		margin: 1em 16px;
+		padding: 1em;
+		overflow: auto;
+
+		p {
+			margin: 12px 0
+		}
+
+		&::-webkit-scrollbar {
+			@include border-radius(5px);
+			height:8px;
+			background-color: $color-inline-code-background;
+		}
+
+		&::-webkit-scrollbar-track {
+			@include border-radius(5px);
+			background-color: $color-box-border;
+		}
+
+		&::-webkit-scrollbar-thumb:horizontal {
+			@include border-radius(5px);
+			background-color: #B1B699;
+		}
+
+		ol,
+		ul {
+			margin-bottom: 0
+		}
+	}
+
+	:not(.meta) > ul,
+	:not(.meta) > ol,
+	:not(.meta) > dl {
+		padding-left: 1.05em
+	}
+
+	.toc {
+		border: 5px solid $color-inline-code-background;
+		display: inline-block;
+		margin-top: 18px;
+		margin-bottom: 0;
+		min-width: 175px;
+		padding: 7px;
+		text-align: left;
+
+		&:hover {
+			@include transition(all .1s ease-in-out);
+			border-color: $color-hover;
+		}
+
+		ol,
+		ul,
+		li {
+			margin-left: 1em;
+			margin-bottom: 0em;
+			padding-left: 0;
+		}
+	}
+
+	ul {
+		li {
+			list-style: disc
+		}
+		li li {
+			list-style: circle
+		}
+		li li li {
+			list-style: square
+		}
+	}
+
+	ol {
+		list-style: decimal
+	}
+	li h1,
+	dt h1,
+	dd h1,
+	li h2,
+	dt h2,
+	dd h2,
+	li h3,
+	dt h3,
+	dd h3,
+	li h4,
+	dt h4,
+	dd h4,
+	li h5,
+	dt h5,
+	dd h5,
+	li p,
+	dt p,
+	dd p,
+	li ul,
+	dt ul,
+	dd ul,
+	li ol,
+	dt ol,
+	dd ol,
+	li dl,
+	dt dl,
+	dd dl,
+	li blockquote,
+	dt blockquote,
+	dd blockquote,
+	li .hasGrid,
+	dt .hasGrid,
+	dd .hasGrid {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	pre.prettyprint,
+	.highlight pre {
+		padding-left: 2em !important
+	}
+
+	p > code,
+	li > code {
+		background-color: $color-inline-code-background;
+		font-family: $fonts-body;
+		padding: 2px 3px;
+		white-space: nowrap;
+	}
+
+	img {
+		border: solid 5px transparent;
+		height: auto;
+		max-width: 100%;
+	}
+	.post-image {
+		&:visited {
+			border-bottom: none
+		}
+		&:hover {
+			background-color: transparent
+		}
+		img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+
+			&:hover {
+				@include transition(all .1s ease-in-out);
+				background-color: transparent;
+			}
+		}
+	}
+
+	img.left {
+		margin-right: 16px
+	}
+	img.right {
+		margin-left: 16px
+	}
+
+	.date {
+		float: right;
+		font-size: .8em;
+	}
+	.date-publish {
+		margin-bottom: 0
+	}
+
+	.list-linear .list-head {
+		margin-right: 10px;
+		padding-right: 4px;
+	}
+	.list-category a,
+	.list-tag a {
+		background-color: transparent;
+		border: 0 none;
+
+		&:hover span {
+			background-color: $color-hover
+		}
+	}
+	.list-category span,
+	.list-tag span {
+		@include border-radius(10px);
+		background-color: $color-hover;
+		color: white;
+		display: inline-block;
+		font-weight: bold;
+		font-size: 0.875em;
+		margin: 0 6px 0 0;
+		padding: 1px 5px;
+		position: relative;
+		top: -2px;
+		text-transform: uppercase;
+		vertical-align: middle;
+	}
+	.list-category {
+		margin-bottom: 0
+	}
+
+	.comment a {
+		border-bottom: 0
+	}
+
+	.footnotes {
+		line-height: .95em;
+
+		a {
+			padding: 1px
+		}
+
+		.reverse-footnote {
+			border: none;
+			cursor: pointer;
+		}
+	}
+}
+
+.unit-article .unit-foot {
+	border-top: 3px solid $color-text;
+	margin-top: 16px;
+	padding-top: 12px;
+	position: relative;
+
+	nav {
+		display: block;
+
+		a[rel="prev"] {
+			float: left;
+			line-height: 1.325em;
+		}
+
+		a[rel="next"] {
+			float: right;
+			line-height: 1.325em;
+		}
+	}
+
+	.gotop {
+		margin-bottom: 26px;
+
+		.addthis_toolbox {
+			display: inline-block;
+			float: right;
+
+			a {
+				border: none;
+				opacity: .3;
+				filter: alpha(opacity=30); /* IE6-9 */
+
+				&:hover {
+					@include transition(all .3s ease-in-out);
+					background: transparent;
+					opacity: 1.0;
+					filter: alpha(opacity=100); /* IE6-9 */
+				}
+			}
+		}
+	}
+}
+
+.unit-article .entry-content {
+	margin-top: 16px;
+	margin-bottom: 8px;
+
+	h2, h3, h4, h5, h6 {
+		color: $color-text;
+
+		a {
+			border: 0;
+			@include link-colors($color-text, $hover:#6D6D6D, $visited: #6D6D6D);
+
+			&:hover {
+				background-color: transparent
+			}
+		}
+	}
+	
+	h3[id$='-ref'],
+	h3.category,
+	h3.year {
+		margin-top: 12px;
+		margin-bottom: 6px;
+	}
+
+	a.license {
+		float: right;
+		border-bottom: none;
+	}
+
+	.mce-btn > button {
+		border: transparent;
+
+		&:hover {
+			background-color: transparent
+		}
+	}
+
+	sup > a {
+		border-bottom: none;
+		padding: 0px, 1px;
+	}
+
+	.footnotes {
+		margin-top: 26px;
+
+		p {
+			font-size: .9em;
+		}
+	}
+}
+
+.unit-article .entry-content:first-child h4 {
+	margin-top: 6px
+}
+
+.unit-article .entry-content:first-child h5,
+.unit-article .entry-content:first-child h6 {
+	margin-top: 0
+}
+
+.site-notice {
+	color: $color-text;
+	text-align: center;
+
+	a {
+		@include link-colors(#0077CC, $visited:#4A6B82, $hover:$color-text);
+		font-size: .95em;
+		padding-left: 3px;
+		padding-right: 3px;
+		border-bottom: 1px dotted #FFD18D;
+
+		&:hover {
+			@include transition(all .3s ease-in-out);
+			background-color: $color-hover;
+		}
+	}
+}
+
+.diagnostics {
+	display: none
+}
+
+.misc-content {
+	margin-top: 48px
+}
+
+/* post & page */
+.layout-page .tag_box {
+	@include background-clip(padding-box);
+	@include box-shadow(inset 0 3px 3px rgba(0, 0, 0, 0.4), 0 3px 0 rgba(255, 255, 255, 0.4));
+
+	background: url('/assets/images/skin/noisy_texture_section0-200x200.png') repeat #F0F0F0;
+	list-style: none;
+	padding: 0.8125em;
+
+	li {
+		display: inline;
+		line-height: normal;
+		vertical-align: middle;
+	}
+
+	a {
+		@include background-clip(padding-box);
+		@include user-select(none);
+		@include transition-duration(0.2s);
+
+		background-color: $color-inline-code-background;
+		border: 1px solid $color-text;
+		color: $color-text;
+		float: left;
+		margin: 5px;
+		padding: 3px 6px 3px 6px;
+		text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.2);
+		vertical-align: bottom;
+
+		&:active {
+			@include box-shadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
+			background: #336633;
+		}
+
+		&:hover {
+			background-color: $color-hover;
+			border: 1px solid $color-text;
+
+			span {
+				background-color: $color-hover;
+				border: 1px solid $color-text;
+			}
+		}
+	}
+
+	span {
+		@include border-radius(10px);
+		background-color: $color-inline-code-background;
+		border: 1px solid $color-text;
+		color: $color-text;
+		display: inline-block;
+		font-weight: bold;
+		font-size: 0.875em;
+		padding: 1px 5px;
+		position: relative;
+		vertical-align: middle;
+		top: -2px;
+	}
+}

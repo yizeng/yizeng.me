@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="author" content="Yi Zeng">
+	<meta name="description" content="Yi Zeng, a software engineer based in Christchurch, New Zealand." />
+	<meta name="keywords" content="software,engineer,testing,christchurch,newzealand" />
+
+	<title>Yi Zeng</title>
+
+	<link href='/assets/css/home-style.css' rel="stylesheet" type="text/css">
+
+	<!--[if IE]>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
+		<script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.0.6.min.js"><\/script>')</script>
+	<![endif]-->
+	<!--[if !IE]> -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+		<script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.6.2.min.js"><\/script>')</script>
+	<!-- <![endif]-->
+	<script>
+		if (!navigator.userAgent.match(/.*(Pingdom|PhantomJS|bot|StatusCake).*/gi)) {
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-42466615-1', 'auto');
+			ga('send', 'pageview');
+		}
+	</script>
+</head>
+
+<body>
+<ul id="menu">
+	<li data-menuanchor="bio"><a href="#bio">Biography</a></li>
+	<li data-menuanchor="social"><a href="#social">Social Links</a></li>
+</ul>
+
+<div id="section0" class="section" data-name="bio">
+	<!--[if IE]>
+		<p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+	<![endif]-->
+	<noscript>
+		<p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+	</noscript>
+
+	<div class="headings animated fadeInLeft">
+		<h1><span>Yi Zeng</span></h1>
+		<h2><span>Software engineer</span></h2>
+		<h3><span>Christchurch, New Zealand</span></h3>
+	</div>
+	<a class="btn-continue animated bounce" data-ga="More" href="#social"></a>
+</div>
+
+<div id="section1" class="section" data-name="social">
+	<h1 class="animated hidden"><a class="btn-enter btn-light" data-ga="Enter Blog" href="/blog">Enter blog</a></h1>
+	<div class="social-links animated hidden">
+		<a class="btn-light ico-linkedin" href="http://linkedin.com/in/yizengnz/" rel="me" target="_blank" title="LinkedIn Profile"></a>
+		<a class="btn-light ico-github" href="http://github.com/yizeng/" rel="me" target="_blank" title="GitHub Page"></a>
+		<a class="btn-light ico-gmail" href="http://scr.im/yizengme/" rel="me" target="_blank" title="Email Address"></a>
+		<a class="btn-light ico-stackoverflow" href="http://stackoverflow.com/users/1177636/yi-zeng" rel="me" target="_blank" title="StackOverflow Profile"></a>
+		<a class="btn-light ico-rss" href="/rss.xml" rel="me" target="_blank" title="RSS Feeds"></a>
+	</div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/assets/js/jquery.fullPage.min.js"></script>
+<script src="/assets/js/jquery.easing.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$.fn.fullpage({
+			anchors: ['bio', 'social'],
+			css3: true,
+			fixedElements: '.site-notice',
+			menu: '#menu',
+			navigation: true,
+			navigationPosition: 'right',
+			resize: false,
+			scrollingSpeed: 500,
+
+			afterLoad: function(anchorLink, index){
+				if(index === 1){
+					$('#section0 .headings, #section0').removeClass('hidden').addClass('fadeInDown');
+					$('#section0 .btn-continue').removeClass('hidden').addClass('bounce');
+				}
+				if(index === 2){
+					$('#section1 h1').removeClass('hidden').addClass('fadeInUp');
+					$('#section1 .social-links').removeClass('hidden').addClass('fadeInLeft');
+				}
+			},
+
+			onLeave: function(index, direction){
+				if(index == 1 && direction =='down'){
+					$('#section0 .headings, #section0 .btn-continue').addClass('hidden').removeClass('bounce fadeInDown fadeInLeft');
+				}
+				if(index == 2 && direction == 'up'){
+					$('#section1 h1, #section1 .social-links').addClass('hidden').removeClass('fadeInUp fadeInLeft');
+				}
+			}
+		});
+	});
+</script>
+<script>
+	$("[class^='btn']").on('click', function() {
+		var label = this.textContent;
+		if (this.title !== '') {
+			label = this.title;
+		}
+		if (this.getAttribute('data-ga') !== null) {
+			label = this.getAttribute('data-ga');
+		}
+		ga('send', 'event', 'Homepage Links', 'Click', label.trim());
+	});
+</script>
+</body>
+</html>

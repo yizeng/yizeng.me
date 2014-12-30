@@ -1,0 +1,41 @@
+language: ruby
+
+branches:
+  except:
+    - gh-pages
+
+rvm:
+  - 2.1.2
+  - 2.1.1
+  - 2.1
+  - 2.0.0
+
+before_install:
+  - pwd
+
+  - sudo apt-get install chromium-browser unzip
+
+  - wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip -P ~/Downloads
+  - unzip ~/Downloads/chromedriver_linux64.zip -d ~/Downloads
+  - chmod +x ~/Downloads/chromedriver
+  - sudo mv -f ~/Downloads/chromedriver /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+  - which chromedriver
+
+  - firefox --version
+  - phantomjs --version
+
+  - gem update --system
+  - gem update
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
+  - rake travis
+
+script:
+  - rake test:posts
+  - rake test:ui

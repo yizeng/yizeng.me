@@ -1,0 +1,202 @@
+permalink: /:year/:month/:day/:title
+
+encoding: UTF-8
+exclude: [".rvmrc", ".rbenv-version", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "yizeng.github.io", "vendor"]
+markdown: kramdown
+
+kramdown:
+  auto_ids: false
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 2..3
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  use_coderay: false
+
+# Themes are encouraged to use these universal variables 
+# so be sure to set them if your theme uses them.
+#
+title: Yi Zeng
+description: "Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand."
+# tagline: Site Tagline
+author:
+  name: Yi Zeng
+  username: yizeng
+  stackoverflow: 1177636/yi-zeng
+  # twitter: username
+  # feedburner: feedname
+
+# The production_url is only used when full-domain names are needed
+# such as sitemap.txt 
+# Most places will/should use BASE_PATH to make the urls
+#
+# If you have set a CNAME (pages.github.com) set your custom domain here.
+# Else if you are pushing to username.github.io, replace with your username.
+# Finally if you are pushing to a GitHub project page, include the project name at the end.
+#
+production_url: http://yizeng.me
+url: http://yizeng.me
+
+# All Jekyll-Bootstrap specific configurations are namespaced into this hash
+#
+JB:
+  version: 0.3.0
+
+  # All links will be namespaced by BASE_PATH if defined.
+  # Links in your website should always be prefixed with {{BASE_PATH}}
+  # however this value will be dynamically changed depending on your deployment situation.
+  #
+  # CNAME (http://yourcustomdomain.com)
+  #   DO NOT SET BASE_PATH 
+  #   (urls will be prefixed with "/" and work relatively)
+  #
+  # GitHub Pages (http://username.github.io)
+  #   DO NOT SET BASE_PATH 
+  #   (urls will be prefixed with "/" and work relatively)
+  #
+  # GitHub Project Pages (http://username.github.io/project-name)
+  #
+  #   A GitHub Project site exists in the `gh-pages` branch of one of your repositories.
+  #  REQUIRED! Set BASE_PATH to: http://username.github.io/project-name
+  #
+  # CAUTION:
+  #   - When in Localhost, your site will run from root "/" regardless of BASE_PATH
+  #   - Only the following values are falsy: ["", null, false]
+  #   - When setting BASE_PATH it must be a valid url.
+  #     This means always setting the protocol (http|https) or prefixing with "/"
+  BASE_PATH: false
+
+  # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
+  # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
+  #
+  # Override this by defining an absolute path to assets here.
+  # ex: 
+  #   http://s3.amazonaws.com/yoursite/themes/watermelon
+  #   /assets
+  #
+  ASSET_PATH: false
+
+  # These paths are to the main pages Jekyll-Bootstrap ships with.
+  # Some JB helpers refer to these paths; change them here if needed.
+  #
+  categories_path: /categories/
+  tags_path: /tags/
+  atom_path: /atom.xml
+  rss_path: /rss.xml
+
+  # Settings for comments helper
+  # Set 'provider' to the comment provider you want to use.
+  # Set 'provider' to false to turn commenting off globally.
+  #
+  comments:
+    provider: disqus
+    disqus:
+      short_name: yizeng
+      public_key: ULZ0b9TFdfCUJSKQd4WCKv2v3u25YoG7YG8zXPewkWrT35lZ0Se9YnxLzoV6VM8W
+    livefyre:
+      site_id: 123
+    intensedebate:
+      account: 123abc
+    facebook:
+      appid: 123
+      num_posts: 5
+      width: 580
+      colorscheme: light
+
+  # Settings for analytics helper
+  # Set 'provider' to the analytics provider you want to use.
+  # Set 'provider' to false to turn analytics off globally.
+  #
+  analytics:
+    provider: google
+    google:
+        tracking_id: 'UA-42466615-1'
+    getclicky:
+      site_id:
+    mixpanel:
+        token: 'cd4f8c5df37ef872805e7ab03962f043'
+
+  # Settings for sharing helper. 
+  # Sharing is for things like tweet, plusone, like, reddit buttons etc.
+  # Set 'provider' to the sharing provider you want to use.
+  # Set 'provider' to false to turn sharing off globally.
+  #
+  sharing:
+    provider: false
+    addthis_public_id: ra-53819e27689934f9
+
+  # Settings for all other include helpers can be defined by creating 
+  # a hash with key named for the given helper. ex:
+  #
+  #   pages_list :
+  #     provider : "custom"
+  #
+  # Setting any helper's provider to 'custom' will bypass the helper code
+  # and include your custom code. Your custom file must be defined at:
+  #   ./_includes/custom/[HELPER]
+  # where [HELPER] is the name of the helper you are overriding.
+
+# All translation keys
+translations:
+  # post_collate
+  last_updated: 'Last updated'
+
+  # <head>
+  keywords: 'software,engineer,testing,christchurch,newzealand'
+
+  # site notices
+  old_ie_notice: 'You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.'
+  js_notice: 'This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.'
+
+  # overlay
+  menu: 'Menu'
+  search_placeholder: 'Search...'
+  search_results: 'Search results'
+  search_not_found: 'Oh shucks<br/><small>Nothing found :(</small>'
+  close: 'Close'
+
+  # navigation
+  archives: 'Archives'
+  articles: 'Articles'
+  notes: 'Notes'
+  categories: 'Categories'
+  tags: 'Tags'
+  search: 'Search'
+
+  # the-footer
+  about: 'About'
+  license: 'License'
+  license_link: 'https://github.com/yizeng/yizeng.me#license'
+  acknowledgements: 'Acknowledgements'
+  acknowledgements_link: 'https://github.com/yizeng/yizeng.me/wiki/Acknowledgements'
+  show_details: true
+  job_title: 'a software developer'
+  based_in: ' based in '
+  city: 'Christchurch'
+  country: 'New Zealand'
+  extra_info: ''
+  back_to_top: 'Back to Top'
+
+  # post.html
+  published: 'Published'
+  cc_license: 'http://creativecommons.org/licenses/by-sa/4.0/'
+  view: 'View'
+  show: 'Show'
+  show_comments: 'Show Comments'
+
+  # 404.html
+  404_heading: 'Sorry, the page is not found.'
+  404_content: 'You will be redirected to <a href="/blog">yizeng.me/blog/</a> in few seconds.'
+
+sitemap:
+  file: "/sitemap.xml"
+  exclude:
+      - "/atom.xml"
+      - "/feed.xml"
+      - "/feed/index.xml"
+      - "/404.html"
+      - "/rss.xml"
+      - "/search.json"
+  include_posts:
+      - "/index.html"
+  change_frequency_name: "change_frequency"
+  priority_name: "priority"
