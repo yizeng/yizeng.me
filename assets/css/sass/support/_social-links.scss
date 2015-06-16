@@ -32,10 +32,7 @@ $icon-size: 42px;
 @mixin get-ico-image($name, $size) {
 	background-image: url("#{$base-url}#{$name}-#{$size}.png");
 }
-.social-links .ico-aim {
-	@include get-ico-image(aim, 48);
-	background-color: #FF6600;
-}
+
 .social-links .ico-gmail {
 	@include get-ico-image(gmail, 48);
 	background-color: #dd4b39;

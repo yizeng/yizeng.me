@@ -68,7 +68,7 @@ h3 {
 	}
 }
 
-#section0 {
+#section0, #section2 {
 	background: url('/assets/images/skin/noisy_texture_section0-200x200.png') repeat 0 0 #F0F0F0
 }
 #section1 {
@@ -84,29 +84,32 @@ h3 {
 
 .btn-light,
 .btn-dark {
-	@include transition(all .3s ease-in-out);
-	color: $color-text-light;
-	border: 1px solid #150E1F;
+	@include transition(all .6s ease-in-out);
 	outline: none;
 	text-decoration: none;
-
-	&:hover {
-		border: 1px solid $color-text-light;
-	}
 }
 
 .btn-dark {
-	background-color: $color-background-dark !important
-}
-.btn-dark:hover, .btn-dark:focus {
-	background-color: $color-background-light !important
+	border: 1px dotted $color-text-dark;
+	background-color: $color-background-light !important;
+	color: $color-text-dark;
+
+	&:hover,
+	&:focus {
+		border: 1px dashed $color-text-dark;
+	}
 }
 
 .btn-light {
-	background-color: $color-background-light !important
-}
-.btn-light:hover, .btn-light:focus {
-	background-color: $color-background-dark !important
+	background-color: $color-background-light !important;
+	border: 1px solid #150E1F;
+	color: $color-text-light;
+
+	&:hover,
+	&:focus {
+		background-color: $color-background-dark !important;
+		border: 1px solid $color-text-light;
+	}
 }
 
 .btn-enter {
@@ -147,6 +150,27 @@ h3 {
 		margin: 18px;
 		height: $icon-size;
 		width: $icon-size;
+	}
+}
+
+.running-links {
+	-webkit-animation-delay: .25s;
+	animation-delay: .25s;
+	margin-top: 12px;
+
+	a {
+		background-size: $icon-size $icon-size;
+		margin: 1.5px;
+		height: $icon-size;
+		width: $icon-size;
+		opacity: .3;
+		filter: alpha(opacity=30); /* IE6-9 */
+
+		&:hover {
+			@include transition(all .3s ease-in-out);
+			opacity: 1.0;
+			filter: alpha(opacity=100); /* IE6-9 */
+		}
 	}
 }
 

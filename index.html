@@ -72,7 +72,7 @@
 <div id="section1" class="section" data-name="social">
 	<h1 class="animated hidden"><a class="btn-enter btn-light" data-ga="Enter Blog" href="/blog">Enter blog</a></h1>
 	<div class="social-links animated hidden">
-		<a class="btn-light ico-aim" href="/running" rel="me" title="Running History"></a>
+		<a class="" href="/running" rel="me" title="Running History"><img src="/assets/images/social/strava.png"></a>
 	</div>
 	<div class="social-links animated hidden">
 		<a class="btn-light ico-linkedin" href="http://linkedin.com/in/yizengnz/" rel="me" target="_blank" title="LinkedIn Profile"></a>
@@ -81,6 +81,16 @@
 		<a class="btn-light ico-stackoverflow" href="http://stackoverflow.com/users/1177636/yi-zeng" rel="me" target="_blank" title="StackOverflow Profile"></a>
 		<a class="btn-light ico-rss" href="/rss.xml" rel="me" target="_blank" title="RSS Feeds"></a>
 	</div>
+	<a class="btn-continue animated bounce" data-ga="More" href="#running"></a>
+</div>
+
+<div id="section2" class="section" data-name="running">
+	<div class="running-links animated hidden">
+		<a href="https://www.strava.com/athletes/yizeng" rel="me" target="_blank" title="Strava Profile">
+			<img src="/assets/images/social/strava.png">
+		</a>
+	</div>
+	<h1 class="animated hidden"><a class="btn-enter btn-dark" data-ga="Ruuning History" href="/running">Running History</a></h1>
 </div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -90,7 +100,7 @@
 <script>
 	$(document).ready(function() {
 		$.fn.fullpage({
-			anchors: ['bio', 'social'],
+			anchors: ['bio', 'social', 'running'],
 			css3: true,
 			fixedElements: '.site-notice',
 			menu: '#menu',
@@ -100,22 +110,34 @@
 			scrollingSpeed: 500,
 
 			afterLoad: function(anchorLink, index){
-				if(index === 1){
+				if (index === 1) {
 					$('#section0 .headings, #section0').removeClass('hidden').addClass('fadeInDown');
 					$('#section0 .btn-continue').removeClass('hidden').addClass('bounce');
 				}
-				if(index === 2){
+				if (index === 2) {
 					$('#section1 h1').removeClass('hidden').addClass('fadeInUp');
 					$('#section1 .social-links').removeClass('hidden').addClass('fadeInLeft');
+					$('#section1 .btn-continue').removeClass('hidden').addClass('bounce');
+				}
+				if (index === 3) {
+					$('#section2 h1').removeClass('hidden').addClass('fadeInUp');
+					$('#section2 .running-links').removeClass('hidden').addClass('fadeInLeft');
 				}
 			},
 
-			onLeave: function(index, direction){
-				if(index == 1 && direction =='down'){
-					$('#section0 .headings, #section0 .btn-continue').addClass('hidden').removeClass('bounce fadeInDown fadeInLeft');
+			onLeave: function(index, direction) {
+				if (index == 1) {
+					$('#section0 .headings').addClass('hidden').removeClass('fadeInDown');
+					$('#section0 .btn-continue').addClass('hidden').removeClass('bounce');
 				}
-				if(index == 2 && direction == 'up'){
-					$('#section1 h1, #section1 .social-links').addClass('hidden').removeClass('fadeInUp fadeInLeft');
+				if (index == 2) {
+					$('#section1 h1').addClass('hidden').removeClass('fadeInUp');
+					$('#section1 .social-links').addClass('hidden').removeClass('fadeInLeft');
+					$('#section1 .btn-continue').addClass('hidden').removeClass('bounce');
+				}
+				if (index == 3) {
+					$('#section2 h1').addClass('hidden').removeClass('fadeInUp');
+					$('#section2 .running-links').addClass('hidden').removeClass('fadeInLeft');
 				}
 			}
 		});
