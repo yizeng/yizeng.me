@@ -13,13 +13,14 @@ rvm:
 before_install:
   - pwd
 
+  - sudo apt-get update
   - sudo apt-get install chromium-browser p7zip-full
 
   - wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip -P ~/Downloads
   - 7z e ~/Downloads/chromedriver_linux64.zip -y
   - ls
-  - chmod +x ~/Downloads/chromedriver
-  - sudo mv -f ~/Downloads/chromedriver /usr/local/share/chromedriver
+  - chmod +x chromedriver
+  - sudo mv -f /chromedriver /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
   - which chromedriver
