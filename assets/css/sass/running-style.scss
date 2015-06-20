@@ -71,9 +71,9 @@ header {
   }
   .profile-picture {
     @include border-radius(150px);
-    height: 125px;
     margin-top: 30px;
-    width: 125px;
+    height: 75px;
+    width: 75px;
   }
 }
 @media only screen and (min-width: 1170px) {
@@ -88,11 +88,22 @@ header {
     }
 
     .profile-picture {
-      margin-top: 60px;
+      margin-top: 30px;
+      height: 125px;
+      width: 125px;
     }
   }
 }
 
+.is-hidden {
+  visibility: hidden;
+}
+.bounce-in {
+  visibility: visible;
+  -webkit-animation: cd-bounce-2 0.6s;
+  -moz-animation: cd-bounce-2 0.6s;
+  animation: cd-bounce-2 0.6s;
+}
 .cd-timeline-content table td {
   padding: 2px
 }
@@ -173,13 +184,13 @@ header {
   margin-left: -12px;
   margin-top: -12px;
 }
-.cd-timeline-img.major-race {
+.major-race .cd-timeline-img {
   background: #c03b44;
 }
-.cd-timeline-img.minor-race {
+.minor-race .cd-timeline-img {
   background: #75ce66;
 }
-.cd-timeline-img.life-event {
+.life-event .cd-timeline-img {
   background: #f0ca45;
 }
 @media only screen and (min-width: 1170px) {
@@ -191,15 +202,6 @@ header {
     /* Force Hardware Acceleration in WebKit */
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
-  }
-  .cssanimations .cd-timeline-img.is-hidden {
-    visibility: hidden;
-  }
-  .cssanimations .cd-timeline-img.bounce-in {
-    visibility: visible;
-    -webkit-animation: cd-bounce-1 0.6s;
-    -moz-animation: cd-bounce-1 0.6s;
-    animation: cd-bounce-1 0.6s;
   }
 }
 
@@ -362,15 +364,6 @@ header {
     left: auto;
     right: 122%;
     text-align: right;
-  }
-  .cssanimations .cd-timeline-content.is-hidden {
-    visibility: hidden;
-  }
-  .cssanimations .cd-timeline-content.bounce-in {
-    visibility: visible;
-    -webkit-animation: cd-bounce-2 0.6s;
-    -moz-animation: cd-bounce-2 0.6s;
-    animation: cd-bounce-2 0.6s;
   }
 }
 
