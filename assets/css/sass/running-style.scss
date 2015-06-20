@@ -57,14 +57,13 @@ Main components
 header {
   background: #150E1F;
   color: white;
-  font-size: .7em;
-  height: 275px;
-  line-height: 30px;
+  font-size: .8em;
+  height: 265px;
+  line-height: 28px;
   margin-top: -8px;
   margin-left: -8px;
   margin-right: -8px;
   text-align: center;
-
   h1 {
     font-size: 18px;
     font-size: 1.125rem;
@@ -75,13 +74,24 @@ header {
     height: 75px;
     width: 75px;
   }
+  label {
+    font-size: .9em;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
 }
+
+@media only screen and (max-width: 640px) {
+  header {
+    height: 295px;
+  }
+}
+
 @media only screen and (min-width: 1170px) {
   header {
     font-size: 1em;
-    height: 300px;
-    line-height: 30px;
-
+    height: 325px;
+  
     h1 {
       font-size: 24px;
       font-size: 1.5rem;
