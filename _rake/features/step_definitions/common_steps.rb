@@ -44,5 +44,5 @@ Then(/^I should see page url "(.*?)" \(with slashes\)$/) do |url|
 end
 
 Then(/^I should have a browser window opened which contains partial url "(.*?)"$/) do |partial_url|
-	assert_equal(true, is_window_present(partial_url))
+	assert_equal(true, is_window_present(partial_url), "partial_url = #{partial_url}")
 end
