@@ -5,9 +5,8 @@ branches:
     - gh-pages
 
 rvm:
-  - 2.1.2
-  - 2.1.1
-  - 2.1
+  - ruby-head
+  - 2.1.0
   - 2.0.0
 
 before_install:
@@ -29,6 +28,7 @@ before_install:
   - phantomjs --version
 
   - gem update --system
+  - gem --version
   - gem update
 
 before_script:
