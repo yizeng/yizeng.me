@@ -28,9 +28,10 @@
 			I started running back in 2014, just to relax after work. But now it's part of my daily life and I'm enjoying it.
 			<br />PB: 21:15 (5 km) - 43:00 (10 km)
 		</p>
-		<input class="event-selector" type="checkbox" id="majorRaces" checked /><label for="majorRaces"><span class="ui"></span>Major Races</label>
-		<input class="event-selector" type="checkbox" id="minorRaces" checked /><label for="minorRaces"><span class="ui"></span>Minor Races</label>
-		<input class="event-selector" type="checkbox" id="lifeEvents" checked /><label for="lifeEvents"><span class="ui"></span>Life Events</label>
+		<input class="event-selector" name="eventSelector" type="radio" id="allEvents" checked /><label for="allEvents"><span class="ui"></span>Show All Events</label><br />
+		<input class="event-selector" name="eventSelector" type="radio" id="majorRaces" /><label for="majorRaces"><span class="ui"></span>Major Races</label>
+		<input class="event-selector" name="eventSelector" type="radio" id="minorRaces" /><label for="minorRaces"><span class="ui"></span>Minor Races</label>
+		<input class="event-selector" name="eventSelector" type="radio" id="lifeEvents" /><label for="lifeEvents"><span class="ui"></span>Life Events</label>
 	</header>
 
 	<section id="cd-timeline" class="cd-container">
@@ -39,7 +40,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/assets/js/jquery-1.10.2.min.js"><\/script>')</script>
 <script>
-function drawTimelineBlocks(eventTypes) {
+function drawTimelineBlocks(eventType) {
 
 	// Clear all timeline block if any.
 	$('#cd-timeline').empty();
@@ -47,7 +48,7 @@ function drawTimelineBlocks(eventTypes) {
 	// Retrieve and parse data from JSON file, then build timeline blocks.
 	$.getJSON("data.json").then(function(data) {
 		$.each(data, function(key, value) {
-			if (eventTypes === undefined || eventTypes.indexOf(value['Type']) > -1) {
+			if (eventType === undefined || eventType === value['Type']) {
 				var timelineBlock = '';
 				timelineBlock += '<div class="cd-timeline-block is-hidden ' + value['Type']+ '">';
 				timelineBlock += '<div class="cd-timeline-img">';
@@ -119,18 +120,19 @@ $(document).ready(function() {
 	});
 
 	// Event Selection Checkboxes handlers.
-	$('#majorRaces, #minorRaces, #lifeEvents').change(function() {
-		var eventTypes = [];
+	$('#allEvents, #majorRaces, #minorRaces, #lifeEvents').change(function() {
+		if($('#allEvents').is(":checked")) {
+			drawTimelineBlocks();
+		}
 		if($('#majorRaces').is(":checked")) {
-			eventTypes.push('major-race');
+			drawTimelineBlocks('major-race');
 		}
 		if($('#minorRaces').is(":checked")) {
-			eventTypes.push('minor-race');
+			drawTimelineBlocks('minor-race');
 		}
 		if($('#lifeEvents').is(":checked")) {
-			eventTypes.push('life-event');
+			drawTimelineBlocks('life-event');
 		}
-		drawTimelineBlocks(eventTypes);
 	});
 });
 </script>
