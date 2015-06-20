@@ -1,4 +1,3 @@
-require 'minitest/autorun'
 require 'rake/testtask'
 
 namespace :test do
