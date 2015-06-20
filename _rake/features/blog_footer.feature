@@ -45,8 +45,8 @@ Feature: Test blog page footer
 
 		Examples:
 			| icon_title     | social_site_url                 |
-			| Email          | scr.im/yizengme                |
-			| LinkedIn       | nz.linkedin.com/in/yizengnz     |
+			| Email          | scr.im/yizengme                 |
+			| LinkedIn       | linkedin.com/in/yizengnz        |
 			| RSS            | rss.xml                         |
 			| GitHub         | github.com/yizeng               |
 			| StackOverflow  | stackoverflow.com/users/1177636 |
