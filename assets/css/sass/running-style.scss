@@ -58,7 +58,7 @@ header {
   background: #150E1F;
   color: white;
   font-size: .8em;
-  height: 265px;
+  height: 275px;
   line-height: 28px;
   margin-top: -8px;
   margin-left: -8px;
@@ -84,13 +84,20 @@ header {
 @media only screen and (max-width: 640px) {
   header {
     height: 295px;
+    line-height: 22px;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  header {
+    height: 275px;
   }
 }
 
 @media only screen and (min-width: 1170px) {
   header {
     font-size: 1em;
-    height: 325px;
+    height: 335px;
   
     h1 {
       font-size: 24px;
