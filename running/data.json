@@ -2,6 +2,20 @@
   {
     "Type": "minor-race",
     "Icon": "running",
+    "Title": "Sri Chinmoy Sumner 5k",
+    "Distance": "5 km",
+    "Gun Time": "22:07",
+    "Net Time": "",
+    "Position": "6, out of 31",
+    "Pace": "4:25 /km",
+    "Avg. HR": "173 bpm",
+    "Official Results": "http://nz.srichinmoyraces.org/sri-chinmoy-10km-5km-childrens-25km/previous-results/2015",
+    "Strava Activity": "",
+    "Date": "July 26, 2015"
+  },
+  {
+    "Type": "minor-race",
+    "Icon": "running",
     "Title": "Hagley Parkrun #37",
     "Distance": "5 km",
     "Gun Time": "21:28",
