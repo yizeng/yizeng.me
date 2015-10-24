@@ -1,5 +1,33 @@
 [
   {
+    "Type": "major-race",
+    "Icon": "running",
+    "Title": "North Shore Marathon 2015",
+    "Distance": "10 km",
+    "Gun Time": "45:36",
+    "Net Time": "",
+    "Position": "11, out of 267",
+    "Pace": "4:33 /km",
+    "Avg. HR": "171 bpm",
+    "Official Results": "http://results.racetiming.co.nz/competitions/1311/10km%20Run/1765/Yi%20Zeng",
+    "Strava Activity": "",
+    "Date": "September 06, 2015"
+  },
+  {
+    "Type": "minor-race",
+    "Icon": "running",
+    "Title": "Hagley Parkrun #47",
+    "Distance": "5 km",
+    "Gun Time": "20:55",
+    "Net Time": "",
+    "Position": "20, out of 95",
+    "Pace": "4:11 /km",
+    "Avg. HR": "175 bpm",
+    "Official Results": "http://www.parkrun.co.nz/hagley/results/weeklyresults/?runSeqNumber=47",
+    "Strava Activity": "",
+    "Date": "August 29, 2015"
+  },
+  {
     "Type": "minor-race",
     "Icon": "running",
     "Title": "Hagley Parkrun #46",
