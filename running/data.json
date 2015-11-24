@@ -2,6 +2,20 @@
   {
     "Type": "major-race",
     "Icon": "running",
+    "Title": "Queenstown Marathon 2015",
+    "Distance": "Half Marathon",
+    "Gun Time": "",
+    "Net Time": "1:43:09",
+    "Position": "352, out of 4273",
+    "Pace": "4:53 /km",
+    "Avg. HR": "167 bpm",
+    "Official Results": "http://www.sportsplits.com/Home/IndividualResult?clientId=34&raceId=628&eventId=2&athleteId=14348",
+    "Strava Activity": "",
+    "Date": "November 21, 2015"
+  },
+  {
+    "Type": "major-race",
+    "Icon": "running",
     "Title": "North Shore Marathon 2015",
     "Distance": "10 km",
     "Gun Time": "45:36",
