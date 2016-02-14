@@ -2,6 +2,20 @@
   {
     "Type": "major-race",
     "Icon": "running",
+    "Title": "Buller Gorge Marathon 2016",
+    "Distance": "Half Marathon",
+    "Gun Time": "",
+    "Net Time": "1:38:00",
+    "Position": "69",
+    "Pace": "4:39 /km",
+    "Avg. HR": "169 bpm",
+    "Official Results": "https://www.bgm.nz/realtimeresults/search/1747",
+    "Strava Activity": "",
+    "Date": "February 13, 2016"
+  },
+  {
+    "Type": "major-race",
+    "Icon": "running",
     "Title": "Queenstown Marathon 2015",
     "Distance": "Half Marathon",
     "Gun Time": "",
