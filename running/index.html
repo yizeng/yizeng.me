@@ -26,11 +26,10 @@
 		</a>
 		<p>
 			I started running back in 2014, just to relax after work. But now it's part of my daily life and I'm enjoying it.
-			<br />PB: 21:03 (5 km) - 43:00 (10 km)
+			<br />PB: 21:07 (5 km) - 43:00 (10 km) - 1:38:00 (Half Marathon)
 		</p>
 		<input class="event-selector" name="eventSelector" type="radio" id="allEvents" /><label for="allEvents"><span class="ui"></span>Show All Events</label><br />
 		<input class="event-selector" name="eventSelector" type="radio" id="majorRaces" checked /><label for="majorRaces"><span class="ui"></span>Major Races</label>
-		<input class="event-selector" name="eventSelector" type="radio" id="minorRaces" /><label for="minorRaces"><span class="ui"></span>Minor Races</label>
 		<input class="event-selector" name="eventSelector" type="radio" id="lifeEvents" /><label for="lifeEvents"><span class="ui"></span>Life Events</label>
 	</header>
 
@@ -120,15 +119,12 @@ $(document).ready(function() {
 	});
 
 	// Event Selection Checkboxes handlers.
-	$('#allEvents, #majorRaces, #minorRaces, #lifeEvents').change(function() {
+	$('#allEvents, #majorRaces, #lifeEvents').change(function() {
 		if($('#allEvents').is(":checked")) {
 			drawTimelineBlocks();
 		}
 		if($('#majorRaces').is(":checked")) {
 			drawTimelineBlocks('major-race');
-		}
-		if($('#minorRaces').is(":checked")) {
-			drawTimelineBlocks('minor-race');
 		}
 		if($('#lifeEvents').is(":checked")) {
 			drawTimelineBlocks('life-event');
