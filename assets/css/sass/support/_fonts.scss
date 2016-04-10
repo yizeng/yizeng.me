@@ -59,3 +59,16 @@
 							   "/assets/fonts/bitter-regular-webfont.ttf",
 							   "/assets/fonts/bitter-regular-webfont.svg#bitterregular"),
 							   "/assets/fonts/bitter-regular-webfont.eot", normal, normal);
+
+@include font-face("MontserratBold",
+					font-files("/assets/fonts/montserrat-bold-webfont.woff",
+							   "/assets/fonts/montserrat-bold-webfont.ttf",
+							   "/assets/fonts/montserrat-bold-webfont.svg#bitterregular"),
+							   "/assets/fonts/montserrat-bold-webfont.eot", normal, bold);
+
+@include font-face("Montserrat",
+					font-files("/assets/fonts/montserrat-regular-webfont.woff",
+							   "/assets/fonts/montserrat-regular-webfont.ttf",
+							   "/assets/fonts/montserrat-regular-webfont.svg#bitterregular"),
+							   "/assets/fonts/montserrat-regular-webfont.eot", normal, normal);
+

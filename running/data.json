@@ -2,6 +2,20 @@
   {
     "Type": "major-race",
     "Icon": "running",
+    "Title": "Southern Lakes Half Marathon 2016",
+    "Distance": "Half Marathon",
+    "Gun Time": "",
+    "Net Time": "1:34:03",
+    "Position": "44, out of 307",
+    "Pace": "4:27 /km",
+    "Avg. HR": "169 bpm",
+    "Official Results": "http://www.racetecresults.com/MyResults.aspx?CId=16299&RId=35&EId=1&AId=14303",
+    "Strava Activity": "",
+    "Date": "April 02, 2016"
+  },
+  {
+    "Type": "major-race",
+    "Icon": "running",
     "Title": "Buller Gorge Marathon 2016",
     "Distance": "Half Marathon",
     "Gun Time": "",
