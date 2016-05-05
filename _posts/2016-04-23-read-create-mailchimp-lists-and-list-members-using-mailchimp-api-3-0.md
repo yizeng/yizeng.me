@@ -7,7 +7,8 @@ tags: [c#, mailchimp]
 alias: [/2016/04/23/]
 utilities: highlight
 ---
-After months of mucking around with MailChimp API 3.0 using C#, it came to my attention that there are not many examples out on the internet. Therefore this post will show some code examples on how to perform GET/POST/PUT operations on MailChimp lists and members.
+After months of mucking around with MailChimp API 3.0 using C#, it came to my attention that there are not many examples out on the internet. Therefore this post will show some code examples on how to perform GET/POST/PUT operations on MailChimp lists and list members
+(i.e. create, read and update MailChimp lists and list members).
 
 * Kramdown table of contents
 {:toc .toc}
@@ -15,9 +16,14 @@ After months of mucking around with MailChimp API 3.0 using C#, it came to my at
 ## Obtain an API key
 {: #obtain-an-api-key}
 
-With MailChimp API 3.0, you can sync email activity and campaign stats with your database, manage lists, create and edit Automation workflows, and many more. It is designed for developers, engineers, or anyone else who’s comfortable creating custom-coded solutions or integrating with RESTful APIs, where you can find the API 3.0 documentation [here](http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/).
+With MailChimp API 3.0, you can sync email activity and campaign stats with your database, manage lists, create and edit Automation workflows, and many more.
+It is designed for developers, engineers, or anyone else who’s comfortable creating custom-coded solutions or integrating with RESTful APIs,
+where you can find tutorial "[Get Started with the MailChimp API 3.0]((http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/))"
+and full official documentation [here](http://developer.mailchimp.com/documentation/mailchimp/reference/overview/).
 
-To begin with, get an API key from your MailChimp account as per documentation [here](http://kb.mailchimp.com/accounts/management/about-api-keys/#Find-or-Generate-Your-API-Key). Here for example, `2ffadd1fe2293bbbc7b1c5cb3e94d89b-us10` is my MailChimp API key, where `2ffadd1fe2293bbbc7b1c5cb3e94d89b` is the actual token and `us10` is the datacenter my MailChimp uses.
+To begin with, get an API key from your MailChimp account as per documentation [here](http://kb.mailchimp.com/accounts/management/about-api-keys/#Find-or-Generate-Your-API-Key).
+Here for example, `2ffadd1fe2293bbbc7b1c5cb3e94d89b-us10` is my MailChimp API key,
+where `2ffadd1fe2293bbbc7b1c5cb3e94d89b` is the actual token and `us10` is the datacenter my MailChimp uses.
 
 ## Lists
 {: #lists}
@@ -26,6 +32,7 @@ To begin with, get an API key from your MailChimp account as per documentation [
 {: #get-list}
 
 MailChimp API 3.0 provides methods to read all lists or just a particular one list.
+Note that by default, only the first 10 lists will be returned when no list ID is specified.
 
 {% prettify c# %}
 /// <summary>
