@@ -78,7 +78,8 @@ function createBestEffortTable(distancesToShow, totalItems, isOverview) {
       var distanceId = distance.toLowerCase().replace(/ /g, '-').replace(/\//g, '-');
       var countLabel = "#best-effort-" + distanceId + " small";
       $(countLabel).remove();
-      $("#best-effort-" + distanceId).append("<small> (" + bestEffortsForThisDistance.length + ")</small>");
+      var countLabelHtml = "<span class='pull-right-container'><small class='pull-right'>" + bestEffortsForThisDistance.length + "</small></span>"
+      $("#best-effort-" + distanceId).append(countLabelHtml);
 
       // If this distance contains best efforts activities,
       // and it's one of those distances to be shown on overview page,
@@ -109,6 +110,7 @@ function constructBestEffortTableHtml(distance, bestEfforts, totalItems, isOverv
   table += "<table class='best-effort-table " + (isOverview ? " " : "datatable ") + "table table-bordered table-striped'>";
   table += "<thead><tr>"
   table += "<th class='col-md-1'>Date</th>"
+  table += "<th class='col-md-1 text-center'>Type</th>"
   table += "<th class='col-md-4'>Activity</th>"
   table += "<th class='col-md-1'>Time</th>"
   table += "<th class='col-md-2'>Shoes</th>"
@@ -121,7 +123,14 @@ function constructBestEffortTableHtml(distance, bestEfforts, totalItems, isOverv
   bestEfforts.reverse().slice(0, totalItems).forEach(function(bestEffort) {
     table += "<tr>";
     table += "<td data-th='Date'>" + bestEffort["start_date"].slice(0, 10); + "</td>";
-    table += "<td data-th='Activity'><a href='https://www.strava.com/activities/" + bestEffort['activity_id'] + "' target='_blank'>" + bestEffort['activity_name'] + "</a></td>";
+    table += "<td class='text-center' data-th='WorkoutType'>" + createWorkoutTypeBadge(bestEffort["workout_type"]) + "</td>";
+    table += "<td data-th='Activity'>"
+      + "<a href='https://www.strava.com/activities/"
+      + bestEffort['activity_id']
+      + "' target='_blank'>"
+      + bestEffort['activity_name']
+      + "</a>"
+      + "</td>";
     table += "<td data-th='Time'>" + bestEffort['elapsed_time'].toString().toHHMMSS() + "</td>";
 
     var gearName = '-';
@@ -147,6 +156,24 @@ function constructBestEffortTableHtml(distance, bestEfforts, totalItems, isOverv
   table += "</table>";
   table += "</div></div></div></div>";
   return table;
+}
+
+function createWorkoutTypeBadge(workoutType) {
+  var badgeColor = "green";
+  var workoutTypeName = "Run";
+  if (workoutType === 1) {
+    badgeColor = "red";
+    workoutTypeName = "Race";
+  }
+  if (workoutType === 2) {
+    badgeColor = "olive";
+    workoutTypeName = "Long Run";
+  }
+  if (workoutType === 3) {
+    badgeColor = "yellow";
+    workoutTypeName = "Workout";
+  }
+  return "<span class='label bg-" + badgeColor + "'>" + workoutTypeName + "</span>";
 }
 
 function createHeartRateBadge(heartRate) {

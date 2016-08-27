@@ -271,6 +271,9 @@
   $("a[id^='best-effort-']").click(function() {
     loadDistanceView($(this));
   });
+  $("a[id^='best-effort-']").dblclick(function(e) { 
+    e.preventDefault();
+  })
   </script>
 </body>
 </html>

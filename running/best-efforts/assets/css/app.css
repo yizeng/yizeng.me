@@ -169,3 +169,13 @@ table.dataTable thead .sorting:after {
 .dataTables_length select {
   width: 60px !important;
 }
+
+@media (max-width: 768px) {
+    body {
+        font-size: .95em !important;
+    }
+}
+.badge,
+.label {
+  font-size: 85%
+}
