@@ -9,20 +9,21 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="author" content="Yi Zeng">
 	<meta name="description" content="Yi Zeng, a software engineer based in Christchurch, New Zealand." />
-	<meta name="keywords" content="software,engineer,testing,christchurch,newzealand" />
+	<meta name="keywords" content="software,engineer,developer,testing,christchurch,newzealand" />
 
 	<title>Yi Zeng</title>
+	<link rel="stylesheet" href="/home/css/style.css">
 
-	<link href='/assets/css/home-style.css' rel="stylesheet" type="text/css">
+	<!-- Custom Fonts -->
+	<link rel="stylesheet" href="/home/css/font-awesome/css/font-awesome.min.css">
 
-	<!--[if IE]>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
-		<script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.0.6.min.js"><\/script>')</script>
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	<!--[if !IE]> -->
-		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-		<script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.6.2.min.js"><\/script>')</script>
-	<!-- <![endif]-->
+
 	<script>
 		if (!navigator.userAgent.match(/.*(Pingdom|PhantomJS|bot|StatusCake).*/gi)) {
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -47,113 +48,148 @@
 	</script>
 </head>
 
-<body>
-<ul id="menu">
-	<li data-menuanchor="bio"><a href="#bio">Biography</a></li>
-	<li data-menuanchor="social"><a href="#social">Social Links</a></li>
-</ul>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+ <!-- Navigation -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">
+                <i class="fa fa-creative-commons"></i>  <span class="light">Yi</span> Zeng
+            </a>
+        </div>
 
-<div id="section0" class="section" data-name="bio">
-	<!--[if IE]>
-		<p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
-	<![endif]-->
-	<noscript>
-		<p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
-	</noscript>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#about">About Me</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#blog">Blog</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+    <!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <div class="heading-text">
+                    <h1 class="brand-heading">Yi Zeng</h1>
+                    <p class="intro-text">Software Engineer based in Christchurch, New Zealand.</p>
+                  </div>
+                    <a href="#about" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    <!-- About Section -->
+<section id="about" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>About Me</h2>
+            <p>After completing my Bachelor of Science degree in Computer Science at <a href="http://www.canterbury.ac.nz/">University of Canterbury</a>,
+            I jumped into the IT industry without the slightest hesitation.</p>
+            <p>Three years at <a href="https://www.telogis.com">Telogis Ltd</a> helped me kick off my career and taught me how to work as a team player to deliver premium SAAS applications. Now working in <a href="http://harcourts.co.nz/">Harcourts Technology</a>,
+            I develop, implement, maintain and support the core corporate information systems used by Harcourts Real Estate.</p>
+            <p>Outside of work, I participated in various open source projects,
+            from web UI automation tools like <a href="http://www.seleniumhq.org/">Selenium</a> to Ruby based blog-aware <a href="https://jekyllrb.com/">Jekyll</a>, and many more.</p>
+            <p>Apart from the coding life, I also enjoy lots of sports. In 2014, I started doing some recreational running and I'm absolutely loving it.
+            Currently I regularly take part in various local <a href="/running">running events</a> and expecting to improve my <a href="/running/best-efforts">half marathon time</a> furthermore.</p>
+        </div>
+    </div>
+</section>
+    <!-- Download Section -->
+<section id="blog" class="content-section text-center">
+    <div class="download-section">
+        <div class="container">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>My Blog</h2>
+                <p>I irregularlly write few things about I learnt in development.</p>
+                <a href="/blog" class="btn btn-default btn-lg">Visit My Blog</a>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Contact Section -->
+<section id="contact" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contact</h2>
+            <p>Feel free to contact me anytime for anything.</p>
+            </p>
+            <ul class="list-inline banner-social-buttons">
+                <li>
+                    <a href="http://stackoverflow.com/users/1177636/yi-zeng" class="btn btn-default btn-lg"><i class="fa fa-stack-overflow fa-fw"></i> <span class="network-name">stack-overflow</span></a>
+                </li>
 
-	<div class="headings animated fadeInLeft">
-		<h1><span>Yi Zeng</span></h1>
-		<h2><span>Software engineer</span></h2>
-		<h3><span>Christchurch, New Zealand</span></h3>
-	</div>
-	<a class="btn-continue animated bounce" data-ga="More" href="#social"></a>
-</div>
+                <li>
+                    <a href="http://linkedin.com/in/yizengnz/" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">linkedin</span></a>
+                </li>
 
-<div id="section1" class="section" data-name="social">
-	<h1 class="animated hidden"><a class="btn-enter btn-light" data-ga="Enter Blog" href="/blog">Enter blog</a></h1>
-	<div class="social-links animated hidden">
-		<a class="" href="/running" rel="me" title="Running History"><img src="/assets/images/social/strava.png"></a>
-	</div>
-	<div class="social-links animated hidden">
-		<a class="btn-light ico-linkedin" href="http://linkedin.com/in/yizengnz/" rel="me" target="_blank" title="LinkedIn Profile"></a>
-		<a class="btn-light ico-github" href="http://github.com/yizeng/" rel="me" target="_blank" title="GitHub Page"></a>
-		<a class="btn-light ico-gmail" href="http://scr.im/yizengme/" rel="me" target="_blank" title="Email Address"></a>
-		<a class="btn-light ico-stackoverflow" href="http://stackoverflow.com/users/1177636/yi-zeng" rel="me" target="_blank" title="StackOverflow Profile"></a>
-		<a class="btn-light ico-rss" href="/rss.xml" rel="me" target="_blank" title="RSS Feeds"></a>
-	</div>
-	<a class="btn-continue animated bounce" data-ga="More" href="#running"></a>
-</div>
+                <li>
+                    <a href="http://github.com/yizeng/" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">github</span></a>
+                </li>
 
-<div id="section2" class="section" data-name="running">
-	<div class="running-links animated hidden">
-		<a href="https://www.strava.com/athletes/yizeng" rel="me" target="_blank" title="Strava Profile">
-			<img src="/assets/images/social/strava.png">
-		</a>
-	</div>
-	<h1 class="animated hidden"><a class="btn-enter btn-dark" data-ga="Ruuning History" href="/running">Running History</a></h1>
-</div>
+                <li>
+                    <a href="https://www.strava.com/athletes/yizeng" class="btn btn-default btn-lg"><i class="fa fa-bicycle fa-fw"></i> <span class="network-name">strava</span></a>
+                </li>
+
+                <li>
+                    <a href="http://scr.im/yizengme/" class="btn btn-default btn-lg"><i class="fa fa-envelope-o fa-fw"></i> <span class="network-name">email</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</section>
+    <!-- Map Section -->
+<div id="map"></div>
+
+    <!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p><a href="/">yizeng.me</a> <a href="http://creativecommons.org/licenses/by-sa/4.0/">(cc by-sa 4.0)</a></p>
+    </div>
+</footer>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/assets/js/jquery-1.10.2.min.js"><\/script>')</script>
-<script src="/assets/js/jquery.fullPage.min.js"></script>
+
+<!-- Loading progess bar plugin -->
+<!--[if !IE]> -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/pace/0.4.17/pace.min.js"></script>
+	<script>window.Pace || document.write('<script src="/assets/js/pace.min.js"><\/script>')</script>
+<!-- <![endif]-->
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/assets/js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
 <script src="/assets/js/jquery.easing.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$.fn.fullpage({
-			anchors: ['bio', 'social', 'running'],
-			css3: true,
-			fixedElements: '.site-notice',
-			menu: '#menu',
-			navigation: true,
-			navigationPosition: 'right',
-			resize: false,
-			scrollingSpeed: 500,
 
-			afterLoad: function(anchorLink, index){
-				if (index === 1) {
-					$('#section0 .headings, #section0').removeClass('hidden').addClass('fadeInDown');
-					$('#section0 .btn-continue').removeClass('hidden').addClass('bounce');
-				}
-				if (index === 2) {
-					$('#section1 h1').removeClass('hidden').addClass('fadeInUp');
-					$('#section1 .social-links').removeClass('hidden').addClass('fadeInLeft');
-					$('#section1 .btn-continue').removeClass('hidden').addClass('bounce');
-				}
-				if (index === 3) {
-					$('#section2 h1').removeClass('hidden').addClass('fadeInUp');
-					$('#section2 .running-links').removeClass('hidden').addClass('fadeInLeft');
-				}
-			},
+<!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCpAkq1a_VYUJlOr4AU-f1EYQnrvwskV8"></script>
 
-			onLeave: function(index, direction) {
-				if (index == 1) {
-					$('#section0 .headings').addClass('hidden').removeClass('fadeInDown');
-					$('#section0 .btn-continue').addClass('hidden').removeClass('bounce');
-				}
-				if (index == 2) {
-					$('#section1 h1').addClass('hidden').removeClass('fadeInUp');
-					$('#section1 .social-links').addClass('hidden').removeClass('fadeInLeft');
-					$('#section1 .btn-continue').addClass('hidden').removeClass('bounce');
-				}
-				if (index == 3) {
-					$('#section2 h1').addClass('hidden').removeClass('fadeInUp');
-					$('#section2 .running-links').addClass('hidden').removeClass('fadeInLeft');
-				}
-			}
-		});
-	});
-</script>
-<script>
-	$("[class^='btn']").on('click', function() {
-		var label = this.textContent;
-		if (this.title !== '') {
-			label = this.title;
-		}
-		if (this.getAttribute('data-ga') !== null) {
-			label = this.getAttribute('data-ga');
-		}
-		ga('send', 'event', 'Homepage Links', 'Click', label.trim());
-	});
-</script>
+<!-- Custom Theme JavaScript -->
+<script src="/home/js/grayscale.js"></script>
 </body>
 </html>
