@@ -110,41 +110,41 @@ function constructBestEffortTableHtml(distance, bestEfforts, totalItems, isOverv
   table += "<table class='best-effort-table " + (isOverview ? " " : "datatable ") + "table table-bordered table-striped'>";
   table += "<thead><tr>"
   table += "<th class='col-md-1'>Date</th>"
-  table += "<th class='col-md-1 text-center'>Type</th>"
+  table += "<th class='col-md-1 text-center badge-cell'>Type</th>"
   table += "<th class='col-md-4'>Activity</th>"
   table += "<th class='col-md-1'>Time</th>"
   table += "<th class='col-md-2'>Shoes</th>"
-  table += "<th class='col-md-1 text-center'>Avg. HR</th>"
-  table += "<th class='col-md-1 text-center'>Max HR</th>"
+  table += "<th class='col-md-1 text-center badge-cell'>Avg. HR</th>"
+  table += "<th class='col-md-1 text-center badge-cell'>Max HR</th>"
   table += "</tr></thead>";
   table += "<tbody>";
 
   // Take only the fastest three for Overview page.
   bestEfforts.reverse().slice(0, totalItems).forEach(function(bestEffort) {
     table += "<tr>";
-    table += "<td data-th='Date'>" + bestEffort["start_date"].slice(0, 10); + "</td>";
-    table += "<td class='text-center' data-th='WorkoutType'>" + createWorkoutTypeBadge(bestEffort["workout_type"]) + "</td>";
-    table += "<td data-th='Activity'>"
+    table += "<td>" + bestEffort["start_date"].slice(0, 10); + "</td>";
+    table += "<td class='text-center badge-cell'>" + createWorkoutTypeBadge(bestEffort["workout_type"]) + "</td>";
+    table += "<td>"
       + "<a href='https://www.strava.com/activities/"
       + bestEffort['activity_id']
       + "' target='_blank'>"
       + bestEffort['activity_name']
       + "</a>"
       + "</td>";
-    table += "<td data-th='Time'>" + bestEffort['elapsed_time'].toString().toHHMMSS() + "</td>";
+    table += "<td>" + bestEffort['elapsed_time'].toString().toHHMMSS() + "</td>";
 
     var gearName = '-';
     if (bestEffort['gear_name']) {
       gearName = bestEffort['gear_name'];
     }
-    table += "<td data-th='Gear'>" + gearName + "</td>";
+    table += "<td>" + gearName + "</td>";
 
-    table += "<td class='text-center' data-th='AvgHR'>";
+    table += "<td class='text-center badge-cell'>";
     var averageHeartRate = Math.round(bestEffort['average_heartrate']);
     table += createHeartRateBadge(averageHeartRate);
     table += "</td>";
 
-    table += "<td class='text-center' data-th='MaxHR'>";
+    table += "<td class='text-center badge-cell'>";
     var maxHeartRate = Math.round(bestEffort['max_heartrate']);
     table += createHeartRateBadge(maxHeartRate);
     table += "</td>";

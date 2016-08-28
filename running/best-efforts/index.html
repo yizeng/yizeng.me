@@ -254,16 +254,19 @@
 
   <script src="AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script><!-- jQuery 2.2.3 -->
   <script src="AdminLTE/bootstrap/js/bootstrap.min.js"></script><!-- Bootstrap 3.3.6 -->
-  <script src="AdminLTE/plugins/pace/pace.min.js"></script><!-- PACE -->
   <script src="AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script><!-- DataTables -->
   <script src="AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script><!-- DataTables -->
-  <script src="AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script><!-- Slimscroll -->
   <script src="AdminLTE/plugins/fastclick/fastclick.min.js"></script><!-- FastClick -->
+  <script src="AdminLTE/plugins/pace/pace.min.js"></script><!-- PACE -->
+  <script src="AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script><!-- Slimscroll -->
   <script src="AdminLTE/dist/js/app.min.js"></script><!-- AdminLTE App -->
   <script src="assets/js/app.js"></script><!-- page script -->
   <script>
   var AdminLTEOptions = {
-    enableControlSidebar: false
+    BSTooltipSelector: "[data-toggle='tooltip']",
+    enableBSToppltip: true,
+    enableControlSidebar: false,
+    enableFastclick: true,
   };
   $(document).ready(function() {
     loadOverview();
@@ -271,7 +274,7 @@
   $("a[id^='best-effort-']").click(function() {
     loadDistanceView($(this));
   });
-  $("a[id^='best-effort-']").dblclick(function(e) { 
+  $("a[id^='best-effort-']").dblclick(function(e) {
     e.preventDefault();
   })
   </script>

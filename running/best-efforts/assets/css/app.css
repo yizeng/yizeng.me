@@ -171,6 +171,11 @@ table.dataTable thead .sorting:after {
 }
 
 @media (max-width: 768px) {
+    .best-effort-table .badge-cell {
+      display: none !important;
+    }
+}
+@media (max-width: 1200px) {
     body {
         font-size: .95em !important;
     }
