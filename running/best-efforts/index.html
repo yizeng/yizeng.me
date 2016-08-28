@@ -1,83 +1,282 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="author" content="Yi Zeng">
-    <meta name="description" content="Yi Zeng, a software engineer based in Christchurch, New Zealand." />
-    <meta name="keywords" content="newzealand,running,parkrun,christchurch,marathon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
 
-    <title>Running Best Efforts - Yi Zeng</title>
+  <title>Strava Best Efforts | Overview</title>
 
-    <!--[if lte IE 8]><script src="/assets/js/running/ie/html5shiv.js"></script><![endif]-->
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet" href="/assets/css/running-best-efforts.css">
-    <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
-    <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
-  </head>
-  <body>
-    <!-- page content -->
+  <!-- Bootstrap 3.3.6 -->
+  <link href="AdminLTE/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Ionicons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+  <!-- Theme style -->
+  <link href="AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link href="AdminLTE/dist/css/skins/skin-black-light.min.css" rel="stylesheet">
+  <!-- Pace style -->
+  <link href="AdminLTE/plugins/pace/pace.min.css" rel="stylesheet">
+  <!-- Custom app style -->
+  <link href="assets/css/app.css" rel="stylesheet">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
 
-    <!-- Header -->
-      <div id="header">
+<body class="hold-transition skin-black-light sidebar-mini">
+  <div class="wrapper">
+    <header class="main-header">
+      <a class="logo" href="/"><!-- Logo -->
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>S</b>BE</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Strava </b>Best Efforts</span>
+      </a>
 
-        <div class="top">
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
 
-          <!-- Logo -->
-            <div id="logo">
-              <span class="image avatar48"><a href="/"><img src="/assets/images/running-profile.jpg" alt=""></a></span>
-              <h1 id="title"><a href="/">Yi Zeng</a></h1>
-            </div>
+        <!-- Sidebar toggle button-->
+        <a class="sidebar-toggle" data-toggle="offcanvas" href="#" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
 
-          <!-- Nav -->
-            <nav id="nav">
-              <!--
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
 
-                Prologue's nav expects links in one of two formats:
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <img alt="User Image" class="user-image" src="assets/img/running-profile.jpg">
+                <span class="hidden-xs">Yi Zeng</span>
+              </a>
 
-                1. Hash link (scrolls to a different section within the page)
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <a href="https://www.strava.com/athletes/9123806" target="_blank">
+                    <img alt="User Image" class="img-circle" src="assets/img/running-profile.jpg">
+                  </a>
+                  <p>Yi Zeng<small>Christchurch, New Zealand</small></p>
+                </li>
 
-                   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-xs-4 text-center">
+                      Following
+                      <a href="https://www.strava.com/athletes/9123806/follows?type=following" target=
+                      "_blank">28</a>
+                    </div>
 
-                2. Standard link (sends the user to another page/site)
+                    <div class="col-xs-4 text-center">
+                      <a href="#"></a>
+                    </div>
 
-                   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
-
-              -->
-              <ul>
+                    <div class="col-xs-4 text-center">
+                      Follower
+                      <a href="https://www.strava.com/athletes/9123806/follows?type=followers" target=
+                      "_blank"> 30</a>
+                    </div>
+                  </div>
+                </li>
               </ul>
-            </nav>
-
-        </div>
-
-        <div class="bottom">
-        </div>
-
-      </div>
-
-      <!-- Main -->
-      <div id="main">
-      </div>
-
-    <!-- Footer -->
-      <div id="footer">
-
-        <!-- Copyright -->
-          <ul class="copyright">
-            <li><a href="/">yizeng.me</a> <a href="http://creativecommons.org/licenses/by-sa/4.0/">(cc by-sa 4.0)</a></li>
+            </li>
           </ul>
+        </div>
+      </nav>
+    </header>
 
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <section class="sidebar"><!-- sidebar: style can be found in sidebar.less -->
+        <div class="user-panel"><!-- Sidebar user panel -->
+          <div class="pull-left image">
+            <a href="https://www.strava.com/athletes/9123806" target="_blank">
+              <img alt="User Image" class="img-circle" src="assets/img/running-profile.jpg">
+            </a>
+          </div>
+
+          <div class="pull-left info">
+            <a href="https://www.strava.com/athletes/9123806" target="_blank">
+            Yi Zeng<p><small>Christchurch, New Zealand</small></p>
+            </a>
+          </div>
+        </div>
+
+        <ul class="sidebar-menu">
+          <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-bars"></i>
+              <span>Best Efforts</span>
+            </a>
+
+            <ul class="treeview-menu">
+              <li>
+                <a id="best-effort-marathon" data-distance-text="Marathon" data-distance-name="Marathon" href="#">
+                  <i class="fa fa-circle-o"></i>Marathon
+                </a>
+              </li>
+
+              <li>
+                <a id="best-effort-half-marathon" data-distance-text="Half Marathon" data-distance-name="Half-Marathon" href="#">
+                  <i class="fa fa-circle-o"></i>Half Marathon
+                </a>
+              </li>
+
+              <li>
+                <a id="best-effort-10k" data-distance-text="10k" data-distance-name="10k" href="#">
+                  <i class="fa fa-circle-o"></i>10k
+                </a>
+              </li>
+
+              <li>
+                <a id="best-effort-5k" data-distance-text="5k" data-distance-name="5k" href="#">
+                  <i class="fa fa-circle-o"></i>5k
+                </a>
+              </li>
+
+              <li>
+                <a id="best-effort-1-mile" data-distance-text="1 mile" data-distance-name="1 mile" href="#">
+                  <i class="fa fa-circle-o"></i>1 mile
+                </a>
+              </li>
+
+              <li>
+                <a id="best-effort-1k" data-distance-text="1k" data-distance-name="1k" href="#">
+                  <i class="fa fa-circle-o"></i>1k
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="fa fa-circle-o"></i>Other Distances
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+
+                <ul class="treeview-menu">
+                  <li>
+                    <a id="best-effort-50k" data-distance-text="50k" data-distance-name="50k" href="#">
+                      <i class="fa fa-circle-o"></i>50k
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-30k" data-distance-text="30k" data-distance-name="30k" href="#">
+                      <i class="fa fa-circle-o"></i>30k
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-20k" data-distance-text="20k" data-distance-name="20k" href="#">
+                      <i class="fa fa-circle-o"></i>20k
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-10-mile" data-distance-text="10 mile" data-distance-name="10 mile" href="#">
+                      <i class="fa fa-circle-o"></i>10 mile
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-15k" data-distance-text="15k" data-distance-name="15k" href="#">
+                      <i class="fa fa-circle-o"></i>15k
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-2-mile" data-distance-text="2 mile" data-distance-name="2 mile" href="#">
+                      <i class="fa fa-circle-o"></i>2 mile
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-1-2-mile" data-distance-text="1/2 mile" data-distance-name="1/2 mile" href="#">
+                      <i class="fa fa-circle-o"></i>1/2 mile
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="best-effort-400m" data-distance-text="400m" data-distance-name="400m" href="#">
+                      <i class="fa fa-circle-o"></i>400m
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section><!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>Overview</h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="/"><i class="fa fa-dashboard"></i> Strava Best Efforts</a>
+          </li>
+          <li class="active">Overview</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content" id="main-content">
+      </section>
+    </div><!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <strong>Theme based on
+        <a href="https://github.com/almasaeed2010/AdminLTE">AdminLTE</a>.</strong>
+        <small>The MIT License.<b>Version</b> 2.3.6</small>
       </div>
+      <strong>Site development by <a href="http://yizeng.me" target="_blank">Yi Zeng</a>.</strong>
+    </footer>
 
-    <!-- Scripts -->
-      <script src="/assets/js/jquery-1.11.0.min.js"></script>
-      <script src="/assets/js/running/jquery.scrolly.min.js"></script>
-      <script src="/assets/js/running/jquery.scrollzer.min.js"></script>
-      <script src="/assets/js/running/skel.min.js"></script>
-      <script src="/assets/js/running/util.js"></script>
-      <!--[if lte IE 8]><script src="/assets/js/running/ie/respond.min.js"></script><![endif]-->
-      <script src="/assets/js/running/main.js"></script>
-      <script src="/assets/js/running/site.js"></script>
-  </body>
+  </div><!-- ./wrapper -->
+
+  <script src="AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script><!-- jQuery 2.2.3 -->
+  <script src="AdminLTE/bootstrap/js/bootstrap.min.js"></script><!-- Bootstrap 3.3.6 -->
+  <script src="AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script><!-- DataTables -->
+  <script src="AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script><!-- DataTables -->
+  <script src="AdminLTE/plugins/fastclick/fastclick.min.js"></script><!-- FastClick -->
+  <script src="AdminLTE/plugins/pace/pace.min.js"></script><!-- PACE -->
+  <script src="AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script><!-- Slimscroll -->
+  <script src="AdminLTE/dist/js/app.min.js"></script><!-- AdminLTE App -->
+  <script src="assets/js/app.js"></script><!-- page script -->
+  <script>
+  var AdminLTEOptions = {
+    BSTooltipSelector: "[data-toggle='tooltip']",
+    enableBSToppltip: true,
+    enableControlSidebar: false,
+    enableFastclick: true,
+  };
+  $(document).ready(function() {
+    loadOverview();
+  });
+  $("a[id^='best-effort-']").click(function() {
+    loadDistanceView($(this));
+  });
+  $("a[id^='best-effort-']").dblclick(function(e) {
+    e.preventDefault();
+  })
+  </script>
+</body>
 </html>
