@@ -3,7 +3,7 @@ layout: post
 title: "Setup a Selenium WebDriver Ruby project on Travis CI"
 description: "How to setup an automated UI testing project on Travis CI
 using Selenium WebDriver Ruby binding with headless PhantomJS."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [github, phantomjs, ruby, selenium-webdriver, travis-ci]
 alias: [/2013/06/15/]
 last_updated: April 20, 2014
@@ -190,7 +190,7 @@ Test results are shown in the `rake` section of the build log.
 For example, here are the test results inside [this particular job's build log](https://travis-ci.org/yizeng/setup-selenium-webdriver-ruby-project-on-travis-ci/jobs/8109067):
 
 	$ rake
-	/home/travis/.rvm/rubies/ruby-2.0.0-p0/bin/ruby -I"lib:test" -I"/home/travis/.rvm/gems/ruby-2.0.0-p0/gems/rake-10.0.4/lib" "/home/travis/.rvm/gems/ruby-2.0.0-p0/gems/rake-10.0.4/lib/rake/rake_test_loader.rb" "test/test_home_page.rb" 
+	/home/travis/.rvm/rubies/ruby-2.0.0-p0/bin/ruby -I"lib:test" -I"/home/travis/.rvm/gems/ruby-2.0.0-p0/gems/rake-10.0.4/lib" "/home/travis/.rvm/gems/ruby-2.0.0-p0/gems/rake-10.0.4/lib/rake/rake_test_loader.rb" "test/test_home_page.rb"
 	Run options:
 
 	# Running tests:

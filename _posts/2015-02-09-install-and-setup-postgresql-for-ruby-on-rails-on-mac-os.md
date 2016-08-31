@@ -2,7 +2,7 @@
 layout: post
 title: "Install and setup PostgreSQL for Ruby on Rails on Mac OS"
 description: "A brief note on how to install and setup PostgreSQL for Ruby on Rails on Mac OS."
-categories: [notes, popular]
+categories: [notes]
 tags: [postgresql, ruby on rails]
 alias: [/2015/02/09/]
 ---

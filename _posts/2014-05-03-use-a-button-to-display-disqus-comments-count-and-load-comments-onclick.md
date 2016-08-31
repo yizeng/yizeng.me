@@ -2,7 +2,7 @@
 layout: post
 title: "Use a button to display Disqus comments count and load comments onClick"
 description: "How to create a button to display Disqus comments count and load comments onClick event."
-categories: [notes, popular]
+categories: [tutorial]
 tags: [disqus, javascript]
 alias: [/2014/05/03/]
 utilities: highlight, show-hidden

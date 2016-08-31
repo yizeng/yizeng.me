@@ -2,7 +2,7 @@
 layout: post
 title: "Why you shouldn't start learning Selenium by automating Google's products?"
 description: "Why people shouldn't start learning Selenium by automating Google's applications like Gmail, Google Maps etc."
-categories: [articles]
+categories: [article]
 tags: [selenium-webdriver]
 alias: [/2014/07/19/]
 utilities: highlight, show-hidden

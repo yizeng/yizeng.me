@@ -3,7 +3,7 @@ layout: post
 title: "Relationships between different versions of Selenium"
 description: "Relationships between different versions of Selenium, including Selenium IDE, RC, WebDriver and Grid,
 as well as other related terminologies, like PhantomJS, WebDriverJS, Appium, etc."
-categories: [articles, popular]
+categories: [article]
 tags: [phantomjs, selenium-webdriver]
 alias: [/2014/04/25/]
 utilities: fancybox, unveil

@@ -3,7 +3,7 @@ layout: post
 title: "Hello World!"
 description: "The first 'Hello world' post for Yi Zeng's personal website
 'yizeng.me' in order to test Jekyll code highlightings."
-categories: [random]
+categories: [uncategorized]
 tags: [jekyll]
 alias: [/2013/04/22/]
 utilities: highlight

@@ -3,7 +3,7 @@ layout: post
 title: "Download PDF files automatically in Firefox using Selenium WebDriver"
 description: "Instead of dealing with 'Save file' dialog or in-browser PDF previewing,
 this tutorial will demonstrate how to download PDF files automatically in Firefox using Selenium WebDriver."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [firefox, ruby, selenium-webdriver]
 alias: [/2014/05/23]
 utilities: fancybox, highlight, unveil

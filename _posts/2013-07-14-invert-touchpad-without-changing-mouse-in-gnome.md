@@ -3,7 +3,7 @@ layout: post
 title: "Invert touchpad without changing mouse in GNOME"
 description: "How to invert touchpad to be left-handed while keep the mouse in its default right-handed mode
 for Linux Mint 15 Cinnamon, which should also work for all GNOME Ubuntu system in theory."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [linux mint]
 alias: [/2013/07/14/]
 utilities: fancybox, unveil

@@ -3,7 +3,7 @@ layout: post
 title: "Work with MailChimp API 3.0's pagination"
 description: "Code examples for how to work with pagination in MailChimp API 3.0.
 For example, get the first 500 items (i.e. more than the default value 10) at once, or ignore the first 10 entries."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [c#, mailchimp]
 alias: [/2016/04/30/]
 utilities: highlight

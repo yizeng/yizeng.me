@@ -2,7 +2,7 @@
 layout: post
 title: "Setup Jekyll on Windows"
 description: "How to install and setup Jekyll on a Windows machine."
-categories: [notes, popular]
+categories: [tutorial]
 tags: [jekyll, ruby, windows]
 alias: [/2013/05/10/]
 last_updated: December 31, 2014
@@ -117,7 +117,7 @@ Note that Python 2 is preferred since Python 3 might not be functioning as inten
 1. Visit <https://pypi.python.org/pypi/setuptools#installation-instructions> for detailed installation instructions.
 2. For best results, uninstall previous versions FIRST (see [Uninstalling](https://pypi.python.org/pypi/setuptools#uninstalling)).
 3. For machines with PowerShell 3 installed, start up Powershell as administrator and paste this command:
-	
+
 	> (Invoke-WebRequest https://bootstrap.pypa.io/ez_setup.py).Content \| python -
 
 4. For Windows without PowerShell 3,
