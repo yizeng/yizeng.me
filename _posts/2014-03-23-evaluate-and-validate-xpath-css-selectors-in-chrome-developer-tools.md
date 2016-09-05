@@ -2,7 +2,7 @@
 layout: post
 title: "Evaluate and validate XPath/CSS selectors in Chrome Developer Tools"
 description: "Demonstrate two approaches to evaluate and validate XPath/CSS selectors in Chrome Developer Tools without extensions, one by searching in 'Elements' panel, one by executing $x/$$ tokens in 'Console' panel."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [css-selectors, selenium-webdriver, xpath]
 alias: [/2014/03/23/]
 utilities: fancybox, unveil

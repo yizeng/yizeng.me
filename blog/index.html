@@ -1,10 +1,10 @@
 ---
 layout: page
 title : Blog
-header : Top Posts
+header : All Posts
 group: navigation
 change_frequency: weekly
 priority: 1.0
 ---
-{% assign posts_collate = site.categories.popular %}
+{% assign posts_collate = site.posts %}
 {% include JB/posts_collate %}

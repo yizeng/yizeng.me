@@ -2,7 +2,7 @@
 layout: post
 title: "READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0"
 description: "Code examples for how to perform READ/CREATE (GET/POST/PUT) operations on MailChimp lists and list members using MailChimp API 3.0."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [c#, mailchimp]
 alias: [/2016/04/23/]
 utilities: highlight

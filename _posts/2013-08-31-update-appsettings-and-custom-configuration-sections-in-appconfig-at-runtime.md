@@ -3,7 +3,7 @@ layout: post
 title: "Update AppSettings and custom configuration sections in App.config at runtime"
 description: "How to update (add, edit or remove) AppSettings
 and custom config sections in App.config at runtime."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [c#, .net]
 alias: [/2013/08/31/]
 utilities: highlight

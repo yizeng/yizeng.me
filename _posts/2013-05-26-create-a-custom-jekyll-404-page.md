@@ -3,7 +3,7 @@ layout: post
 title: "Create a custom Jekyll 404 page"
 description: "How to create a custom Jekyll 404 page for sites hosted on GitHub Pages,
 which can redirect to homepage automatically after a timeout using HTML meta tag."
-categories: [articles, popular]
+categories: [tutorial]
 tags: [jekyll, github]
 alias: [/2013/05/26/]
 last_updated: March 18, 2014
