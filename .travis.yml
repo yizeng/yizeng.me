@@ -14,8 +14,6 @@ rvm:
 bundler_args: --without production
 
 before_install:
-  - rm ${BUNDLE_GEMFILE}.lock
-
   - sudo apt-get update
   - sudo apt-get install chromium-browser p7zip-full
 
