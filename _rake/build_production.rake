@@ -32,8 +32,6 @@ namespace :build do
     def execute_command(command)
       puts command.to_s
       puts `#{command}`
-
-      exit 1 unless $CHILD_STATUS.success?
     end
 
     def cleanup_production
