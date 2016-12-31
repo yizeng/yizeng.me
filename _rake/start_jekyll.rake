@@ -18,19 +18,12 @@ end
 
 desc 'Start Compass watching'
 task :compass do
-  puts 'Usage: rake compass'
-
   system 'compass watch ./assets/css'
 end
 
 desc 'Start Jekyll on Travis CI'
 task :travis do
-  puts 'Usage: rake travis'
-
   system 'compass compile ./assets/css'
-
   system 'jekyll serve --detach --trace'
-  exit 1 unless $CHILD_STATUS.success?
-
   sleep 3
 end
