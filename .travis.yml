@@ -14,7 +14,6 @@ rvm:
 bundler_args: --without production
 
 before_install:
-  - sudo apt-get update
   - sudo apt-get install chromium-browser p7zip-full
 
   - wget -N https://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/Downloads
@@ -47,7 +46,7 @@ before_script:
 script:
   #- bundle exec rake test:posts
   - cd _tests
-  - cucumber
+  - bundle exec cucumber
 
 notifications:
   email: false
