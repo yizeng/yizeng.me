@@ -11,19 +11,12 @@ task :jekyll do
     system 'chcp 65001'
   end
 
-  system 'compass compile ./assets/css'
-  system "jekyll serve --watch --drafts --trace --port=#{port}"
+  system "bundle exec jekyll serve --watch --drafts --trace --port=#{port}"
   sleep 3
-end
-
-desc 'Start Compass watching'
-task :compass do
-  system 'compass watch ./assets/css'
 end
 
 desc 'Start Jekyll on Travis CI'
 task :travis do
-  system 'compass compile ./assets/css'
-  system 'jekyll serve --detach --trace'
+  system 'bundle exec jekyll serve --detach --trace'
   sleep 3
 end

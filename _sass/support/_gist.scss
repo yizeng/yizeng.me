@@ -1,0 +1,29 @@
+.gist .gist-file {
+  border: none !important;
+  font-family: $fonts-code !important;
+
+  .gist-data {
+    font-size: .9em !important;
+    background-color: $color-code-background !important;
+
+    table {
+      background-color: $color-code-background !important;
+    }
+
+    .line-numbers {
+      background-color: $color-linenos-background !important;
+      border-right: none !important;
+      line-height: 18px;
+    }
+
+    .line-pre {
+      box-shadow: none;
+      font-family: $fonts-code !important;
+    }
+  }
+
+  .gist-meta {
+    display: none !important;
+    visibility: hidden;
+  }
+}

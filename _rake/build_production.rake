@@ -19,14 +19,10 @@ namespace :build do
 
     def build
       cleanup_production
-      compile_compass(compressed: true)
       build_jekyll
 
       create_production
       compress_source
-
-      # re-compile Compass without compressing for development
-      compile_compass(compressed: false)
     end
 
     def execute_command(command)
@@ -39,17 +35,12 @@ namespace :build do
       FileUtils.rm_rf(Dir.glob("#{@production_dir}/*"), verbose: true)
     end
 
-    def compile_compass(options = { compressed: true })
-      output_style = options[:compressed] ? 'compressed' : 'expanded'
-      execute_command("compass compile ./assets/css --no-line-comments --trace --force --output-style=#{output_style}")
-    end
-
     def build_jekyll
       execute_command 'jekyll build'
     end
 
     def create_production
-      # remove unnecessary compass files
+      # remove unnecessary sass files
       FileUtils.rm_rf('./_site/assets/css/sass', verbose: true)
       FileUtils.rm_f('./_site/assets/css/config.rb', verbose: true)
 

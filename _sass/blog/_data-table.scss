@@ -1,0 +1,44 @@
+.data-table {
+  overflow: auto;
+
+  table {
+    border-collapse: separate;
+    border: 5px solid $color-inline-code-background;
+    background-color: #FFFFFF;
+
+    &:hover {
+      -webkit-transition: all .3s ease-in-out;
+      -moz-transition: all .3s ease-in-out;
+      -o-transition: all .3s ease-in-out;
+      transition: all .3s ease-in-out;
+      border-color: $color-hover;
+    }
+
+    td, th {
+      padding: 3px;
+      border: 1px solid rgba(175, 175, 175, .5);
+    }
+
+    tr:nth-child(even) td {
+      background-color: $color-inline-code-background;
+    }
+
+    a {
+      font-size: 1em;
+      border-bottom: none;
+    }
+
+    .center, th {
+      text-align: center;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  }
+}
+
+.data-table::-webkit-scrollbar-track {
+  border-left: none;
+  background-color: transparent;
+}

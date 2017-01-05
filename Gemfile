@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'compass'
 gem 'cucumber'
 gem 'jekyll'
 gem 'kramdown'
