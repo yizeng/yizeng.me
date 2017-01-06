@@ -86,9 +86,6 @@
   border-color: #FC4C02 !important;
   margin-top: 30px;
 }
-#main-content .alert h4 {
-  margin-bottom: 0;
-}
 
 /* Add box shadow to treeview menu items */
 .treeview-menu li a:hover {
