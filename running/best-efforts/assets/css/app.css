@@ -1,19 +1,17 @@
-.main-header .logo b,
-.main-footer a {
+.main-header .logo b, .main-footer a {
   color: #FC4C02;
 }
-.main-header .logo b:hover,
-.main-footer a:hover {
+.main-header .logo b:hover, .main-footer a:hover {
   color: #E34402;
 }
 .main-header li.user-header {
-    background-color: #555 !important;
+  background-color: #555555 !important;
 }
 .form-control:focus {
-    border-color: #FC4C02;
+  border-color: #FC4C02;
 }
 .box.box-primary {
-    border-top-color: #FC4C02;
+  border-top-color: #FC4C02;
 }
 /* Blue follower and following links. */
 .navbar-nav > .user-menu > .dropdown-menu > .user-body a {
@@ -24,14 +22,12 @@
 }
 
 /* Add some transition effects */
-.treeview-menu > li > a,
-.main-header .logo,
-.main-header .navbar .sidebar-toggle {
-  -o-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+.treeview-menu > li > a, .main-header .logo, .main-header .navbar .sidebar-toggle {
+  -o-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 /* Style Sidebar User Panel as a link */
@@ -50,7 +46,7 @@
   margin-bottom: 9px;
   padding-right: inherit;
   margin-top: inherit;
-  font-size: inherit
+  font-size: inherit;
 }
 
 /* Style User Menu Dropdown */
@@ -66,17 +62,16 @@
 #main-content .best-effort-table a {
   text-decoration: none;
   color: inherit;
-  border-bottom: dotted 1px rgba(128,128,128,0.5);
-  -o-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  outline: 0
+  border-bottom: dotted 1px rgba(128,128,128,.5);
+  -o-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  outline: 0;
 }
 
-#main-content .best-effort-table a:hover,
-#main-content .best-effort-table a:focus {
+#main-content .best-effort-table a:hover, #main-content .best-effort-table a:focus {
   color: #FC4C02;
   border-bottom-color: #FC4C02;
 }
@@ -94,30 +89,28 @@
 
 /* Heart rate badge style */
 .best-effort-table .badge {
-    margin: 4px;
+  margin: 4px;
 }
 
 /* Pace loading progress bar style */
-body > :not(.pace),body:before,body:after {
-  -webkit-transition:opacity .4s ease-in-out;
-  -moz-transition:opacity .4s ease-in-out;
-  -o-transition:opacity .4s ease-in-out;
-  -ms-transition:opacity .4s ease-in-out;
-  transition:opacity .4s ease-in-out
+body > :not(.pace), body:before, body:after {
+  -webkit-transition: opacity .4s ease-in-out;
+  -moz-transition: opacity .4s ease-in-out;
+  -o-transition: opacity .4s ease-in-out;
+  -ms-transition: opacity .4s ease-in-out;
+  transition: opacity .4s ease-in-out;
 }
 
-body:not(.pace-done) > :not(.pace),body:not(.pace-done):before,body:not(.pace-done):after {
-  opacity:0
+body:not(.pace-done) > :not(.pace), body:not(.pace-done):before, body:not(.pace-done):after {
+  opacity: 0;
 }
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
   z-index: 2000;
   position: fixed;
   margin: auto;
@@ -127,9 +120,8 @@ body:not(.pace-done) > :not(.pace),body:not(.pace-done):before,body:not(.pace-do
   bottom: 0;
   height: 5px;
   width: 60%;
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #FC4C02;
-
   overflow: hidden;
 }
 
@@ -139,13 +131,11 @@ body:not(.pace-done) > :not(.pace),body:not(.pace-done):before,body:not(.pace-do
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-
   max-width: 200px;
   z-index: 2000;
   display: block;
@@ -165,14 +155,9 @@ body:not(.pace-done) > :not(.pace),body:not(.pace-done):before,body:not(.pace-do
 .dataTable thead .sorting:after {
   content: none !important;
 }
-.pagination > .active > a,
-.pagination > .active > a:focus,
-.pagination > .active > a:hover,
-.pagination > .active > span,
-.pagination > .active > span:focus,
-.pagination > .active > span:hover {
-    background-color: #FC4C02;
-    border-color: #FC4C02;
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+  background-color: #FC4C02;
+  border-color: #FC4C02;
 }
 .dataTables_filter input {
   width: 170px !important;
@@ -182,62 +167,61 @@ body:not(.pace-done) > :not(.pace),body:not(.pace-done):before,body:not(.pace-do
 }
 
 @media (max-width: 768px) {
-    .best-effort-table .badge-cell {
-      display: none !important;
-    }
+  .best-effort-table .badge-cell {
+    display: none !important;
+  }
 }
 @media (max-width: 1200px) {
-    #main-content {
-        font-size: .9em !important;
-    }
+  #main-content {
+    font-size: .9em !important;
+  }
 }
 
 /* Badge and label styles */
-.badge,
-.label {
+.badge, .label {
   font-size: 12px;
 }
 
 .hr-zone-na {
-  background-color: #D2D6DE; // Gray.
+  background-color: #D2D6DE; /* Gray */
 }
 .hr-zone-1 {
-  background-color: #A0A0A0; // Dark Gray.
+  background-color: #A0A0A0; /* Dark Gray */
 }
 .hr-zone-2 {
-  background-color: #00A65A; // Green.
+  background-color: #00A65A; /* Green */
 }
 .hr-zone-3 {
-  background-color: #F39C12; // Yellow.
+  background-color: #F39C12; /* Yellow */
 }
 .hr-zone-4 {
-  background-color: #FF851B; // Orange.
+  background-color: #FF851B; /* Orange */
 }
 .hr-zone-5 {
-  background-color: #F56954; // Red.
+  background-color: #F56954; /* Red */
 }
 .hr-zone-6 {
-  background-color: #DD4B39; // Dark Red.
+  background-color: #DD4B39; /* Dark Red */
 }
 .hr-zone-7 {
-  background-color: #001F3F; // Navy.
+  background-color: #001F3F; /* Navy */
 }
 .hr-zone-8 {
-  background-color: #222222; // Black.
+  background-color: #222222; /* Black */
 }
 .light-color-zone {
   opacity: .75;
   filter: alpha(opacity=75);
 }
 .workout-type-run {
-  background-color: #00A65A; // Green.
+  background-color: #00A65A; /* Green */
 }
 .workout-type-race {
-  background-color: #F56954; // Red.
+  background-color: #F56954; /* Red */
 }
 .workout-type-long-run {
-  background-color: #00A65A; // Green.
+  background-color: #00A65A; /* Green */
 }
 .workout-type-workout {
-  background-color: #F39C12; // Yellow.
+  background-color: #F39C12; /* Yellow */
 }
