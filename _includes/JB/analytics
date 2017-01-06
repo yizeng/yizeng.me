@@ -13,7 +13,6 @@
                     {% include custom/analytics %}
             {% endcase %}
         }
-        {% include JB/analytics-providers/hotjar %}
     </script>
 
 {% endif %}
