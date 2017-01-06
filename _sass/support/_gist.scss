@@ -10,15 +10,18 @@
       background-color: $color-code-background !important;
     }
 
-    .line-numbers {
-      background-color: $color-linenos-background !important;
-      border-right: none !important;
-      line-height: 18px;
+    .blob-code-inner, .blob-num {
+      color: #ffffff;
     }
 
-    .line-pre {
-      box-shadow: none;
-      font-family: $fonts-code !important;
+    .blob-num {
+      &:hover {
+        color: #ECAC29 !important;
+      }
+    }
+
+    .pl-s, .pl-pds, .pl-s .pl-pse .pl-s1, .pl-sr, .pl-sr .pl-cce, .pl-sr .pl-sre, .pl-sr .pl-sra {
+      color: #ECAC29 !important;
     }
   }
 
