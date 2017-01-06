@@ -185,6 +185,10 @@ pre {
   border-radius: 5px;
   background-color: #6D705F;
 }
+button, input, optgroup, select, textarea {
+  font-family: $fonts-body;
+}
+
 @import './blog/header';
 @import './blog/unit-article';
 @import './blog/data-table';

@@ -31,7 +31,7 @@ $('.navbar-collapse ul li a').click(function() {
 
 // remove the focused state after click,
 // otherwise bootstrap will still highlight the link
-$("a").mouseup(function(){
+$("a").mouseup(function() {
     $(this).blur();
 })
 

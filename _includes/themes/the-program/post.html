@@ -12,7 +12,7 @@
                 <div class="entry-content">
                         <div class="meta">
                             <p class="date-publish">
-                               {{ site.translations.published }}: <time itemprop="datePublished" class="date-pub {% if page.last_updated == null %}updated{% endif %}" title="{{ page.date | date_to_xmlschema }}" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B' }} {{ page.date | date: '%d' }}, {{ page.date | date: '%Y' }} </time> by 
+                               {{ site.translations.published }}: <time itemprop="datePublished" class="date-pub {% if page.last_updated == null %}updated{% endif %}" title="{{ page.date | date_to_xmlschema }}" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B' }} {{ page.date | date: '%d' }}, {{ page.date | date: '%Y' }} </time> by
                                 <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{% if page.author == null %}{{ site.author.name }}{% else %}{{ page.author }}{% endif %}</span></span></a>
                                 <a class="license image-link" rel="license" href="{{ site.translations.cc_license }}" target="_blank">
                                     <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/cc-by-sa.png"  height="16" width="80"/>
@@ -43,11 +43,11 @@
                         <a class="internal" href="#page">{{ site.translations.back_to_top }}</a>
                         <!-- AddThis Button BEGIN -->
                         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-                            <a class="addthis_button_email"></a>
-                            <a class="addthis_button_facebook"></a>
-                            <a class="addthis_button_google_plusone_share"></a>
-                            <a class="addthis_button_reddit"></a>
-                            <a class="addthis_button_twitter"></a>
+                            <a class="btn-share-post addthis_button_email"></a>
+                            <a class="btn-share-post addthis_button_facebook"></a>
+                            <a class="btn-share-post addthis_button_google_plusone_share"></a>
+                            <a class="btn-share-post addthis_button_reddit"></a>
+                            <a class="btn-share-post addthis_button_twitter"></a>
                         </div>
                         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ JB.sharing.addthis_public_id }}"></script>
                         <!-- AddThis Button END -->

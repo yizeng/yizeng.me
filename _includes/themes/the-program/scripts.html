@@ -1,227 +1,275 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/assets/js/jquery-1.11.0.min.js"><\/script>')</script>
+<script>
+    window.jQuery || document.write('<script src="/assets/js/jquery-1.11.0.min.js"><\/script>')
+
+</script>
 
 <!-- Loading progess bar plugin -->
 <!--[if !IE]> -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/pace/0.4.17/pace.min.js"></script>
-	<script>window.Pace || document.write('<script src="/assets/js/pace.min.js"><\/script>')</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/0.4.17/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/js/pace.min.js"><\/script>')
+
+</script>
 <!-- <![endif]-->
 
 <script>
-	$(document).ready(function () {
-		var offset = 50, duration = 500, width = 960;
-		$(window).scroll(function () {
-			if ($(window).width() > width) {
-				if ($(this).scrollTop() > offset) {
-					$('footer').css('top', '20px');
-					$('footer .back-to-top').fadeIn(duration);
-				} else {
-					$('footer').css('top', 'auto');
-					$('footer .back-to-top').fadeOut(duration);
-				}
-			}
-		});
-		$(window).resize(function () {
-			if ($(window).width() < width) {
-				$('footer').css('top', 'auto');
-				$('footer .back-to-top').fadeOut(duration);
-			}
-			if ($(window).width() >= width && $(this).scrollTop() > offset) {
-				$('footer').css('top', '20px');
-				$('footer .back-to-top').fadeIn(duration);
-			}
-		});
+    $(document).ready(function() {
+        var offset = 50,
+            duration = 500,
+            width = 960;
+        $(window).scroll(function() {
+            if ($(window).width() > width) {
+                if ($(this).scrollTop() > offset) {
+                    $('footer').css('top', '20px');
+                    $('footer .back-to-top').fadeIn(duration);
+                } else {
+                    $('footer').css('top', 'auto');
+                    $('footer .back-to-top').fadeOut(duration);
+                }
+            }
+        });
+        $(window).resize(function() {
+            if ($(window).width() < width) {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+            if ($(window).width() >= width && $(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            }
+        });
 
-		$('footer .back-to-top').click(function (event) {
-			event.preventDefault();
-			$('html, body').animate({scrollTop: 0}, duration);
-			return false;
-		});
-	});
+        $('footer .back-to-top').click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, duration);
+            return false;
+        });
+    });
+
 </script>
 
 <!-- Google Analytics Event tracking -->
 <script>
-var sendGaEvent = function(category, action, label) {
-	if (label === 'undefined') {
-		ga('send', 'event', category, action);
-	} else {
-		ga('send', 'event', category, action, label.trim());
-	}
-};
+    // Google Analytics event tracking common functions.
+    function sendGaEvent(category, action, label) {
+        if (typeof label === 'undefined') {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: category,
+                eventAction: action
+            });
+        } else {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: category,
+                eventAction: action,
+                eventLabel: label.trim()
+            });
+        };
+    };
 
-$(document).ready(function () {
-	$('.the-header .nav-link a').on('click', function() {
-		label = (this.getAttribute('data-ga') !== null) ? this.getAttribute('data-ga') : this.textContent;
-		sendGaEvent('Internal Links', 'Click', label);
-	});
-	$('.the-header .nav-link button').on('click', function() {
-		sendGaEvent('Navigation Buttons', 'Click', this.getAttribute('data-ga'));
-	});
+    function handleOutboundLinkClicks(href) {
+        ga('send', 'event', {
+            eventCategory: 'Outbound Link',
+            eventAction: 'Click',
+            eventLabel: href.trim(),
+            transport: 'beacon'
+        });
+    }
 
-	$('[class$=wrapper] .results a').on('click', function() {
-		sendGaEvent('Overlay Links', 'Click', this.textContent);
-	});
+    $('.external').on('click', function() {
+        handleOutboundLinkClicks($(this).attr('href'));
+    });
 
-	$('.the-footer .about a').on('click', function() {
-		sendGaEvent('Footer Links', 'Click', this.textContent);
-	});
-	$('.the-footer .social-links > a').on('click', function() {
-		sendGaEvent('Social Links', 'Click', this.title);
-	});
+    $('.the-header .nav-link a, [class$=wrapper] .results a').on('click', function() {
+        sendGaEvent('Blog', 'Navigate', this.textContent);
+    });
+    $('.the-header .nav-link button').on('click', function() {
+        sendGaEvent('Blog', 'Navigate', this.getAttribute('data-ga'));
+    });
+    $('.the-footer .about h4 a').on('click', function() {
+        sendGaEvent('Blog', 'Go to About');
+    });
+    $('.tag_box.categories a').on('click', function() {
+        sendGaEvent('Blog', 'Click Category', this.title);
+    });
+    $('.tag_box.tags a').on('click', function() {
+        sendGaEvent('Blog', 'Click Tag', this.title);
+    });
+    $('.unit-article .comment .show-hidden').on('click', function() {
+        sendGaEvent('Post', 'Show Comments', this.textContent);
+    });
+    $('a.internal').on('click', function() {
+        label = (this.getAttribute('data-ga') !== null) ? this.getAttribute('data-ga') : this.textContent;
+        sendGaEvent('Post', 'Navigate', label);
+    });
+    $('.unit-article .meta .author').on('click', function() {
+        sendGaEvent('Post', 'Show Author');
+    });
+    $('.unit-article .meta .license').on('click', function() {
+        sendGaEvent('Post', 'Show License');
+    });
+    $('.unit-article .meta .list-tag a').on('click', function() {
+        if (this.getAttribute('data-ga') !== null) {
+            sendGaEvent('Post', 'Click Tag', this.getAttribute('data-ga'));
+        }
+    });
+    $('.unit-article .meta .list-category a').on('click', function() {
+        if (this.getAttribute('data-ga') !== null) {
+            sendGaEvent('Post', 'Click Category', this.getAttribute('data-ga'));
+        }
+    });
+    $('.addthis_toolbox .btn-share-post').on('click', function() {
+        sendGaEvent('Post', 'Share Post', this.attr('title'));
+    });
 
-	$('.tag_box.categories a').on('click', function() {
-		sendGaEvent('Categories', 'Click', this.title);
-	});
-	$('.tag_box.tags a').on('click', function() {
-		sendGaEvent('Tags', 'Click', this.title);
-	});
-
-	$('a.internal, .unit-article .comment .show-hidden').on('click', function() {
-		label = (this.getAttribute('data-ga') !== null) ? this.getAttribute('data-ga') : this.textContent;
-		sendGaEvent('Internal Links', 'Click', label);
-	});
-
-	$('.unit-article .meta .author').on('click', function() {
-		sendGaEvent('Post meta Links', 'Click', 'Author');
-	});
-	$('.unit-article .meta .license').on('click', function() {
-		sendGaEvent('Post meta Links', 'Click', 'License');
-	});
-	$('.unit-article .meta .list-linear a').on('click', function() {
-		if (this.getAttribute('data-ga') !== null){
-			sendGaEvent('Post meta Links', 'Click', this.getAttribute('data-ga'));
-		}
-	});
-});
 </script>
 
 <!-- Show menu overlay + Jekyll Simple Search option -->
 <script src="/assets/js/jekyll-search.jquery.js"></script>
 <script>
-	$(document).ready(function() {
-		$('.search-field').simpleJekyllSearch({
-			jsonFile : '/search.json',
-			template : '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
-			searchResults: '.search-wrapper .results',
-			searchResultsTitle : '<h4>{{ site.translations.search_results }}</h4>',
-			noResults : '<p>{{ site.translations.search_not_found }}</p>'
-		});
-	});
+    $(document).ready(function() {
+        $('.search-field').simpleJekyllSearch({
+            jsonFile: '/search.json',
+            template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+            searchResults: '.search-wrapper .results',
+            searchResultsTitle: '<h4>{{ site.translations.search_results }}</h4>',
+            noResults: '<p>{{ site.translations.search_not_found }}</p>'
+        });
+    });
 
-	(function($, window, undefined) {
-		var closeOverlay = function() {
-			$('.nav-wrapper, .search-wrapper').removeAttr('style');
-			$(".nav-form, .search-form").removeClass('active');
-			$("body").removeClass('nav-overlay search-overlay');
-		};
+    (function($, window, undefined) {
+        var closeOverlay = function() {
+            $('.nav-wrapper, .search-wrapper').removeAttr('style');
+            $(".nav-form, .search-form").removeClass('active');
+            $("body").removeClass('nav-overlay search-overlay');
+        };
 
-		$('.nav-global .btn-search').on('click', function() {
-			$('.search-wrapper').css({ display: "block" });
-			$(".search-form").addClass('active');
-			$(".search-form").find('input').focus();
-			$("body").addClass('search-overlay');
-		});
+        $('.nav-global .btn-search').on('click', function() {
+            $('.search-wrapper').css({
+                display: "block"
+            });
+            $(".search-form").addClass('active');
+            $(".search-form").find('input').focus();
+            $("body").addClass('search-overlay');
+        });
 
-		$('.nav-global .btn-menu').on('click', function() {
-			$('.nav-wrapper').css({ display: "block" });
-			$(".nav-form").addClass('active');
-			$(".nav-form .search-field").prop('disabled', true);
-			$("body").addClass('nav-overlay');
-		});
+        $('.nav-global .btn-menu').on('click', function() {
+            $('.nav-wrapper').css({
+                display: "block"
+            });
+            $(".nav-form").addClass('active');
+            $(".nav-form .search-field").prop('disabled', true);
+            $("body").addClass('nav-overlay');
+        });
 
-		$('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function() {
-			closeOverlay();
-		});
+        $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function() {
+            closeOverlay();
+        });
 
-		$(document).on('keyup', function(e) {
-			if(e.keyCode === 27) {
-				closeOverlay();
-			}
-		});
-	})(jQuery, window);
+        $(document).on('keyup', function(e) {
+            if (e.keyCode === 27) {
+                closeOverlay();
+            }
+        });
+    })(jQuery, window);
+
 </script>
 
-{% if page.utilities != null %}
-	{% if page.utilities contains "show-hidden" %}
-		<script>
-			$('.show-hidden').on('click', function() {
-				$(this).parent().next().toggleClass("hidden");
-				$(this).toggleClass("hidden");
-			});
-		</script>
-	{% endif %}
-
-	{% if page.utilities contains "highlight" %}
-		<script src="/assets/js/google-code-prettify/run_prettify.js?lang=yaml"></script>
-		<script>
-			$("head").append('<link rel="stylesheet" href="/assets/css/highlight.css" type="text/css" />');
-			$("head").append('<link rel="stylesheet" href="/assets/js/google-code-prettify/prettify.css" type="text/css" />');
-		</script>
-	{% endif %}
-
-	{% if page.utilities contains "fancybox" %}
-		<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
-		<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
-
-		<script>window.jQuery.fancybox || document.write('<script src="/assets/js/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')</script>
-		<script>window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/js/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')</script>
-
-		<script>
-			$("head").append('<link rel="stylesheet" href="/assets/js/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
-			$("head").append('<link rel="stylesheet" href="/assets/js/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
-			$(".post-image").fancybox({
-				prevEffect : 'none',
-				nextEffect : 'none',
-				closeBtn : true,
-				helpers : {
-					title : { type : 'float' }
-				}
-			});
-		</script>
-	{% endif %}
-
-	{% if page.utilities contains "unveil" %}
-		<script src="/assets/js/unveil/jquery.unveil.min.js"></script>
-		<script>
-			$(document).ready(function () {
-				$(".post-image > img").unveil(450);
-			});
-		</script>
-	{% endif %}
-{% endif %}
-
-{% if page.categories != nil %}
+{% if page.utilities != null %} {% if page.utilities contains "show-hidden" %}
 <script>
-$(document).ready(function () {
-	var disqusPublicKey = "{{ site.JB.comments.disqus.public_key }}";
-	var disqusShortname = "{{ site.JB.comments.disqus.short_name }}";
-	var threadUrl = 'link:' + $('.comment .show-hidden').attr('data-disqus-url');
+    $('.show-hidden').on('click', function() {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
 
-	$.ajax({
-		type: 'GET',
-		url: 'https://disqus.com/api/3.0/threads/set.jsonp',
-		data: { api_key: disqusPublicKey, forum: disqusShortname, thread: threadUrl },
-		cache: false,
-		dataType: 'jsonp',
-		success: function(result) {
-			if (result.response.length === 1) {
-				btnText = '{{ site.translations.show_comments }} (' + result.response[0].posts + ')';
-				$('.comment .show-hidden').html(btnText);
-			}
-		}
-	});
+</script>
+{% endif %} {% if page.utilities contains "highlight" %}
+<script src="/assets/js/google-code-prettify/run_prettify.js?lang=yaml"></script>
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/css/highlight.css" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/js/google-code-prettify/prettify.css" type="text/css" />');
 
-	$('.comment .show-hidden').on('click', function() {
-		$.ajaxSetup({cache:true});
-		$.getScript('http://' + disqusShortname + '.disqus.com/embed.js');
-		$.ajaxSetup({cache:false});
-		$(this).remove();
-	});
+</script>
+{% endif %} {% if page.utilities contains "fancybox" %}
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
 
-	if(/\#comment/.test(location.hash)){
-		$('.comment .show-hidden').trigger('click');
-	}
-});
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/js/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+
+</script>
+<script>
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/js/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/js/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/js/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+
+</script>
+{% endif %} {% if page.utilities contains "unveil" %}
+<script src="/assets/js/unveil/jquery.unveil.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".post-image > img").unveil(450);
+    });
+
+</script>
+{% endif %} {% endif %} {% if page.categories != nil %}
+<script>
+    $(document).ready(function() {
+        var disqusPublicKey = "{{ site.JB.comments.disqus.public_key }}";
+        var disqusShortname = "{{ site.JB.comments.disqus.short_name }}";
+        var threadUrl = 'link:' + $('.comment .show-hidden').attr('data-disqus-url');
+
+        $.ajax({
+            type: 'GET',
+            url: 'https://disqus.com/api/3.0/threads/set.jsonp',
+            data: {
+                api_key: disqusPublicKey,
+                forum: disqusShortname,
+                thread: threadUrl
+            },
+            cache: false,
+            dataType: 'jsonp',
+            success: function(result) {
+                if (result.response.length === 1) {
+                    btnText = '{{ site.translations.show_comments }} (' + result.response[0].posts + ')';
+                    $('.comment .show-hidden').html(btnText);
+                }
+            }
+        });
+
+        $('.comment .show-hidden').on('click', function() {
+            $.ajaxSetup({
+                cache: true
+            });
+            $.getScript('http://' + disqusShortname + '.disqus.com/embed.js');
+            $.ajaxSetup({
+                cache: false
+            });
+            $(this).remove();
+        });
+
+        if (/\#comment/.test(location.hash)) {
+            $('.comment .show-hidden').trigger('click');
+        }
+    });
+
 </script>
 {% endif %}
