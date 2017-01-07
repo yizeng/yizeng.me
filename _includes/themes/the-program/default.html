@@ -2,18 +2,15 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
-
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="{{ site.author.name }}">
     <meta name="description" content="{% if page.description == null %}{{ site.description }}{% else %}{{ page.description }}{% endif %}" />
-    <meta name="keywords" content="{{ site.author.username }},{% if page.tags != null %}{{ page.tags | join: ',' }}{% else %}{{ site.translations.keywords }}{% endif %}" /> {% if page.url == "/404.html" %}
-    <meta http-equiv="refresh" content="5; url=/blog">{% endif %}
+    <meta name="keywords" content="{{ site.author.username }},{% if page.tags != null %}{{ page.tags | join: ',' }}{% else %}{{ site.translations.keywords }}{% endif %}" />
+    {% if page.url == "/404.html" %}<meta http-equiv="refresh" content="5; url=/blog">{% endif %}
 
     <title>{% if page.url != "/index.html" %}{{ page.title }} - {% endif %}{{ site.title }}</title>
 
@@ -25,11 +22,8 @@
         <script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.0.6.min.js"><\/script>')</script>
     <![endif]-->
     <!--[if !IE]> -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-    <script>
-        window.Modernizr || document.write('<script src="/assets/js/modernizr-2.6.2.min.js"><\/script>')
-
-    </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+        <script>window.Modernizr || document.write('<script src="/assets/js/modernizr-2.6.2.min.js"><\/script>')</script>
     <!-- <![endif]-->
     {% include JB/analytics %}
 </head>
@@ -71,20 +65,15 @@
                             <li class="logo nav-link">
                                 <button class="btn-menu" data-ga="Menu"></button>
                                 <a href="/blog">{{ site.title }}</a>
-                                <!--[if !IE]> --><button class="btn-search" data-ga="Search"></button>
-                                <!-- <![endif]-->
+                                <!--[if !IE]> --><button class="btn-search" data-ga="Search"></button><!-- <![endif]-->
                             </li>
                             <li class="nav-link"><a data-ga="Categories" href="/categories">{{ site.translations.categories }}</a></li>
                             <li class="nav-link"><a data-ga="Tags" href="/tags">{{ site.translations.tags }}</a></li>
-                            <!--[if !IE]> -->
-                            <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">{{ site.translations.search }}</a></li>
-                            <!-- <![endif]-->
+                            <!--[if !IE]> --><li class="nav-link"><a data-ga="Search" class="btn-search" href="#">{{ site.translations.search }}</a></li><!-- <![endif]-->
                         </ul>
                     </nav>
-                </div>
-                <!-- unit-inner -->
-            </div>
-            <!-- unit-head -->
+                </div><!-- unit-inner -->
+            </div><!-- unit-head -->
         </header>
 
         <div class="body animated fadeInDown" role="main">
@@ -93,31 +82,39 @@
                     <div class="entry-content">
                         {{ content }}
                     </div>
-                </div>
-                <!-- unit-inner -->
-            </div>
-            <!-- unit-body -->
-        </div>
-        <!-- body -->
+                </div><!-- unit-inner -->
+            </div><!-- unit-body -->
+        </div><!-- body -->
 
         <footer class="the-footer">
             <div class="unit-foot">
                 <div class="unit-inner unit-foot-inner">
                     <div class="misc vcard">
                         <div class="about">
-                            <h4><a href="/">{{ site.translations.about }}</a></h4> {% if site.translations.show_details == true %}
-                            <p>
-                                <span class="fn p-name">{{ site.author.name }}</span>,
-                                <span class="p-job-title">{{ site.translations.job_title }}</span>
-                                <span>{{ site.translations.based_in }}</span>
-                                <span class="adr h-adr p-adr">
+                            <h4><a href="/">{{ site.translations.about }}</a></h4>
+                            {% if site.translations.show_details == true %}
+                                <p>
+                                    <span class="fn p-name">{{ site.author.name }}</span>,
+                                    <span class="p-job-title">{{ site.translations.job_title }}</span>
+                                    <span>{{ site.translations.based_in }}</span>
+                                    <span class="adr h-adr p-adr">
                                         <abbr class="locality p-locality">{{ site.translations.city }}</abbr>,
                                         <abbr class="country-name p-country-name">{{ site.translations.country }}</abbr>.
                                     </span>
-                            </p>
-                            <p><a class="external" href="{{ site.translations.license_link }}" target="_blank">{{ site.translations.license }}</a> &amp; <a class="external" href="{{ site.translations.acknowledgements_link }}" target="_blank">{{ site.translations.acknowledgements }}</a></p>
-                            {% endif %} {% if site.translations.extra_info != "" %}
-                            <p>{{ site.translations.extra_info }}</p>{% endif %}
+                                </p>
+                                <p>
+                                  <a class="external" href="{{ site.translations.license_link }}" target="_blank">
+                                  {{ site.translations.license }}
+                                  </a> &amp;
+                                  <a href="{{ site.translations.acknowledgements_link }}" target="_blank">
+                                    {{ site.translations.acknowledgements }}
+                                  </a>
+                                </p>
+                            {% endif %}
+
+                            {% if site.translations.extra_info != "" %}
+                              <p>{{ site.translations.extra_info }}</p>
+                            {% endif %}
                         </div>
                         <div class="social-links">
                             <a class="external ico-linkedin" href="http://linkedin.com/in/{{ site.author.username }}nz/" rel="me" target="_blank" title="LinkedIn Profile"></a>
@@ -126,17 +123,12 @@
                             <a class="external ico-stackoverflow" href="http://stackoverflow.com/users/{{ site.author.stackoverflow }}" rel="me" target="_blank" title="StackOverflow Profile"></a>
                             <a class="external ico-rss" href="/rss.xml" rel="me" target="_blank" title="RSS Feeds"></a>
                         </div>
-                    </div>
-                    <!-- misc -->
-                </div>
-                <!-- unit-foot-inner -->
-            </div>
-            <!-- unit-foot -->
+                    </div><!-- misc -->
+                </div><!-- unit-foot-inner -->
+            </div><!-- unit-foot -->
             <a href="#" class="internal back-to-top">{{ site.translations.back_to_top }}</a>
         </footer>
-    </div>
-    <!-- page -->
+    </div><!-- page -->
     {% include themes/the-program/scripts.html %}
 </body>
-
 </html>

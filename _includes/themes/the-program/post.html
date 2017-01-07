@@ -12,7 +12,7 @@
                 <div class="entry-content">
                         <div class="meta">
                             <p class="date-publish">
-                               {{ site.translations.published }}: <time itemprop="datePublished" class="date-pub {% if page.last_updated == null %}updated{% endif %}" title="{{ page.date | date_to_xmlschema }}" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B' }} {{ page.date | date: '%d' }}, {{ page.date | date: '%Y' }} </time> by
+                               {{ site.translations.published }}: <time itemprop="datePublished" class="date-pub {% if page.last_updated == null %}updated{% endif %}" title="{{ page.date | date_to_xmlschema }}" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B' }} {{ page.date | date: '%d' }}, {{ page.date | date: '%Y' }} </time> by 
                                 <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{% if page.author == null %}{{ site.author.name }}{% else %}{{ page.author }}{% endif %}</span></span></a>
                                 <a class="license image-link" rel="license" href="{{ site.translations.cc_license }}" target="_blank">
                                     <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/cc-by-sa.png"  height="16" width="80"/>
