@@ -53,6 +53,8 @@
 
 <!-- Google Analytics Event tracking -->
 <script>
+
+$(document).ready(function() {
     // Google Analytics event tracking common functions.
     function sendGaEvent(category, action, label) {
         if (typeof label === 'undefined') {
@@ -125,6 +127,7 @@
     $('.addthis_toolbox .btn-share-post').on('click', function() {
         sendGaEvent('Post', 'Share Post', this.attr('title'));
     });
+});
 
 </script>
 
