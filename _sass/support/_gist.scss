@@ -10,7 +10,8 @@
       background-color: $color-code-background !important;
     }
 
-    .blob-code-inner, .blob-num {
+    .blob-code-inner,
+    .blob-num {
       color: #FFFFFF;
     }
 
@@ -20,7 +21,13 @@
       }
     }
 
-    .pl-s, .pl-pds, .pl-s .pl-pse .pl-s1, .pl-sr, .pl-sr .pl-cce, .pl-sr .pl-sre, .pl-sr .pl-sra {
+    .pl-s,
+    .pl-pds,
+    .pl-s .pl-pse .pl-s1,
+    .pl-sr,
+    .pl-sr .pl-cce,
+    .pl-sr .pl-sre,
+    .pl-sr .pl-sra {
       color: #ECAC29 !important;
     }
   }

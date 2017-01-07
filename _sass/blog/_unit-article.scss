@@ -45,13 +45,20 @@
     }
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     a {
       padding: 0;
     }
   }
 
-  .button, .show-hidden, button {
+  .button,
+  .show-hidden,
+  button {
     background-clip: padding-box;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -94,7 +101,9 @@
     }
   }
 
-  .meta a, .toc a, .unit-foot a {
+  .meta a,
+  .toc a,
+  .unit-foot a {
     color: $color-text;
 
     &:hover {
@@ -170,12 +179,15 @@
       background-color: #B1B699;
     }
 
-    ol, ul {
+    ol,
+    ul {
       margin-bottom: 0;
     }
   }
 
-  :not(.meta) > dl, :not(.meta) > ol, :not(.meta) > ul {
+  :not(.meta) > dl,
+  :not(.meta) > ol,
+  :not(.meta) > ul {
     padding-left: 1.05em;
   }
 
@@ -196,7 +208,9 @@
       border-color: $color-hover;
     }
 
-    li, ol, ul {
+    li,
+    ol,
+    ul {
       margin-left: 1em;
       margin-bottom: 0;
       padding-left: 0;
@@ -221,16 +235,50 @@
     list-style: decimal;
   }
 
-  dd .hasGrid, dd blockquote, dd dl, dd h1, dd h2, dd h3, dd h4, dd h5, dd ol, dd p, dd ul, dt .hasGrid, dt blockquote, dt dl, dt h1, dt h2, dt h3, dt h4, dt h5, dt ol, dt p, dt ul, li .hasGrid, li blockquote, li dl, li h1, li h2, li h3, li h4, li h5, li ol, li p, li ul {
+  dd .hasGrid,
+  dd blockquote,
+  dd dl,
+  dd h1,
+  dd h2,
+  dd h3,
+  dd h4,
+  dd h5,
+  dd ol,
+  dd p,
+  dd ul,
+  dt .hasGrid,
+  dt blockquote,
+  dt dl,
+  dt h1,
+  dt h2,
+  dt h3,
+  dt h4,
+  dt h5,
+  dt ol,
+  dt p,
+  dt ul,
+  li .hasGrid,
+  li blockquote,
+  li dl,
+  li h1,
+  li h2,
+  li h3,
+  li h4,
+  li h5,
+  li ol,
+  li p,
+  li ul {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .highlight pre, pre.prettyprint {
+  .highlight pre,
+  pre.prettyprint {
     padding-left: 2em !important;
   }
 
-  li > code, p > code {
+  li > code,
+  p > code {
     background-color: $color-inline-code-background;
     font-family: $fonts-body;
     padding: 2px 3px;
@@ -289,7 +337,8 @@
     padding-right: 4px;
   }
 
-  .list-category a, .list-tag a {
+  .list-category a,
+  .list-tag a {
     background-color: transparent;
     border: 0 none;
 
@@ -298,7 +347,8 @@
     }
   }
 
-  .list-category span, .list-tag span {
+  .list-category span,
+  .list-tag span {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -388,7 +438,11 @@
   margin-top: 16px;
   margin-bottom: 8px;
 
-  h2, h3, h4, h5, h6 {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $color-text;
 
     a {
@@ -406,7 +460,9 @@
     }
   }
 
-  h3.category, h3.year, h3[id$='-ref'] {
+  h3.category,
+  h3.year,
+  h3[id$='-ref'] {
     margin-top: 12px;
     margin-bottom: 6px;
   }
@@ -442,7 +498,8 @@
   margin-top: 6px;
 }
 
-.unit-article .entry-content:first-child h5, .unit-article .entry-content:first-child h6 {
+.unit-article .entry-content:first-child h5,
+.unit-article .entry-content:first-child h6 {
   margin-top: 0;
 }
 

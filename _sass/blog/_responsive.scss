@@ -13,12 +13,16 @@
 	Old mobile phone width: [0, 640]
 */
 @media only screen and (max-width: 640px) {
-  .h1, .h2, h1, h2 {
+  .h1,
+  .h2,
+  h1,
+  h2 {
     font-size: 1.325em !important;
     line-height: 32px !important;
   }
 
-  .h3, h3 {
+  .h3,
+  h3 {
     font-size: 1.175em !important;
   }
 
@@ -34,7 +38,8 @@
         padding-bottom: 6px !important;
       }
 
-      .btn-menu, .btn-search {
+      .btn-menu,
+      .btn-search {
         cursor: pointer;
         display: inline;
       }
@@ -63,7 +68,8 @@
 	Smartphone width: [0, 959]
 */
 @media only screen and (max-width: 960px) {
-  .unit-article .year, .unit-article header h1 {
+  .unit-article .year,
+  .unit-article header h1 {
     text-align: center;
   }
 
@@ -97,16 +103,21 @@ img {
   max-width: 95%;
 }
 
-.h1, .h2, h1, h2 {
+.h1,
+.h2,
+h1,
+h2 {
   font-size: 1.575em;
   line-height: 42px;
 }
 
-.h3, h3 {
+.h3,
+h3 {
   font-size: 1.325em;
 }
 
-.the-footer, .the-header {
+.the-footer,
+.the-header {
   text-align: center;
 }
 
@@ -115,7 +126,8 @@ img {
     margin-top: 24px;
   }
 
-  .posts, .posts li {
+  .posts,
+  .posts li {
     margin-top: 8px;
     margin-bottom: 8px;
 

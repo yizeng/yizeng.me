@@ -12,7 +12,9 @@ html * {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*, *:after, *:before {
+*,
+*:after,
+*:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -317,12 +319,15 @@ header {
   color: #303E49;
 }
 
-.cd-timeline-content .cd-date, .cd-timeline-content .cd-read-more, .cd-timeline-content p {
+.cd-timeline-content .cd-date,
+.cd-timeline-content .cd-read-more,
+.cd-timeline-content p {
   font-size: 13px;
   font-size: .8125rem;
 }
 
-.cd-timeline-content .cd-date, .cd-timeline-content .cd-read-more {
+.cd-timeline-content .cd-date,
+.cd-timeline-content .cd-read-more {
   display: inline-block;
 }
 
@@ -367,7 +372,8 @@ header {
     font-size: 1rem;
   }
 
-  .cd-timeline-content .cd-date, .cd-timeline-content .cd-read-more {
+  .cd-timeline-content .cd-date,
+  .cd-timeline-content .cd-read-more {
     font-size: .875rem;
   }
 }

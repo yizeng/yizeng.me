@@ -1,4 +1,5 @@
-.nav-form, .search-form {
+.nav-form,
+.search-form {
   left: -200px;
   opacity: 0;
   position: relative;
@@ -53,7 +54,10 @@
     }
   }
 
-  a, h4, li, p {
+  a,
+  h4,
+  li,
+  p {
     color: #FFFFFF;
   }
 
@@ -112,13 +116,15 @@
   float: right;
 }
 
-.nav-form.active, .search-form.active {
+.nav-form.active,
+.search-form.active {
   top: 0;
   left: 0;
   opacity: 1;
 }
 
-body.nav-overlay, body.search-overlay {
+body.nav-overlay,
+body.search-overlay {
   overflow: hidden;
 
   &:after {
@@ -134,7 +140,8 @@ body.nav-overlay, body.search-overlay {
   }
 }
 
-.nav-wrapper, .search-wrapper {
+.nav-wrapper,
+.search-wrapper {
   display: none;
   top: 50px;
   width: 90%;

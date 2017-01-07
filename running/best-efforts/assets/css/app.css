@@ -1,7 +1,9 @@
-.main-header .logo b, .main-footer a {
+.main-header .logo b,
+.main-footer a {
   color: #FC4C02;
 }
-.main-header .logo b:hover, .main-footer a:hover {
+.main-header .logo b:hover,
+.main-footer a:hover {
   color: #E34402;
 }
 .main-header li.user-header {
@@ -22,7 +24,9 @@
 }
 
 /* Add some transition effects */
-.treeview-menu > li > a, .main-header .logo, .main-header .navbar .sidebar-toggle {
+.treeview-menu > li > a,
+.main-header .logo,
+.main-header .navbar .sidebar-toggle {
   -o-transition: all .2s ease-in-out;
   -moz-transition: all .2s ease-in-out;
   -webkit-transition: all .2s ease-in-out;
@@ -71,7 +75,8 @@
   outline: 0;
 }
 
-#main-content .best-effort-table a:hover, #main-content .best-effort-table a:focus {
+#main-content .best-effort-table a:hover,
+#main-content .best-effort-table a:focus {
   color: #FC4C02;
   border-bottom-color: #FC4C02;
 }
@@ -93,7 +98,9 @@
 }
 
 /* Pace loading progress bar style */
-body > :not(.pace), body:before, body:after {
+body > :not(.pace),
+body:before,
+body:after {
   -webkit-transition: opacity .4s ease-in-out;
   -moz-transition: opacity .4s ease-in-out;
   -o-transition: opacity .4s ease-in-out;
@@ -101,7 +108,9 @@ body > :not(.pace), body:before, body:after {
   transition: opacity .4s ease-in-out;
 }
 
-body:not(.pace-done) > :not(.pace), body:not(.pace-done):before, body:not(.pace-done):after {
+body:not(.pace-done) > :not(.pace),
+body:not(.pace-done):before,
+body:not(.pace-done):after {
   opacity: 0;
 }
 .pace {
@@ -155,7 +164,12 @@ body:not(.pace-done) > :not(.pace), body:not(.pace-done):before, body:not(.pace-
 .dataTable thead .sorting:after {
   content: none !important;
 }
-.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
   background-color: #FC4C02;
   border-color: #FC4C02;
 }
@@ -178,7 +192,8 @@ body:not(.pace-done) > :not(.pace), body:not(.pace-done):before, body:not(.pace-
 }
 
 /* Badge and label styles */
-.badge, .label {
+.badge,
+.label {
   font-size: 12px;
 }
 

@@ -14,7 +14,8 @@
       border-color: $color-hover;
     }
 
-    td, th {
+    td,
+    th {
       padding: 3px;
       border: 1px solid rgba(175, 175, 175, .5);
     }
@@ -28,7 +29,8 @@
       border-bottom: none;
     }
 
-    .center, th {
+    .center,
+    th {
       text-align: center;
     }
 
