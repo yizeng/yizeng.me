@@ -72,6 +72,12 @@ module Helper
 
     element
   end
+
+  def save_screenshot(filepath)
+    (blank_filepath = filepath.nil?) || filepath.empty?
+    filepath = "./#{Time.now.strftime('%Y%m%dT%H%M%S%z')}.png" if blank_filepath
+    @driver.save_screenshot(filepath)
+  end
 end
 
 World(Helper)
