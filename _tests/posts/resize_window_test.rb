@@ -3,8 +3,8 @@ require 'test/unit'
 
 module ResizeWindow
   module CommonComponents
-    NEW_WIDTH = 1920
-    NEW_HEIGHT = 1080
+    NEW_WIDTH = 1024
+    NEW_HEIGHT = 576
 
     def teardown
       @driver.quit unless @driver.nil?

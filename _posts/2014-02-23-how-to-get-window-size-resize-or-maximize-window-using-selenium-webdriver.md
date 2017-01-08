@@ -6,6 +6,7 @@ using Selenium WebDriver C#, Ruby and Python bindings."
 categories: [tutorial]
 tags: [c#, python, ruby, selenium-webdriver]
 alias: [/2014/02/23/]
+last_updated: January 08, 2017
 utilities: highlight
 ---
 Selenium WebDriver supports getting the browser window size,
@@ -26,8 +27,9 @@ and assign it to property `driver.manage.window.size`.
 Alternatively, Ruby binding has provided a `driver.manage.window.resize_to()` method,
 which is equivalent to `#size=`, but accepts width and height arguments according to API [here][Ruby resize_to()].
 
-> Environment Tested:<br/>
-> Windows 7, Ruby 2.0.0p247, Selenium 2.39.0, Firefox 26.0
+> Environment Tested:<br />
+> Mac OS Sierra, Ruby 2.3.1p112, Selenium 3.0.5, ChromDriver 2.26, GeckoDriver 0.13<br/>
+> Firefox 50.1, Chrome 55, PhantomJS 1.9.8
 
 ### Example
 {: #ruby-example}

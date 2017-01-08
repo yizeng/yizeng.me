@@ -6,7 +6,7 @@ innerHTML, innerText or textContent."
 categories: [tutorial]
 tags: [c#, python, ruby, selenium-webdriver]
 alias: [/2014/04/08/]
-last_updated: April 20, 2014
+last_updated: January 08, 2017
 utilities: highlight
 ---
 As defined in [WebDriver spec](http://www.w3.org/TR/webdriver/#interactable),
@@ -32,8 +32,8 @@ Here is a brief demonstration on how to get text from hidden elements using Sele
 {: #ruby}
 
 > Environment Tested:<br/>
-> Windows 7, Ruby 2.0.0p451, Selenium 2.41.0, PhantomJS 1.9.7<br />
-> Linux Mint, ruby 2.1.1p76, Selenium 2.41.0, PhantomJS 1.9.7
+> Mac OS Sierra, Ruby 2.3.1p112, Selenium 3.0.5, ChromeDriver 2.26, GeckoDriver 0.13<br />
+> Chrome 55, Firefox 50.1, PhantomJS 1.9.8
 
 {% highlight ruby %}
 require 'selenium-webdriver'

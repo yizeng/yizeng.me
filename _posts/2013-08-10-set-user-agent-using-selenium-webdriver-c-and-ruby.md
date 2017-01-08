@@ -6,15 +6,15 @@ using Selenium WebDriver C# and Ruby bindings."
 categories: [tutorial]
 tags: [c#, ruby, selenium-webdriver]
 alias: [/2013/08/10/]
-last_updated: April 21, 2014
+last_updated: January 08, 2017
 utilities: highlight
 ---
 This post demonstrates how to set Chrome, Firefox and PhantomJS's User Agent
 using Selenium WebDriver C# and Ruby bindings.
 
-> Environment:<br />
-> Linux Mint 16, Ruby 2.1.1p76, Selenium 2.41.0, ChromDriver 2.9<br/>
-> Firefox 28.0, Chrome 33, PhantomJS 1.9.7
+> Environment Tested:<br />
+> Mac OS Sierra, Ruby 2.3.1p112, Selenium 3.0.5, ChromDriver 2.26, GeckoDriver 0.13<br/>
+> Firefox 50.1, Chrome 55, PhantomJS 1.9.8
 >
 > Example User Agent (ipad):<br />
 > Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10
