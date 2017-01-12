@@ -5,14 +5,10 @@ Then(/^I should see title header "(.*?)"$/) do |title|
   assert_equal(title, @page.title_header.text)
 end
 
-Then(/^I should have posts grouped by "(.*?)"$/) do |list_names|
-  list_names = list_names.split(', ')
-
-  assert_equal(true, list_names.count > 0)
-  assert_equal(list_names.count, @page.list_year_headers.count)
-
+Then(/^I should have posts grouped by year$/) do
+  assert_equal(true, @page.list_year_headers.count > 0)
   @page.list_year_headers.each do |list_year_header|
-    assert_equal(true, list_names.include?(list_year_header.text))
+    assert_equal(true, !!(list_year_header.text =~ /^20\d\d$/))
   end
 end
 
