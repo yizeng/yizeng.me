@@ -36,7 +36,7 @@ namespace :build do
     end
 
     def build_jekyll
-      execute_command 'jekyll build'
+      execute_command 'bundle exec jekyll build'
     end
 
     def create_production
