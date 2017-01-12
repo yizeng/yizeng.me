@@ -9,6 +9,8 @@ alias: [/2014/02/23/]
 last_updated: January 08, 2017
 utilities: highlight
 ---
+> Recently Updated - January 08, 2017
+
 Selenium WebDriver supports getting the browser window size,
 resizing and maximizing window natively from its API,
 no JavaScript injections like `window.resizeTo(X, Y);` are necessary any more.

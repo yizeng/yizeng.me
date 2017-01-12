@@ -8,6 +8,8 @@ alias: [/2013/05/10/, /2013/05/10/setup-jekyll-on-windows/]
 last_updated: January 07, 2017
 utilities: fancybox, unveil
 ---
+> Recently Updated - January 07, 2017
+
 * Kramdown table of contents
 {:toc .toc}
 

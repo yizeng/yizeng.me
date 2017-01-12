@@ -9,8 +9,13 @@ alias: [/2013/08/10/]
 last_updated: January 08, 2017
 utilities: highlight
 ---
+> Recently Updated - January 08, 2017
+
 This post demonstrates how to set Chrome, Firefox and PhantomJS's User Agent
 using Selenium WebDriver C# and Ruby bindings.
+
+* Kramdown table of contents
+{:toc .toc}
 
 > Environment Tested:<br />
 > Mac OS Sierra, Ruby 2.3.1p112, Selenium 3.0.5, ChromDriver 2.26, GeckoDriver 0.13<br/>
@@ -18,9 +23,6 @@ using Selenium WebDriver C# and Ruby bindings.
 >
 > Example User Agent (ipad):<br />
 > Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10
-
-* Kramdown table of contents
-{:toc .toc}
 
 ## Chrome
 {: #chrome}

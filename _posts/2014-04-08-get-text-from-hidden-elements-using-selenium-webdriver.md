@@ -9,6 +9,8 @@ alias: [/2014/04/08/]
 last_updated: January 08, 2017
 utilities: highlight
 ---
+> Recently Updated - January 08, 2017
+
 As defined in [WebDriver spec](http://www.w3.org/TR/webdriver/#interactable),
 Selenium WebDriver will only interact with visible elements,
 therefore the text of an invisible element will always be returned as an empty string.
