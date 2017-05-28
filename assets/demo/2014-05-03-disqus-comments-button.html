@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Yi Zeng">
+	<meta name="description" content="A demo for how to create a button to display Disqus comments count and load comments onClick event." />
+	<meta name="keywords" content="yizeng,disqus,comments,javascript" />
+	<title>Demo for how to create a button to display Disqus comments count and load comments onClick</title>
+
+	<link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+	<style type="text/css">.show-comments {margin-top: 75px}</style>
+</head>
+<body>
+	<div class="unit-article">
+		<button class="center-block show-comments center" data-disqus-url="http://yizeng.me/assets/demo/2014-05-03-disqus-comments-button.html">Show Comments</button>
+		<div id="disqus_thread"></div>
+	</div>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+	</script>
+	<script>
+	$(document).ready(function () {
+		var disqusPublicKey = "ULZ0b9TFdfCUJSKQd4WCKv2v3u25YoG7YG8zXPewkWrT35lZ0Se9YnxLzoV6VM8W";
+		var disqusShortname = "yizeng";
+		var threadUrl = 'link:' + $('.show-comments').attr('data-disqus-url');
+
+		$.ajax({
+			type: 'GET',
+			url: 'https://disqus.com/api/3.0/threads/set.jsonp',
+			data: { api_key: disqusPublicKey, forum: disqusShortname, thread: threadUrl },
+			cache: false,
+			dataType: 'jsonp',
+			success: function(result) {
+				if (result.response.length === 1) {
+					btnText = 'Show Comments (' + result.response[0].posts + ')';
+					$('.show-comments').html(btnText);
+				}
+			}
+		});
+
+		$('.show-comments').on('click', function() {
+			$.ajaxSetup({cache:true});
+			$.getScript('http://' + disqusShortname + '.disqus.com/embed.js');
+			$.ajaxSetup({cache:false});
+			$(this).remove();
+		});
+
+		if(/\#comment/.test(location.hash)){
+			$('.show-comments').trigger('click');
+		}
+	});
+	</script>
+</body>
+</html>

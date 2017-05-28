@@ -1,8 +1,8 @@
 # Site Settings
 encoding: UTF-8
-exclude: ["*.gem", "*.gemspec", "Gemfile", "Gemfile.lock", "node_modules", "Rakefile", "starter-kit", "vendor"]
+exclude: ["*.gem", "*.gemspec", "docs", "Gemfile", "Gemfile.lock", "node_modules", "Rakefile", "starter-kit", "yizeng.github.io", "vendor"]
 lang: en
-permalink: /blog/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 theme: jekyll-theme-simple-texture
 
 whitelist: [jekyll-feed, jekyll-redirect-from, jekyll-seo-tag, jekyll-sitemap]
@@ -21,44 +21,44 @@ sass:
   style: compressed
 
 # Site Data
-url: https://yizeng.github.io/jekyll-theme-simple-texture
-title: Simple Texture
-description: "A gem-based responsive simple texture styled Jekyll theme."
-keywords: 'jekyll,theme,gem-based,blog'
+url: http://yizeng.me
+title: Yi Zeng’s Blog
+description: "Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand."
+keywords: 'software,engineer,testing,full-stack,christchurch,newzealand'
 author:
-  name:
-  job_title:
-  location:
-  email:
+  name: Yi Zeng
+  job_title: Software Engineer
+  location: Christchurch, New Zealand
+  email: yi.zeng.dev@gmail.com
   social_links:
     - name: facebook
       url:
     - name: github
-      url: https://github.com/yizeng/jekyll-theme-simple-texture
+      url: https://github.com/yizeng/
     - name: instagram
-      url:
+      url: https://www.instagram.com/yizeng.me
     - name: linkedin
-      url:
+      url: https://www.linkedin.com/in/yizengnz/
     - name: stackoverflow
-      url:
+      url: https://stackoverflow.com/users/1177636/yi-zeng
     - name: twitter
       url: 
     - name: vk
-      url:
+      url: https://vk.com/yi.zeng
 home:
-  h1: Simple Texutre
-  h2: A gem-based responsive simple texture styled Jekyll theme
+  h1:
+  h2:
   h3:
 blog:
   cc_license: http://creativecommons.org/licenses/by-sa/4.0/ # A link to CC License
   cc_license_image: /assets/images/theme/cc-by-sa.png # Choose one at https://creativecommons.org/choose/
-  footer_content: A gem-based responsive simple texture styled Jekyll theme.
+  footer_content: Yi Zeng, a software engineer based in Christchurch, New Zealand.
 
 disqus:
-  shortname:
-  public_key:
-google_analytics:
-addthis_public_id: # AddThis sharing plugin. See http://www.addthis.com/
+  shortname: yizeng
+  public_key: ULZ0b9TFdfCUJSKQd4WCKv2v3u25YoG7YG8zXPewkWrT35lZ0Se9YnxLzoV6VM8W
+google_analytics: 'UA-42466615-1'
+addthis_public_id: ra-53819e27689934f9 # AddThis sharing plugin. See http://www.addthis.com/
 
 paths:
   home: /

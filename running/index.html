@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Yi Zeng">
+    <meta name="description" content="Yi Zeng, a software engineer based in Christchurch, New Zealand." />
+    <meta name="keywords" content="newzealand,running,parkrun,christchurch,marathon" />
+
+    <title>Running History - Yi Zeng</title>
+    <link href='/running/assets/stylesheets/running-style.css' rel="stylesheet" type="text/css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+</head>
+
+<body>
+    <header>
+        <a href="/">
+            <img class="profile-picture" src="/running/assets/images/running-profile.jpg" alt="Yi Zeng's Profile Picture">
+        </a>
+        <p>
+            I started running back in 2014, just to relax after work. But now it's part of my daily life and I'm enjoying it.
+            <br />PB: 21:06 (5 km) - 43:00 (10 km) - 1:34:03 (Half Marathon)
+        </p>
+        <input class="event-selector" name="eventSelector" type="radio" id="allEvents" /><label for="allEvents"><span class="ui"></span>Show All Events</label><br />
+        <input class="event-selector" name="eventSelector" type="radio" id="majorRaces" checked /><label for="majorRaces"><span class="ui"></span>Major Races</label>
+        <input class="event-selector" name="eventSelector" type="radio" id="minorRaces" /><label for="minorRaces"><span class="ui"></span>Minor Races</label>
+        <input class="event-selector" name="eventSelector" type="radio" id="lifeEvents" /><label for="lifeEvents"><span class="ui"></span>Life Events</label>
+    </header>
+
+    <section id="cd-timeline" class="cd-container">
+    </section>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="/assets/javascripts/jquery-1.10.2.min.js"><\/script>')
+
+    </script>
+    <script>
+        function drawTimelineBlocks(eventType) {
+
+            // Clear all timeline block if any.
+            $('#cd-timeline').empty();
+
+            // Retrieve and parse data from JSON file, then build timeline blocks.
+            $.getJSON("data.json").then(function(data) {
+                $.each(data, function(key, value) {
+                    if (eventType === undefined || eventType === value['Type']) {
+                        var timelineBlock = '';
+                        timelineBlock += '<div class="cd-timeline-block is-hidden ' + value['Type'] + '">';
+                        timelineBlock += '<div class="cd-timeline-img">';
+                        timelineBlock += '<img src="/running/assets/images/' + value['Icon'] + '.png" alt="Timeline Icon">';
+                        timelineBlock += '</div>';
+                        timelineBlock += '<div class="cd-timeline-content">';
+                        timelineBlock += '<h2>' + value['Title'] + '</h2>';
+
+                        timelineBlock += '<table>';
+                        timelineBlock += '<tr><td>Distance</td><td>' + value['Distance'] + '</td></tr>';
+                        if (value['Gun Time'].trim()) {
+                            timelineBlock += '<tr><td>Gun Time</td><td>' + value['Gun Time'] + '</td></tr>';
+                        }
+                        if (value['Net Time'].trim()) {
+                            timelineBlock += '<tr><td>Net Time</td><td>' + value['Net Time'] + '</td></tr>';
+                        }
+                        if (value['Position'].trim()) {
+                            timelineBlock += '<tr><td>Position</td><td>' + value['Position'] + '</td></tr>';
+                        }
+
+                        timelineBlock += '<tr><td>Pace</td><td>' + value['Pace'] + '</td></tr>';
+
+                        if (value['Avg. HR'].trim()) {
+                            timelineBlock += '<tr><td>Avg. HR</td><td>' + value['Avg. HR'] + '</td></tr>';
+                        }
+                        timelineBlock += '</table>';
+
+                        if (value['Official Results'].trim()) {
+                            timelineBlock += '<a href="' + value['Official Results'] + '" class="cd-read-more" target="_blank">Official Results</a>';
+                        }
+                        if (value['Strava Activity'].trim()) {
+                            timelineBlock += '<a href="' + value['Strava Activity'] + '" class="cd-read-more" target="_blank">Strava Activity</a>';
+                        }
+                        timelineBlock += '<span class="cd-date">' + value['Date'] + '</span>';
+                        timelineBlock += '</div>';
+                        timelineBlock += '</div>';
+                        $('#cd-timeline').append(timelineBlock);
+                        $('.cd-timeline-block').removeClass('is-hidden').addClass('bounce-in');
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function() {
+            drawTimelineBlocks('major-race');
+
+            $(window).load(function() {
+                $(document).on('DOMSubtreeModified', function(e) {
+                    if (e.target.id == 'cd-timeline') {
+                        var $timeline_block = $('.cd-timeline-block');
+
+                        // Hide timeline blocks which are outside the viewport.
+                        $timeline_block.each(function() {
+                            if ($(this).offset().top > $(window).scrollTop() + $(window).height()) {
+                                $(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
+                            }
+                        });
+
+                        // On scolling, show/animate timeline blocks when enter the viewport.
+                        $(window).on('scroll', function() {
+                            $timeline_block.each(function() {
+                                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() && $(this).find('.cd-timeline-img').hasClass('is-hidden')) {
+                                    $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            // Event Selection Checkboxes handlers.
+            $('#allEvents, #majorRaces, #minorRaces, #lifeEvents').change(function() {
+                if ($('#allEvents').is(":checked")) {
+                    drawTimelineBlocks();
+                }
+                if ($('#majorRaces').is(":checked")) {
+                    drawTimelineBlocks('major-race');
+                }
+                if ($('#minorRaces').is(":checked")) {
+                    drawTimelineBlocks('minor-race');
+                }
+                if ($('#lifeEvents').is(":checked")) {
+                    drawTimelineBlocks('life-event');
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
