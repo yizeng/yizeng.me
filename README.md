@@ -1,6 +1,6 @@
 # yizeng.me
 
-[![Build Status](https://travis-ci.org/yizeng/yizeng.me.png?branch=master)](https://travis-ci.org/yizeng/yizeng.me)
+[![Build Status](https://travis-ci.org/yizeng/yizeng.me.svg?branch=master)](https://travis-ci.org/yizeng/yizeng.me)
 
 This repository hosts the source code of my personal website and blog [yizeng.me](http://yizeng.me).
 
