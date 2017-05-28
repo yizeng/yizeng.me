@@ -1,0 +1,234 @@
+[
+  
+    {
+      "title"      : "Add TypeScript support to Ruby on Rails - A quick and hacky example",
+      "url"        : "/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/",
+      "date"       : "2017-05-20 00:00:00 +1200",
+      "shortdate"  : "May 20, 2017"
+    } ,
+  
+    {
+      "title"      : "Use two different Pace.js progress bars on the same page",
+      "url"        : "/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/",
+      "date"       : "2017-04-15 00:00:00 +1200",
+      "shortdate"  : "April 15, 2017"
+    } ,
+  
+    {
+      "title"      : "Convert speed to pace programmatically using Ruby",
+      "url"        : "/2017/02/25/convert-speed-to-pace-programmatically-using-ruby/",
+      "date"       : "2017-02-25 00:00:00 +1300",
+      "shortdate"  : "February 25, 2017"
+    } ,
+  
+    {
+      "title"      : "Tips for locating elements in Ext JS applications with Selenium WebDriver",
+      "url"        : "/2017/01/15/tips-for-locating-elements-in-ext-js-applications-with-selenium-webdriver/",
+      "date"       : "2017-01-15 00:00:00 +1300",
+      "shortdate"  : "January 15, 2017"
+    } ,
+  
+    {
+      "title"      : "Get a Strava API access token with write permission",
+      "url"        : "/2017/01/11/get-a-strava-api-access-token-with-write-permission/",
+      "date"       : "2017-01-11 00:00:00 +1300",
+      "shortdate"  : "January 11, 2017"
+    } ,
+  
+    {
+      "title"      : "Exclude Selenium WebDriver traffic from Google Analytics",
+      "url"        : "/2017/01/08/exclude-your-selenium-webdriver-traffic-from-google-analytics/",
+      "date"       : "2017-01-08 00:00:00 +1300",
+      "shortdate"  : "January 08, 2017"
+    } ,
+  
+    {
+      "title"      : "Work with MailChimp API 3.0&#39;s pagination",
+      "url"        : "/2016/04/30/work-with-mailchimp-api-3-0s-pagination/",
+      "date"       : "2016-04-30 00:00:00 +1200",
+      "shortdate"  : "April 30, 2016"
+    } ,
+  
+    {
+      "title"      : "READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0",
+      "url"        : "/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0/",
+      "date"       : "2016-04-23 00:00:00 +1200",
+      "shortdate"  : "April 23, 2016"
+    } ,
+  
+    {
+      "title"      : "Install and setup PostgreSQL for Ruby on Rails on Mac OS",
+      "url"        : "/2015/02/09/install-and-setup-postgresql-for-ruby-on-rails-on-mac-os/",
+      "date"       : "2015-02-09 00:00:00 +1300",
+      "shortdate"  : "February 09, 2015"
+    } ,
+  
+    {
+      "title"      : "Why you shouldn&#39;t start learning Selenium by automating Google&#39;s products?",
+      "url"        : "/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/",
+      "date"       : "2014-07-19 00:00:00 +1200",
+      "shortdate"  : "July 19, 2014"
+    } ,
+  
+    {
+      "title"      : "Download PDF files automatically in Firefox using Selenium WebDriver",
+      "url"        : "/2014/05/23/download-pdf-files-automatically-in-firefox-using-selenium-webdriver/",
+      "date"       : "2014-05-23 00:00:00 +1200",
+      "shortdate"  : "May 23, 2014"
+    } ,
+  
+    {
+      "title"      : "Use a button to display Disqus comments count and load comments onClick",
+      "url"        : "/2014/05/03/use-a-button-to-display-disqus-comments-count-and-load-comments-onclick/",
+      "date"       : "2014-05-03 00:00:00 +1200",
+      "shortdate"  : "May 03, 2014"
+    } ,
+  
+    {
+      "title"      : "Relationships between different versions of Selenium",
+      "url"        : "/2014/04/25/relationships-between-different-versions-of-selenium/",
+      "date"       : "2014-04-25 00:00:00 +1200",
+      "shortdate"  : "April 25, 2014"
+    } ,
+  
+    {
+      "title"      : "Install ChromeDriver and PhantomJS on Linux Mint",
+      "url"        : "/2014/04/20/install-chromedriver-and-phantomjs-on-linux-mint/",
+      "date"       : "2014-04-20 00:00:00 +1200",
+      "shortdate"  : "April 20, 2014"
+    } ,
+  
+    {
+      "title"      : "Get text from hidden elements using Selenium WebDriver",
+      "url"        : "/2014/04/08/get-text-from-hidden-elements-using-selenium-webdriver/",
+      "date"       : "2014-04-08 00:00:00 +1200",
+      "shortdate"  : "April 08, 2014"
+    } ,
+  
+    {
+      "title"      : "Setup Stringer on Heroku",
+      "url"        : "/2014/03/25/setup-stringer-on-heroku/",
+      "date"       : "2014-03-25 00:00:00 +1300",
+      "shortdate"  : "March 25, 2014"
+    } ,
+  
+    {
+      "title"      : "Evaluate and validate XPath/CSS selectors in Chrome Developer Tools",
+      "url"        : "/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/",
+      "date"       : "2014-03-23 00:00:00 +1300",
+      "shortdate"  : "March 23, 2014"
+    } ,
+  
+    {
+      "title"      : "Hide command prompt window in Selenium WebDriver .NET binding",
+      "url"        : "/2014/03/05/hide-command-prompt-window-in-selenium-webdriver-net-binding/",
+      "date"       : "2014-03-05 00:00:00 +1300",
+      "shortdate"  : "March 05, 2014"
+    } ,
+  
+    {
+      "title"      : "How to get window size, resize or maximize window using Selenium WebDriver",
+      "url"        : "/2014/02/23/how-to-get-window-size-resize-or-maximize-window-using-selenium-webdriver/",
+      "date"       : "2014-02-23 00:00:00 +1300",
+      "shortdate"  : "February 23, 2014"
+    } ,
+  
+    {
+      "title"      : "Take a screenshot on exception with Selenium C#&#39;s EventFiringWebDriver",
+      "url"        : "/2014/02/08/take-a-screenshot-on-exception-with-selenium-csharp-eventfiringwebdriver/",
+      "date"       : "2014-02-08 00:00:00 +1300",
+      "shortdate"  : "February 08, 2014"
+    } ,
+  
+    {
+      "title"      : "Test WYSIWYG editors using Selenium WebDriver",
+      "url"        : "/2014/01/31/test-wysiwyg-editors-using-selenium-webdriver/",
+      "date"       : "2014-01-31 00:00:00 +1300",
+      "shortdate"  : "January 31, 2014"
+    } ,
+  
+    {
+      "title"      : "Disable JavaScript using Selenium WebDriver",
+      "url"        : "/2014/01/08/disable-javascript-using-selenium-webdriver/",
+      "date"       : "2014-01-08 00:00:00 +1300",
+      "shortdate"  : "January 08, 2014"
+    } ,
+  
+    {
+      "title"      : "Run Selenium WebDriver UI tests against a Jekyll site on Travis CI",
+      "url"        : "/2013/11/17/run-selenium-webdriver-ui-tests-against-jekyll-site-on-travis-ci/",
+      "date"       : "2013-11-17 00:00:00 +1300",
+      "shortdate"  : "November 17, 2013"
+    } ,
+  
+    {
+      "title"      : "Update AppSettings and custom configuration sections in App.config at runtime",
+      "url"        : "/2013/08/31/update-appsettings-and-custom-configuration-sections-in-appconfig-at-runtime/",
+      "date"       : "2013-08-31 00:00:00 +1200",
+      "shortdate"  : "August 31, 2013"
+    } ,
+  
+    {
+      "title"      : "Set user agent using Selenium WebDriver C# and Ruby",
+      "url"        : "/2013/08/10/set-user-agent-using-selenium-webdriver-c-and-ruby/",
+      "date"       : "2013-08-10 00:00:00 +1200",
+      "shortdate"  : "August 10, 2013"
+    } ,
+  
+    {
+      "title"      : "Invert touchpad without changing mouse in GNOME",
+      "url"        : "/2013/07/14/invert-touchpad-without-changing-mouse-in-gnome/",
+      "date"       : "2013-07-14 00:00:00 +1200",
+      "shortdate"  : "July 14, 2013"
+    } ,
+  
+    {
+      "title"      : "Install TortoiseHg on Linux Mint",
+      "url"        : "/2013/07/02/install-tortoisehg-on-linux-mint/",
+      "date"       : "2013-07-02 00:00:00 +1200",
+      "shortdate"  : "July 02, 2013"
+    } ,
+  
+    {
+      "title"      : "Setup a Selenium WebDriver Ruby project on Travis CI",
+      "url"        : "/2013/06/15/setup-a-selenium-webdriver-ruby-project-on-travis-ci/",
+      "date"       : "2013-06-15 00:00:00 +1200",
+      "shortdate"  : "June 15, 2013"
+    } ,
+  
+    {
+      "title"      : "Create a custom Jekyll 404 page",
+      "url"        : "/2013/05/26/create-a-custom-jekyll-404-page/",
+      "date"       : "2013-05-26 00:00:00 +1200",
+      "shortdate"  : "May 26, 2013"
+    } ,
+  
+    {
+      "title"      : "Use netrc to avoid TortoiseGit asking for username and password",
+      "url"        : "/2013/05/19/use-_netrc-to-avoid-tortoisegit-asking-for-username-and-password/",
+      "date"       : "2013-05-19 00:00:00 +1200",
+      "shortdate"  : "May 19, 2013"
+    } ,
+  
+    {
+      "title"      : "Quick RubyGems Command References for Jekyll",
+      "url"        : "/2013/05/17/quick-rubygems-command-references-for-jekyll/",
+      "date"       : "2013-05-17 00:00:00 +1200",
+      "shortdate"  : "May 17, 2013"
+    } ,
+  
+    {
+      "title"      : "Install Jekyll 3 on Windows",
+      "url"        : "/2013/05/10/install-jekyll-3-on-windows/",
+      "date"       : "2013-05-10 00:00:00 +1200",
+      "shortdate"  : "May 10, 2013"
+    } ,
+  
+    {
+      "title"      : "Hello World!",
+      "url"        : "/2013/04/22/hello-world/",
+      "date"       : "2013-04-22 00:00:00 +1200",
+      "shortdate"  : "April 22, 2013"
+    } 
+  
+]
