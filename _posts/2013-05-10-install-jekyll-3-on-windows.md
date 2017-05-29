@@ -173,8 +173,8 @@ a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http:
 
     **Solution**: Downgrade pygments.rb gem from 0.5.1/0.5.2 to version 0.5.0.
 
-    > gem uninstall pygments.rb --version 0.5.2<br />
-    > gem install pygments.rb --version 0.5.0
+    > gem uninstall pygments.rb \--version 0.5.2<br />
+    > gem install pygments.rb \--version 0.5.0
 
 6. Error message:
 
@@ -191,8 +191,8 @@ a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http:
 
     **Solution**: Downgrade pygments.rb gem to version 0.4.2
 
-    > gem uninstall pygments.rb --version 0.5.0<br />
-    > gem install pygments.rb --version 0.4.2
+    > gem uninstall pygments.rb \--version 0.5.0<br />
+    > gem install pygments.rb \--version 0.4.2
 
 7. Error message:
 
