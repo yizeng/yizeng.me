@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2017-05-29T00:05:16+12:00</updated><id>http://yizeng.me/</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand.</subtitle><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+12:00</published><updated>2017-05-20T00:00:00+12:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;p&gt;As I’m currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2017-05-29T19:58:54+12:00</updated><id>http://yizeng.me/</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand.</subtitle><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+12:00</published><updated>2017-05-20T00:00:00+12:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;p&gt;As I'm currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
 I wondered if I could apply it to my little &lt;a href=&quot;http://rubyonrails.org/&quot;&gt;Ruby on Rails&lt;/a&gt; project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 so that I could use this real world project to help me learning TypeScript quickly.&lt;/p&gt;
@@ -10,8 +10,8 @@ mostly due to the following reasons:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;The purpose is to learn TypeScript with all its setup process, so why not start from scratch by myself
-as I’m not trying to create a nice and complete solution for everyone.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;typescript-rails&lt;/code&gt; project hasn’t been updated for almost a year.
+as I'm not trying to create a nice and complete solution for everyone.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;typescript-rails&lt;/code&gt; project hasn't been updated for almost a year.
 Is it well maintained and fully compatible with the latest Rails 5.1.x?&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1.x supports Yarn now&lt;/a&gt;.
 Why not try the traditional Node.js way instead of the Rails way?&lt;/li&gt;
@@ -74,7 +74,7 @@ But for users with older Rails versions, &lt;code class=&quot;highlighter-rouge&
 &lt;h3 id=&quot;heading-update-gitignore&quot;&gt;Update .gitignore&lt;/h3&gt;
 
 &lt;p&gt;For users with Rails 5.0 or under, once &lt;code class=&quot;highlighter-rouge&quot;&gt;node_modules&lt;/code&gt; folder is created,
-remember to add it together with Yarn’s error log file to &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;,
+remember to add it together with Yarn's error log file to &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;,
 so that they will not be commited to the repository.&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -130,7 +130,7 @@ where everything in &lt;code class=&quot;highlighter-rouge&quot;&gt;generated&lt
 &lt;h2 id=&quot;heading-add-rake-build-task&quot;&gt;Add Rake build task&lt;/h2&gt;
 
 &lt;p&gt;Finally create a new Rake task to compile to TypeScript files to JavaScript.
-Note that this new task can be added to Rails’ &lt;code class=&quot;highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; task,
+Note that this new task can be added to Rails' &lt;code class=&quot;highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; task,
 so that every time &lt;code class=&quot;highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; is executed, &lt;code class=&quot;highlighter-rouge&quot;&gt;assets:tsc&lt;/code&gt; will be run first.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:assets&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
@@ -155,7 +155,7 @@ then call the following command to compile TypeScript.&lt;/p&gt;
 
 &lt;p&gt;The more complicated example that was actually applied to &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 can also be viewed on &lt;a href=&quot;https://github.com/yizeng/strafforts&quot;&gt;GitHub&lt;/a&gt;,
-which contains separate &lt;code class=&quot;highlighter-rouge&quot;&gt;tsconfig.json&lt;/code&gt; files for compiling different pages/projects.&lt;/p&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="javascript" /><category term="typescript" /><category term="ruby on rails" /><category term="yarn" /><summary type="html">As I’m currently learning TypeScript, I wondered if I could apply it to my little Ruby on Rails project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), so that I could use this real world project to help me learning TypeScript quickly.</summary></entry><entry><title type="html">Use two different Pace.js progress bars on the same page</title><link href="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/" rel="alternate" type="text/html" title="Use two different Pace.js progress bars on the same page" /><published>2017-04-15T00:00:00+12:00</published><updated>2017-04-15T00:00:00+12:00</updated><id>http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page</id><content type="html" xml:base="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/">&lt;p&gt;I came across this problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
+which contains separate &lt;code class=&quot;highlighter-rouge&quot;&gt;tsconfig.json&lt;/code&gt; files for compiling different pages/projects.&lt;/p&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="javascript" /><category term="typescript" /><category term="ruby on rails" /><category term="yarn" /><summary type="html">As I'm currently learning TypeScript, I wondered if I could apply it to my little Ruby on Rails project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), so that I could use this real world project to help me learning TypeScript quickly.</summary></entry><entry><title type="html">Use two different Pace.js progress bars on the same page</title><link href="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/" rel="alternate" type="text/html" title="Use two different Pace.js progress bars on the same page" /><published>2017-04-15T00:00:00+12:00</published><updated>2017-04-15T00:00:00+12:00</updated><id>http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page</id><content type="html" xml:base="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/">&lt;p&gt;I came across this problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 that how to have two different &lt;a href=&quot;http://github.hubspot.com/pace/docs/welcome/&quot;&gt;Pace.js&lt;/a&gt; progress bars on the same page within a single page application.&lt;/p&gt;
 
@@ -163,14 +163,14 @@ that how to have two different &lt;a href=&quot;http://github.hubspot.com/pace/d
 while the other is a default progress bar when any Ajax is triggered without hiding any content.&lt;/p&gt;
 
 &lt;p&gt;After some Googling, I found &lt;a href=&quot;https://github.com/HubSpot/pace/issues/135&quot;&gt;this answer&lt;/a&gt; works like a charm.
-Hence I’m turning it into a simple working demo for anyone is interested.&lt;/p&gt;
+Hence I'm turning it into a simple working demo for anyone is interested.&lt;/p&gt;
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-demo&quot; id=&quot;markdown-toc-heading-demo&quot;&gt;Demo&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-add-first-progress-bar&quot; id=&quot;markdown-toc-heading-add-first-progress-bar&quot;&gt;Add first progress bar&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-add-second-progress-bar&quot; id=&quot;markdown-toc-heading-add-second-progress-bar&quot;&gt;Add second progress bar&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-make-them-working-together&quot; id=&quot;markdown-toc-heading-make-them-working-together&quot;&gt;Make them working together&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-demos-source-code&quot; id=&quot;markdown-toc-heading-demos-source-code&quot;&gt;Demo’s source code&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-demos-source-code&quot; id=&quot;markdown-toc-heading-demos-source-code&quot;&gt;Demo's source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;heading-demo&quot;&gt;Demo&lt;/h2&gt;
@@ -239,7 +239,7 @@ when there are Ajax calls, state changes, etc.&lt;/p&gt;
 add a class name on &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; element of the page.&lt;/p&gt;
 
 &lt;p&gt;For example, add &lt;code class=&quot;highlighter-rouge&quot;&gt;.content-loading&lt;/code&gt; class to &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; in HTML markup,
-which indicates the page hasn’t been loaded and is in the initial state.&lt;/p&gt;
+which indicates the page hasn't been loaded and is in the initial state.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;...
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;content-loading&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Add class name for initial state. --&amp;gt;&lt;/span&gt;
@@ -336,9 +336,9 @@ So that content in the application will still be visible during Ajax calls.&lt;/
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;heading-demos-source-code&quot;&gt;Demo’s source code&lt;/h2&gt;
+&lt;h2 id=&quot;heading-demos-source-code&quot;&gt;Demo's source code&lt;/h2&gt;
 
-&lt;p&gt;See demo’s on JSFiddle &lt;a href=&quot;https://jsfiddle.net/yizeng/39oar0bw/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;See demo's on JSFiddle &lt;a href=&quot;https://jsfiddle.net/yizeng/39oar0bw/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;script async=&quot;&quot; src=&quot;//jsfiddle.net/yizeng/39oar0bw/embed/&quot;&gt;&lt;/script&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="javascript" /><summary type="html">I came across this problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to have two different Pace.js progress bars on the same page within a single page application.</summary></entry><entry><title type="html">Convert speed to pace programmatically using Ruby</title><link href="http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby/" rel="alternate" type="text/html" title="Convert speed to pace programmatically using Ruby" /><published>2017-02-25T00:00:00+13:00</published><updated>2017-02-25T00:00:00+13:00</updated><id>http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby</id><content type="html" xml:base="http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby/">&lt;p&gt;I came across a problem while working on my little side project &lt;a href=&quot;http://strafforts.yizeng.me&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
@@ -346,7 +346,7 @@ that how to convert speed (&lt;code class=&quot;highlighter-rouge&quot;&gt;m/s&l
 
 &lt;h2 id=&quot;heading-calculate-time-spend-per-distance-kilometremile&quot;&gt;Calculate time spend per distance (kilometre/mile)&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://strava.github.io/api/v3/activities/&quot;&gt;Strava Activity API&lt;/a&gt; provides a field for athlete’s average speed during this activity.
+&lt;p&gt;&lt;a href=&quot;https://strava.github.io/api/v3/activities/&quot;&gt;Strava Activity API&lt;/a&gt; provides a field for athlete's average speed during this activity.
 It is a float number for meters per seconds (i.e. the unit of the speed is &lt;code class=&quot;highlighter-rouge&quot;&gt;m/s&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;For example, if the speed is 4 meters per seconds and the target pace unit is &lt;code class=&quot;highlighter-rouge&quot;&gt;min/km&lt;/code&gt;.
@@ -354,7 +354,7 @@ Then the first step is to find out how long does it take reach the target distan
 
 &lt;p&gt;This is simple math: &lt;code class=&quot;highlighter-rouge&quot;&gt;1000 / 4 = 250 (seconds)&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;If the target pace unit is &lt;code class=&quot;highlighter-rouge&quot;&gt;min/mile&lt;/code&gt; (minutes per mile), then it’s &lt;code class=&quot;highlighter-rouge&quot;&gt;1609.344 / 4 = 402.336 (seconds)&lt;/code&gt; for one mile.&lt;/p&gt;
+&lt;p&gt;If the target pace unit is &lt;code class=&quot;highlighter-rouge&quot;&gt;min/mile&lt;/code&gt; (minutes per mile), then it's &lt;code class=&quot;highlighter-rouge&quot;&gt;1609.344 / 4 = 402.336 (seconds)&lt;/code&gt; for one mile.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-convert-seconds-to-pace&quot;&gt;Convert seconds to pace&lt;/h2&gt;
 
@@ -391,7 +391,7 @@ Note that time is base 60, while meter is base 10.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;12 km/h is 12 kilometres (7.45645 miles) per 3600 seconds.&lt;br /&gt;
-So it’s 3600 / 12 = 300 (seconds per km), 3600 / 7.45645 = 482.803 (seconds per mile).&lt;br /&gt;
+So it's 3600 / 12 = 300 (seconds per km), 3600 / 7.45645 = 482.803 (seconds per mile).&lt;br /&gt;
 Then use the modulo logic above to convert seconds into pace, which is 5:00 min/km or 8:03 min/mile.&lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="ruby" /><category term="strava" /><summary type="html">I came across a problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to convert speed (m/s in this case) to pace (min/km or min/mile) programmatically using Ruby.</summary></entry><entry><title type="html">Tips for locating elements in Ext JS applications with Selenium WebDriver</title><link href="http://yizeng.me/2017/01/15/tips-for-locating-elements-in-ext-js-applications-with-selenium-webdriver/" rel="alternate" type="text/html" title="Tips for locating elements in Ext JS applications with Selenium WebDriver" /><published>2017-01-15T00:00:00+13:00</published><updated>2017-01-15T00:00:00+13:00</updated><id>http://yizeng.me/2017/01/15/tips-for-locating-elements-in-ext-js-applications-with-selenium-webdriver</id><content type="html" xml:base="http://yizeng.me/2017/01/15/tips-for-locating-elements-in-ext-js-applications-with-selenium-webdriver/">&lt;p&gt;Locating elements in web applications created by &lt;a href=&quot;https://www.sencha.com/products/extjs/#overview&quot;&gt;Ext JS&lt;/a&gt; framework
 could be a total nightmare for UI automators,
@@ -399,7 +399,7 @@ as Ext JS generates one of the most complex DOM structures
 which have dynamic IDs with a large amount of duplicate class names.&lt;/p&gt;
 
 &lt;p&gt;Unlike automating applications with simple DOM structures,
-Selenium WebDriver’s built-in methods like &lt;code class=&quot;highlighter-rouge&quot;&gt;By.Id&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;By.ClassName&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;By.Name&lt;/code&gt;
+Selenium WebDriver's built-in methods like &lt;code class=&quot;highlighter-rouge&quot;&gt;By.Id&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;By.ClassName&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;By.Name&lt;/code&gt;
 would barely identify anything in Ext JS applications.
 In most of the cases, &lt;code class=&quot;highlighter-rouge&quot;&gt;By.CssSelector&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;By.XPath&lt;/code&gt; will be neccessary,
 even though using them are not that straightforward either.&lt;/p&gt;
@@ -409,12 +409,12 @@ so that maintenance cost can be kept minimum when automating ExtJS applications.
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-ext-js-example&quot; id=&quot;markdown-toc-heading-ext-js-example&quot;&gt;Ext JS Example&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#donts&quot; id=&quot;markdown-toc-donts&quot;&gt;DON’Ts&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-dont-match-only-ids&quot; id=&quot;markdown-toc-heading-dont-match-only-ids&quot;&gt;Don’t match only IDs&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-dont-use-highly-position-dependent-xpaths&quot; id=&quot;markdown-toc-heading-dont-use-highly-position-dependent-xpaths&quot;&gt;Don’t use highly position-dependent XPaths&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-dont-match-single-class-name-only&quot; id=&quot;markdown-toc-heading-dont-match-single-class-name-only&quot;&gt;Don’t match single class name only&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-dont-perform-exact-match-on-multiple-classes&quot; id=&quot;markdown-toc-heading-dont-perform-exact-match-on-multiple-classes&quot;&gt;Don’t perform exact match on multiple classes&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-dont-use-tools-to-generate-locators&quot; id=&quot;markdown-toc-heading-dont-use-tools-to-generate-locators&quot;&gt;Don’t use tools to generate locators&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#donts&quot; id=&quot;markdown-toc-donts&quot;&gt;DON'Ts&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-dont-match-only-ids&quot; id=&quot;markdown-toc-heading-dont-match-only-ids&quot;&gt;Don't match only IDs&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-dont-use-highly-position-dependent-xpaths&quot; id=&quot;markdown-toc-heading-dont-use-highly-position-dependent-xpaths&quot;&gt;Don't use highly position-dependent XPaths&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-dont-match-single-class-name-only&quot; id=&quot;markdown-toc-heading-dont-match-single-class-name-only&quot;&gt;Don't match single class name only&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-dont-perform-exact-match-on-multiple-classes&quot; id=&quot;markdown-toc-heading-dont-perform-exact-match-on-multiple-classes&quot;&gt;Don't perform exact match on multiple classes&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-dont-use-tools-to-generate-locators&quot; id=&quot;markdown-toc-heading-dont-use-tools-to-generate-locators&quot;&gt;Don't use tools to generate locators&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-dos&quot; id=&quot;markdown-toc-heading-dos&quot;&gt;DOs&lt;/a&gt;    &lt;ul&gt;
@@ -433,7 +433,7 @@ so that maintenance cost can be kept minimum when automating ExtJS applications.
 
 &lt;h2 id=&quot;heading-ext-js-example&quot;&gt;Ext JS Example&lt;/h2&gt;
 
-&lt;p&gt;Here Sencha Ext JS’ &lt;a href=&quot;http://examples.sencha.com/extjs/6.2.0/examples/classic/ticket-app/index.html&quot; target=&quot;_blank&quot;&gt;Ticket App&lt;/a&gt;
+&lt;p&gt;Here Sencha Ext JS' &lt;a href=&quot;http://examples.sencha.com/extjs/6.2.0/examples/classic/ticket-app/index.html&quot; target=&quot;_blank&quot;&gt;Ticket App&lt;/a&gt;
 is used as an example:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- The Password Field --&amp;gt;&lt;/span&gt;
@@ -454,20 +454,20 @@ is used as an example:&lt;/p&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;donts&quot;&gt;DON’Ts&lt;/h2&gt;
+&lt;h2 id=&quot;donts&quot;&gt;DON'Ts&lt;/h2&gt;
 
-&lt;h3 id=&quot;heading-dont-match-only-ids&quot;&gt;Don’t match only IDs&lt;/h3&gt;
+&lt;h3 id=&quot;heading-dont-match-only-ids&quot;&gt;Don't match only IDs&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// DON'T USE
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;textfield-1012-inputEl&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Unless IDs are explicitly defined in application’s source code,
+&lt;p&gt;Unless IDs are explicitly defined in application's source code,
 ExtJS will produce IDs for each elements dynamically, like &lt;code class=&quot;highlighter-rouge&quot;&gt;textfield-1012-inputEl&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;button-1016-btnInnerEl&lt;/code&gt;.
 Matching elements using those dynamic numbers will make project unmaintainable.
-Even matching on IDs partially like &lt;code class=&quot;highlighter-rouge&quot;&gt;input[id$='inputEl']&lt;/code&gt; wouldn’t help either,
+Even matching on IDs partially like &lt;code class=&quot;highlighter-rouge&quot;&gt;input[id$='inputEl']&lt;/code&gt; wouldn't help either,
 as there will be lots of others elements have the same id structures.&lt;/p&gt;
 
-&lt;h3 id=&quot;heading-dont-use-highly-position-dependent-xpaths&quot;&gt;Don’t use highly position-dependent XPaths&lt;/h3&gt;
+&lt;h3 id=&quot;heading-dont-use-highly-position-dependent-xpaths&quot;&gt;Don't use highly position-dependent XPaths&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// DON'T USE
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;XPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//div[contains(@class, 'x-panel-body')]/div/div/div[2]/div/div/div/input&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -478,16 +478,16 @@ Because any tiny bit of DOM change will result in XPath becoming invalid.
 XPaths like &lt;code class=&quot;highlighter-rouge&quot;&gt;//div[contains(@class, 'x-panel-body')]/div/div/div[2]/div/div/div/input&lt;/code&gt;
 are too fragile in terms of UI automation.&lt;/p&gt;
 
-&lt;h3 id=&quot;heading-dont-match-single-class-name-only&quot;&gt;Don’t match single class name only&lt;/h3&gt;
+&lt;h3 id=&quot;heading-dont-match-single-class-name-only&quot;&gt;Don't match single class name only&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// DON'T USE
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ClassName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x-form-text&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Just like matching IDs, matching single class name won’t help either.
+&lt;p&gt;Just like matching IDs, matching single class name won't help either.
 As ExtJS generates class names in a similar naming convention for all elements,
 &lt;code class=&quot;highlighter-rouge&quot;&gt;.x-form-field&lt;/code&gt; will mostly likely result in multiple elements.&lt;/p&gt;
 
-&lt;h3 id=&quot;heading-dont-perform-exact-match-on-multiple-classes&quot;&gt;Don’t perform exact match on multiple classes&lt;/h3&gt;
+&lt;h3 id=&quot;heading-dont-perform-exact-match-on-multiple-classes&quot;&gt;Don't perform exact match on multiple classes&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// DON'T USE
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;XPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.//a[contains(@class, 'x-btn btn-submit')]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
@@ -504,7 +504,7 @@ which matches an anchor that has class &lt;code class=&quot;highlighter-rouge&qu
 This is absolutely fine without any problems.&lt;/p&gt;
 
 &lt;p&gt;However, for XPaths, a common usage
-&lt;code class=&quot;highlighter-rouge&quot;&gt;.//a[contains(@class, 'x-btn btn-submit')]&lt;/code&gt; doesn’t do the same thing,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;.//a[contains(@class, 'x-btn btn-submit')]&lt;/code&gt; doesn't do the same thing,
 as it matches exactly class attributes &lt;code class=&quot;highlighter-rouge&quot;&gt;x-btn btn-submit&lt;/code&gt; with exact one space and class order.
 This XPath is actually equivalent to CSS selector &lt;code class=&quot;highlighter-rouge&quot;&gt;a[class*='x-btn btn-submit']&lt;/code&gt;.
 Matching class names by exact string &lt;code class=&quot;highlighter-rouge&quot;&gt;x-btn btn-submit&lt;/code&gt; should be avoided
@@ -542,12 +542,12 @@ unless the order is important in that particular case.&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CssSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;input.x-form-field.x-form-text&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;XPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//input[contains(@class, 'x-form-field') and contains(@class, 'x-form-text')]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3 id=&quot;heading-dont-use-tools-to-generate-locators&quot;&gt;Don’t use tools to generate locators&lt;/h3&gt;
+&lt;h3 id=&quot;heading-dont-use-tools-to-generate-locators&quot;&gt;Don't use tools to generate locators&lt;/h3&gt;
 
 &lt;p&gt;There are XPath generating extensions in Chrome or Firefox to create XPaths.
 Never ever use them against web applications with complex DOM.
 Some tools generate absolute or position-based XPaths,
-which are totally rubbish and shouldn’t be used in any Selenium WebDriver code at all.
+which are totally rubbish and shouldn't be used in any Selenium WebDriver code at all.
 Some extensions are smarter that generates some relative selectors based on class names or IDs.
 Due to the nature of Ext JS as explained above,
 class names or IDs are unlikely to be sufficient for locating elements in Ext JS applications most of the time.&lt;/p&gt;
@@ -563,7 +563,7 @@ A: In my opinion, good locators are unique and concise, not random or fragile.&l
 
 &lt;p&gt;Among all those Ext JS generated class names, sometimes some meaningful ones can be used as good locators.
 In the example above, there are two labels for text fields.
-To locate the ‘Password’ label, &lt;code class=&quot;highlighter-rouge&quot;&gt;.password label&lt;/code&gt; would be a nice and easy one,
+To locate the 'Password' label, &lt;code class=&quot;highlighter-rouge&quot;&gt;.password label&lt;/code&gt; would be a nice and easy one,
 as &lt;code class=&quot;highlighter-rouge&quot;&gt;password&lt;/code&gt; is the meaningful and unique class name among those text fields.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FindElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CssSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.password label&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -587,7 +587,7 @@ It is fairly easy locate them using either CSS or XPath locators.&lt;/p&gt;
 &lt;p&gt;Sometimes one locator matches multiple elements, but each element is within a unique ancestor.
 In this case, try locate the unique ancestor and then match the element based on this context.&lt;/p&gt;
 
-&lt;p&gt;For example, here are few ‘Cancel’ buttons which are almost identical
+&lt;p&gt;For example, here are few 'Cancel' buttons which are almost identical
 except for one is in a container &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div id='header'&amp;gt;&lt;/code&gt;, while the other two are in &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div id='footer'&amp;gt;&lt;/code&gt;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'header'&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -623,7 +623,7 @@ However, to match elements with text, there are things to be considered first!&l
 
     &lt;p&gt;If you are doing something like &lt;code class=&quot;highlighter-rouge&quot;&gt;//div[contains(@class, 'password')]/label//span[text()='Password:']&lt;/code&gt;
   to find the &lt;code class=&quot;highlighter-rouge&quot;&gt;Password:&lt;/code&gt; label,
-  it won’t match if there are extra whitespaces around it!&lt;/p&gt;
+  it won't match if there are extra whitespaces around it!&lt;/p&gt;
 
     &lt;p&gt;In this case, normalize whitespace in XPath would be a good idea.&lt;/p&gt;
   &lt;/li&gt;
@@ -639,7 +639,7 @@ However, to match elements with text, there are things to be considered first!&l
 Matching text will make the tests dependent on the displaying language of the application.
 This is one major reason that I personally always avoid writing text matching locators.
 Even if there is only one language supported in the application at the moment,
-it’s still good to keep Selenium code extensible in the future.&lt;/p&gt;
+it's still good to keep Selenium code extensible in the future.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Encoding&lt;/p&gt;
@@ -660,7 +660,7 @@ or use &lt;code class=&quot;highlighter-rouge&quot;&gt;nth-child()&lt;/code&gt;,
 Using them to locate the first or number X item of a list is totally acceptable,
 where the items are actually structured inside a list (options, lists, etc.) logically.
 But using them against some elements that are not logically related,
-like three buttons called ‘Cancel’ in different containers from the example above, might make tests really fragile
+like three buttons called 'Cancel' in different containers from the example above, might make tests really fragile
 that any text change or position change would fail the tests.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-ultimate-solution&quot;&gt;Ultimate Solution&lt;/h2&gt;
@@ -760,8 +760,8 @@ and parameters are:&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;Go to above URL in browser. (HTTP GET)&lt;/li&gt;
-  &lt;li&gt;Login to Strava and click ‘Authorize’ if needed.&lt;/li&gt;
-  &lt;li&gt;Browser should go to 404 as &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/exchange_token&lt;/code&gt; doesn’t exist.&lt;/li&gt;
+  &lt;li&gt;Login to Strava and click 'Authorize' if needed.&lt;/li&gt;
+  &lt;li&gt;Browser should go to 404 as &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/exchange_token&lt;/code&gt; doesn't exist.&lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Copy the authorization code from URL. For example,&lt;/p&gt;
 
@@ -824,13 +824,13 @@ developers may find it useful to exclude
 internal automated testing traffic from Google Analytics.&lt;/p&gt;
 
 &lt;p&gt;However, first things first, before talking about how to exclude such traffic,
-the question would be “why such traffic exists?”.
+the question would be &quot;why such traffic exists?&quot;.
 If such traffic comes from unknown sources,
 i.e. some people are running Selenium WebDriver against the  website,
-then there isn’t much can be done,
+then there isn't much can be done,
 unless the IP/ISP or User Agent can be uniquely identified.
-If such traffic is from site developers’ own Selenium WebDriver tests,
-then the question becomes “Why Selenium tests were run against production”?
+If such traffic is from site developers' own Selenium WebDriver tests,
+then the question becomes &quot;Why Selenium tests were run against production&quot;?
 Normally production servers only require some manual exploratory/smoke testing,
 instead of intensive automated testing to mess around live databases
 and slow down the servers.&lt;/p&gt;
@@ -869,8 +869,8 @@ while some may involve updating Selenium test code explicitly.&lt;/p&gt;
 
 &lt;p&gt;A custom filter on certain IP address/range or ISP
 can be created in order to filter out internal traffic.
-See Google Analytics official documentation’s
-‘&lt;a href=&quot;https://support.google.com/analytics/answer/1034840?hl=en&amp;amp;ref_topic=1034830&quot;&gt;Exclude internal traffic&lt;/a&gt;’ section for details.&lt;/p&gt;
+See Google Analytics official documentation's
+'&lt;a href=&quot;https://support.google.com/analytics/answer/1034840?hl=en&amp;amp;ref_topic=1034830&quot;&gt;Exclude internal traffic&lt;/a&gt;' section for details.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Go to the &lt;code class=&quot;highlighter-rouge&quot;&gt;ADMIN&lt;/code&gt; Section of Google Analytics and select one website view from your account.&lt;/li&gt;
@@ -879,7 +879,7 @@ See Google Analytics official documentation’s
   &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Create new filter&lt;/code&gt; and give it a new filter name.&lt;/li&gt;
   &lt;li&gt;Choose filter type: &lt;code class=&quot;highlighter-rouge&quot;&gt;Custom&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;Check &lt;code class=&quot;highlighter-rouge&quot;&gt;Exclude&lt;/code&gt; radio button.&lt;/li&gt;
-  &lt;li&gt;Choose “IP Address” from &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter Field&lt;/code&gt; and type in IP Address Range in &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter Pattern&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Choose &quot;IP Address&quot; from &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter Field&lt;/code&gt; and type in IP Address Range in &lt;code class=&quot;highlighter-rouge&quot;&gt;Filter Pattern&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;Apply this filter to the views you want to filter.
 For example, if the single IP address is 176.168.1.1, then enter &lt;code class=&quot;highlighter-rouge&quot;&gt;176\.168\.1\.1&lt;/code&gt;.
 If the range of IP addresses is 176.168.1.1-15 and 10.0.0.1-14, then enter
@@ -900,7 +900,7 @@ might be too much of a hassle.&lt;/p&gt;
 &lt;h3 id=&quot;heading-edit-hosts-file&quot;&gt;Edit hosts file&lt;/h3&gt;
 
 &lt;p&gt;Without changing Google Analytics settings from data-receiving end,
-one other direction is to block GA’s traffic being sent to its server.
+one other direction is to block GA's traffic being sent to its server.
 To achieve it, editing hosts file on the machines where the tests are run
 would be a straightforward thing to do.
 It requires certain permissions on testing environment,
@@ -921,13 +921,13 @@ by editing hosts file, here are few posts explaining the same thing:&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-disable-javascript&quot;&gt;Disable JavaScript&lt;/h3&gt;
 
-&lt;p&gt;Since Google Analytics’s tracking code is just a piece of JavaScript code,
+&lt;p&gt;Since Google Analytics's tracking code is just a piece of JavaScript code,
 disabling the JavaScript in browser seems to be one reasonable solution.&lt;/p&gt;
 
 &lt;p&gt;Seriously? Nope.
 Modern websites nowadays use a lot of JavaScript to make things happen,
-disabling it doesn’t seem to be feasible at all,
-unless the target site doesn’t use JavaScript.
+disabling it doesn't seem to be feasible at all,
+unless the target site doesn't use JavaScript.
 Selenium WebDriver also requires JavaScript to function properly,
 as a result, starting Selenium with JavaScript
 disabled might cause all tests behave strangely.&lt;/p&gt;
@@ -939,13 +939,13 @@ this should not be encouraged anyway due to the side effects.&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-set-custom-user-agents&quot;&gt;Set custom user agents&lt;/h3&gt;
 
-&lt;p&gt;As most of the browsers’ user agents can be set through Selenium,
-wrap site’s Google Analytics’ snippet with an if-statement
+&lt;p&gt;As most of the browsers' user agents can be set through Selenium,
+wrap site's Google Analytics' snippet with an if-statement
 to ignore some certain user agents
 would be another possible approach to deal with it.&lt;/p&gt;
 
 &lt;p&gt;For example, Google Analytics snippet will only be executed
-if browser’s user agent doesn’t contain “phantomjs”.&lt;/p&gt;
+if browser's user agent doesn't contain &quot;phantomjs&quot;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;navigator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;userAgent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/.*PhantomJS.*/gi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;// Google Analytics's tracking snippet&lt;/span&gt;
@@ -957,13 +957,13 @@ user agent when starting browsers using Selenium WebDriver.
 A previous article
 &lt;a href=&quot;/2013/08/10/set-user-agent-using-selenium-webdriver-c-and-ruby/&quot;&gt;Set user agent using Selenium WebDriver C# and Ruby&lt;/a&gt;
 provides few sample snippets on how to set user agents.
-Note that user agent can’t be set for IE using Selenium WebDriver,
+Note that user agent can't be set for IE using Selenium WebDriver,
 therefore this approach is not going to work for IE&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;p&gt;Here, Firefox for example, add something identifiable
-(e.g “Selenium”) into the user agent when launching,
-then wrap Google Analytics’s tracking code with
-if-statement to ignore any user agents that contain word “Selenium” like above.&lt;/p&gt;
+(e.g &quot;Selenium&quot;) into the user agent when launching,
+then wrap Google Analytics's tracking code with
+if-statement to ignore any user agents that contain word &quot;Selenium&quot; like above.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Environment Tested:&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# Windows 10, Ruby 2.3.3p222, Selenium 3.0.5, GeckoDriver 0.13, Firefox 50.1&lt;/span&gt;
@@ -984,9 +984,9 @@ to opt-out Google Analytics.
 With this plugin installed in the browser,
 no Google Analytics data will be collected and used by Google.
 It supports IE 11, Chrome, Firefox, Safari and Opera,
-which unfortunately, means that this won’t work for PhantomJS.
+which unfortunately, means that this won't work for PhantomJS.
 Additionally, Selenium WebDriver cannot start IE with custom
-add-ons installed&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, therefore this won’t work for IE unless pre-install manually.&lt;/p&gt;
+add-ons installed&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, therefore this won't work for IE unless pre-install manually.&lt;/p&gt;
 
 &lt;h4 id=&quot;heading-chrome&quot;&gt;Chrome&lt;/h4&gt;
 
@@ -1027,7 +1027,7 @@ then use the following code to start Firefox.&lt;/p&gt;
 capturing HTTP content, and exporting performance data as a HAR file.
 It supports blacklisting which can be used as a way of blocking data sent to Google Analytics.&lt;/p&gt;
 
-&lt;p&gt;Below is a simple example of how it’s done using the &lt;a href=&quot;https://github.com/jarib/browsermob-proxy-rb&quot;&gt;Ruby client for the BrowserMob Proxy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Below is a simple example of how it's done using the &lt;a href=&quot;https://github.com/jarib/browsermob-proxy-rb&quot;&gt;Ruby client for the BrowserMob Proxy&lt;/a&gt;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'browsermob/proxy'&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'selenium-webdriver'&lt;/span&gt;
@@ -1146,14 +1146,14 @@ It supports blacklisting which can be used as a way of blocking data sent to Goo
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;IEDriver developer Jim Evans’ comment at &lt;a href=&quot;https://github.com/seleniumhq/selenium/issues/759&quot;&gt;github.com/seleniumhq/selenium/issues/759&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;IEDriver developer Jim Evans' comment at &lt;a href=&quot;https://github.com/seleniumhq/selenium/issues/759&quot;&gt;github.com/seleniumhq/selenium/issues/759&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;IEDriver developer Jim Evans’ comment on &lt;a href=&quot;https://groups.google.com/forum/#!topic/webdriver/LAQkirTUWWY&quot;&gt;Selenium Mailing List&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;IEDriver developer Jim Evans' comment on &lt;a href=&quot;https://groups.google.com/forum/#!topic/webdriver/LAQkirTUWWY&quot;&gt;Selenium Mailing List&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="[&quot;tutorials&quot;]" /><category term="google analytics" /><category term="ruby" /><category term="selenium webdriver" /><summary type="html">For sites being tested by automated UI testing frameworks like Selenium WebDriver or Watir, developers may find it useful to exclude internal automated testing traffic from Google Analytics.</summary></entry><entry><title type="html">Work with MailChimp API 3.0’s pagination</title><link href="http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination/" rel="alternate" type="text/html" title="Work with MailChimp API 3.0's pagination" /><published>2016-04-30T00:00:00+12:00</published><updated>2016-04-30T00:00:00+12:00</updated><id>http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination</id><content type="html" xml:base="http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination/">&lt;p&gt;MailChimp API 3.0 is a RESTful solution to allow applications
-take action on MailChimp resources (e.g. “subscribers”, “campaigns”, “lists” etc.)
+&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="[&quot;tutorials&quot;]" /><category term="google analytics" /><category term="ruby" /><category term="selenium webdriver" /><summary type="html">For sites being tested by automated UI testing frameworks like Selenium WebDriver or Watir, developers may find it useful to exclude internal automated testing traffic from Google Analytics.</summary></entry><entry><title type="html">Work with MailChimp API 3.0's pagination</title><link href="http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination/" rel="alternate" type="text/html" title="Work with MailChimp API 3.0's pagination" /><published>2016-04-30T00:00:00+12:00</published><updated>2016-04-30T00:00:00+12:00</updated><id>http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination</id><content type="html" xml:base="http://yizeng.me/2016/04/30/work-with-mailchimp-api-3-0s-pagination/">&lt;p&gt;MailChimp API 3.0 is a RESTful solution to allow applications
+take action on MailChimp resources (e.g. “subscribers”, “campaigns”, &quot;lists&quot; etc.)
 using the standard HTTP methods: POST, GET, PATCH, and DELETE.&lt;/p&gt;
 
 &lt;p&gt;Within this API, pagination is enabled by default for some resources,
@@ -1177,7 +1177,7 @@ append the &lt;code class=&quot;highlighter-rouge&quot;&gt;offset=10&lt;/code&gt
 &lt;/blockquote&gt;
 
 &lt;p&gt;A real world scenario to work with pagination is that, previously at some point,
-MailChimp API 3.0 couldn’t handle HTTP GET request that gets more than 1000 list members at one go
+MailChimp API 3.0 couldn't handle HTTP GET request that gets more than 1000 list members at one go
 (If there are thousands of members within a list,
 calling HTTP GET to that list would result in HTTP 500 Internal Server Error from MailChimp server).
 Therefore all list members had to be retrieved by multiple batches,
@@ -1246,7 +1246,7 @@ where &lt;code class=&quot;highlighter-rouge&quot;&gt;count&lt;/code&gt; and &lt
             &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="api" /><category term="c#" /><category term="mailchimp" /><summary type="html">MailChimp API 3.0 is a RESTful solution to allow applications take action on MailChimp resources (e.g. “subscribers”, “campaigns”, “lists” etc.) using the standard HTTP methods: POST, GET, PATCH, and DELETE.</summary></entry><entry><title type="html">READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0</title><link href="http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0/" rel="alternate" type="text/html" title="READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0" /><published>2016-04-23T00:00:00+12:00</published><updated>2016-04-23T00:00:00+12:00</updated><id>http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0</id><content type="html" xml:base="http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0/">&lt;p&gt;After months of mucking around with MailChimp API 3.0 using C#, it came to my attention that there are not many examples out on the internet. Therefore this post will show some code examples on how to perform GET/POST/PUT operations on MailChimp lists and list members
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="api" /><category term="c#" /><category term="mailchimp" /><summary type="html">MailChimp API 3.0 is a RESTful solution to allow applications take action on MailChimp resources (e.g. “subscribers”, “campaigns”, &quot;lists&quot; etc.) using the standard HTTP methods: POST, GET, PATCH, and DELETE.</summary></entry><entry><title type="html">READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0</title><link href="http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0/" rel="alternate" type="text/html" title="READ/CREATE MailChimp Lists and List Members using MailChimp API 3.0" /><published>2016-04-23T00:00:00+12:00</published><updated>2016-04-23T00:00:00+12:00</updated><id>http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0</id><content type="html" xml:base="http://yizeng.me/2016/04/23/read-create-mailchimp-lists-and-list-members-using-mailchimp-api-3-0/">&lt;p&gt;After months of mucking around with MailChimp API 3.0 using C#, it came to my attention that there are not many examples out on the internet. Therefore this post will show some code examples on how to perform GET/POST/PUT operations on MailChimp lists and list members
 (i.e. create, read and update MailChimp lists and list members).&lt;/p&gt;
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
@@ -1267,7 +1267,7 @@ where &lt;code class=&quot;highlighter-rouge&quot;&gt;count&lt;/code&gt; and &lt
 
 &lt;p&gt;With MailChimp API 3.0, you can sync email activity and campaign stats with your database, manage lists, create and edit Automation workflows, and many more.
 It is designed for developers, engineers, or anyone else who’s comfortable creating custom-coded solutions or integrating with RESTful APIs,
-where you can find tutorial “&lt;a href=&quot;http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/&quot;&gt;Get Started with the MailChimp API 3.0&lt;/a&gt;”
+where you can find tutorial &quot;&lt;a href=&quot;http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/&quot;&gt;Get Started with the MailChimp API 3.0&lt;/a&gt;&quot;
 and full official documentation &lt;a href=&quot;http://developer.mailchimp.com/documentation/mailchimp/reference/overview/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;To begin with, get an API key from your MailChimp account as per documentation &lt;a href=&quot;http://kb.mailchimp.com/accounts/management/about-api-keys/#Find-or-Generate-Your-API-Key&quot;&gt;here&lt;/a&gt;.
@@ -1505,7 +1505,7 @@ Postgres installed with few simple clicks.&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;Go to &lt;a href=&quot;https://www.enterprisedb.com/software-downloads-postgres&quot;&gt;https://www.enterprisedb.com/software-downloads-postgres&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Select a version. (For example, the latest installer version is &lt;code class=&quot;highlighter-rouge&quot;&gt;Version 9.4.0&lt;/code&gt;).&lt;/li&gt;
-  &lt;li&gt;Click ‘Mac OS X’ to download for Mac.&lt;/li&gt;
+  &lt;li&gt;Click 'Mac OS X' to download for Mac.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h3 id=&quot;install-postgresql-steps&quot;&gt;Install&lt;/h3&gt;
@@ -1518,12 +1518,12 @@ Postgres installed with few simple clicks.&lt;/p&gt;
 &lt;h3 id=&quot;add-to-path&quot;&gt;Add to PATH&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Locate where PostgreSQL’s binary is.
+    &lt;p&gt;Locate where PostgreSQL's binary is.
 By default, it should be &lt;code class=&quot;highlighter-rouge&quot;&gt;/Library/PostgreSQL/9.4/bin/psql&lt;/code&gt;, where 9.4 is the PostgreSQL version number.
 Otherwise, use the following &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; command to find the path.&lt;/p&gt;
 
     &lt;blockquote&gt;
-      &lt;p&gt;sudo find / -name “psql”&lt;/p&gt;
+      &lt;p&gt;sudo find / -name &quot;psql&quot;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;
@@ -1534,7 +1534,7 @@ Otherwise, use the following &lt;code class=&quot;highlighter-rouge&quot;&gt;fin
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Add the following line to &lt;code class=&quot;highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt; using the PostgreSQL’s binary path.&lt;/p&gt;
+    &lt;p&gt;Add the following line to &lt;code class=&quot;highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt; using the PostgreSQL's binary path.&lt;/p&gt;
 
     &lt;blockquote&gt;
       &lt;p&gt;PATH=$PATH:/Library/PostgreSQL/9.4/bin&lt;/p&gt;
@@ -1569,7 +1569,7 @@ or the port number specified when installing PostgreSQL.&lt;/li&gt;
 By default, it should be &lt;code class=&quot;highlighter-rouge&quot;&gt;/Library/PostgreSQL/9.4/bin/pg_config&lt;/code&gt; for PostgreSQL 9.4.&lt;/p&gt;
 
     &lt;blockquote&gt;
-      &lt;p&gt;sudo find / -name “pg_config”&lt;/p&gt;
+      &lt;p&gt;sudo find / -name &quot;pg_config&quot;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;
@@ -1585,7 +1585,7 @@ By default, it should be &lt;code class=&quot;highlighter-rouge&quot;&gt;/Librar
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Update ‘Gemfile’. Replace &lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'sqlite3'&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'pg'&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Update 'Gemfile'. Replace &lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'sqlite3'&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'pg'&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt;.&lt;/p&gt;
@@ -1648,10 +1648,10 @@ By default, it should be &lt;code class=&quot;highlighter-rouge&quot;&gt;/Librar
 
 &lt;blockquote&gt;
   &lt;p&gt;rake db:create &amp;amp;&amp;amp; rake db:migrate&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="mac os" /><category term="postgresql" /><category term="ruby on rails" /><summary type="html">A brief note on how to install and setup PostgreSQL for Ruby on Rails on Mac OS.</summary></entry><entry><title type="html">Why you shouldn’t start learning Selenium by automating Google’s products?</title><link href="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/" rel="alternate" type="text/html" title="Why you shouldn't start learning Selenium by automating Google's products?" /><published>2014-07-19T00:00:00+12:00</published><updated>2014-07-19T00:00:00+12:00</updated><id>http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products</id><content type="html" xml:base="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/">&lt;p&gt;Whenever I see questions on StackOverflow about UI automation
-against Google’s products (especially Gmail, Google maps, Youtube, etc.),
+&lt;/blockquote&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="mac os" /><category term="postgresql" /><category term="ruby on rails" /><summary type="html">A brief note on how to install and setup PostgreSQL for Ruby on Rails on Mac OS.</summary></entry><entry><title type="html">Why you shouldn't start learning Selenium by automating Google's products?</title><link href="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/" rel="alternate" type="text/html" title="Why you shouldn't start learning Selenium by automating Google's products?" /><published>2014-07-19T00:00:00+12:00</published><updated>2014-07-19T00:00:00+12:00</updated><id>http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products</id><content type="html" xml:base="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/">&lt;p&gt;Whenever I see questions on StackOverflow about UI automation
+against Google's products (especially Gmail, Google maps, Youtube, etc.),
 the first thing pops up in my head would be - do those OPs work for Google? I guess not.
-Then why are there so many people interested in automating Google’s applications from UI?&lt;/p&gt;
+Then why are there so many people interested in automating Google's applications from UI?&lt;/p&gt;
 
 &lt;p&gt;My wild guess is that this mainly includes two situations:&lt;/p&gt;
 
@@ -1659,32 +1659,32 @@ Then why are there so many people interested in automating Google’s applicatio
   &lt;li&gt;Someone who starts off learning Selenium and has decided to automate Google search as a starting point.
 Since Google homepage has a reasonably clean and simple UI,
 people have the reason to believe that Google could be the best site for learning Selenium.
-After playing with “Google Search” scenario, they might continue to try out automating Gmail or Youtube.&lt;/li&gt;
+After playing with &quot;Google Search&quot; scenario, they might continue to try out automating Gmail or Youtube.&lt;/li&gt;
   &lt;li&gt;Someone who needs to access Google services like Gmail, Google maps as part of the job,
 which can be either testing projects or applications involving browser automation.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Well, for whatever the reason is, people should rarely need to automated Google’s applications from UI level,
+&lt;p&gt;Well, for whatever the reason is, people should rarely need to automated Google's applications from UI level,
 especially for those who have just started learning Selenium.&lt;/p&gt;
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-dont-automate-googles-products&quot; id=&quot;markdown-toc-heading-dont-automate-googles-products&quot;&gt;Don’t automate Google’s products&lt;/a&gt;    &lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-dont-automate-googles-products&quot; id=&quot;markdown-toc-heading-dont-automate-googles-products&quot;&gt;Don't automate Google's products&lt;/a&gt;    &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#heading-google-search-use-case-is-too-easy&quot; id=&quot;markdown-toc-heading-google-search-use-case-is-too-easy&quot;&gt;Google search use case is too easy&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#heading-everything-else-is-too-difficult&quot; id=&quot;markdown-toc-heading-everything-else-is-too-difficult&quot;&gt;Everything else is too difficult&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#heading-there-are-apis&quot; id=&quot;markdown-toc-heading-there-are-apis&quot;&gt;There are APIs&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-it-was-against-the-term-of-service&quot; id=&quot;markdown-toc-heading-it-was-against-the-term-of-service&quot;&gt;It was against the “Term of service”&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-it-was-against-the-term-of-service&quot; id=&quot;markdown-toc-heading-it-was-against-the-term-of-service&quot;&gt;It was against the &quot;Term of service&quot;&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-who-might-still-do-it&quot; id=&quot;markdown-toc-heading-who-might-still-do-it&quot;&gt;Who might still do it?&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-what-should-you-automate-then&quot; id=&quot;markdown-toc-heading-what-should-you-automate-then&quot;&gt;What should you automate then?&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#your-own-applications&quot; id=&quot;markdown-toc-your-own-applications&quot;&gt;Your own (or your company’s) applications&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#your-own-applications&quot; id=&quot;markdown-toc-your-own-applications&quot;&gt;Your own (or your company's) applications&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href=&quot;#heading-demos-of-javascript-ui-frameworks&quot; id=&quot;markdown-toc-heading-demos-of-javascript-ui-frameworks&quot;&gt;Demos of JavaScript UI frameworks&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-further-reading&quot; id=&quot;markdown-toc-heading-further-reading&quot;&gt;Further reading&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;heading-dont-automate-googles-products&quot;&gt;Don’t automate Google’s products&lt;/h2&gt;
+&lt;h2 id=&quot;heading-dont-automate-googles-products&quot;&gt;Don't automate Google's products&lt;/h2&gt;
 
 &lt;h3 id=&quot;heading-google-search-use-case-is-too-easy&quot;&gt;Google search use case is too easy&lt;/h3&gt;
 
@@ -1692,25 +1692,25 @@ especially for those who have just started learning Selenium.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;ol&gt;
-    &lt;li&gt;Send keys to Google’s search box&lt;/li&gt;
+    &lt;li&gt;Send keys to Google's search box&lt;/li&gt;
     &lt;li&gt;Submit&lt;/li&gt;
     &lt;li&gt;Check the title in browser window&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;This is indeed a reasonable starting point for people who have just started coding with Selenium,
-as it provides an intuitive way to demonstrate what Selenium does - “Selenium automates browsers”&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+as it provides an intuitive way to demonstrate what Selenium does - &quot;Selenium automates browsers&quot;&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;p&gt;However, considering the fact that it looks so easy
 purely because it was deliberately simplified for educational purposes,
-this use case doesn’t have to be the first Selenium program recommended for novice users to learn.
+this use case doesn't have to be the first Selenium program recommended for novice users to learn.
 More importantly, the dynamic DOM structure and the instant search feature
 have made Google homepage definitely not the easiest thing for them.
-Without revealing what’s under the hood, it might give newbies the false impressions that&lt;/p&gt;
+Without revealing what's under the hood, it might give newbies the false impressions that&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Selenium projects are like some auto-generated scripts - let’s copy n’ paste these statements.&lt;/li&gt;
-  &lt;li&gt;Google’s products are extremely straightforward to automate - let’s try automating Gmail or Youtube next.&lt;/li&gt;
+  &lt;li&gt;Selenium projects are like some auto-generated scripts - let's copy n' paste these statements.&lt;/li&gt;
+  &lt;li&gt;Google's products are extremely straightforward to automate - let's try automating Gmail or Youtube next.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Instead of giving a use case that could potentially cause trouble,
@@ -1719,13 +1719,13 @@ it might be better to find a scenario as simple as below for learning purposes.&
 &lt;blockquote&gt;
   &lt;ol&gt;
     &lt;li&gt;Search &lt;code class=&quot;highlighter-rouge&quot;&gt;[selenium]&lt;/code&gt; on StackOverflow&lt;/li&gt;
-    &lt;li&gt;Find out how many questions are tagged with “selenium”&lt;/li&gt;
+    &lt;li&gt;Find out how many questions are tagged with &quot;selenium&quot;&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/blockquote&gt;
 
 &lt;h3 id=&quot;heading-everything-else-is-too-difficult&quot;&gt;Everything else is too difficult&lt;/h3&gt;
 
-&lt;p&gt;Even though Google’s products are technically automatable, it requires certain amount of time and effort to achieve&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.
+&lt;p&gt;Even though Google's products are technically automatable, it requires certain amount of time and effort to achieve&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.
 Learning Selenium or performing certain tasks by automating them from UI would certainly be a poor choice.&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1733,15 +1733,15 @@ Learning Selenium or performing certain tasks by automating them from UI would c
     &lt;p&gt;DOM is too complex&lt;/p&gt;
 
     &lt;p&gt;Google is well-known for its meaningless, minimized DOM structures.
-Not only straightforward approaches like &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; won’t work well,
+Not only straightforward approaches like &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; won't work well,
 but also advanced XPath/CSS selectors can merely be used because most of the things in DOM are not human readable.
 Difficulties in element locating could be really common in UI automation sometimes,
-while automating Google’s products makes it inevitable.
+while automating Google's products makes it inevitable.
 Strong XPath/CSS selector skills are crucial to get the job done.&lt;/p&gt;
 
     &lt;p&gt;What about text-free XPaths based on position relationship, like &lt;code class=&quot;highlighter-rouge&quot;&gt;//div[3]/div[1]/div[3]/span[10]/a&lt;/code&gt;?
 They are even worse and likely to be changed frequently by Google.
-Brittle XPaths shouldn’t be used in any kind of programs in the first place anyway.&lt;/p&gt;
+Brittle XPaths shouldn't be used in any kind of programs in the first place anyway.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Some are Ajax powered&lt;/p&gt;
@@ -1755,7 +1755,7 @@ wait time might vary and debugging them are difficult due to other constraints, 
     &lt;p&gt;DOM changes too frequently&lt;/p&gt;
 
     &lt;p&gt;Just like many other active-developing web applications,
-the DOM of Google’s products are constantly changed either deliberately in order to prevent scripting or as part of the development process.
+the DOM of Google's products are constantly changed either deliberately in order to prevent scripting or as part of the development process.
 Assuming best-available locators have been used,
 it may still frequently break the existing Selenium code and make it highly unmaintainable,&lt;/p&gt;
   &lt;/li&gt;
@@ -1766,7 +1766,7 @@ it may still frequently break the existing Selenium code and make it highly unma
 source code, documentation, private APIs can be extremely useful during UI automation process.
 On one hand, modifying source code for testing purpose, like adding class names, is a common practice for making elements locating easier.
 On the other hand, monitoring UI related bug/feature tickets would greatly help developers track down what has been changed.
-Unfortunately, external automators outside Google won’t be able to take advantage of this.&lt;/p&gt;
+Unfortunately, external automators outside Google won't be able to take advantage of this.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1780,7 +1780,7 @@ Google provides APIs for &lt;a href=&quot;https://developers.google.com/gmail/&q
 &lt;a href=&quot;https://developers.google.com/drive/&quot;&gt;Drive&lt;/a&gt;, &lt;a href=&quot;https://developers.google.com/maps/&quot;&gt;Maps&lt;/a&gt; and more&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.
 This is the intended and more correct way to access data.
 People who have just started UI automation might think and solve problems in a way that end users will do.
-However, using Selenium doesn’t mean that absolutely all actions have to be performed from UI level,
+However, using Selenium doesn't mean that absolutely all actions have to be performed from UI level,
 which, most of the time, would be an inefficient approach.&lt;/p&gt;
 
 &lt;p&gt;For example, &lt;a href=&quot;https://github.com/dcparker/ruby-gmail&quot;&gt;ruby-gmail&lt;/a&gt; is a Ruby library that allows accessing emails in Gmail.
@@ -1791,11 +1791,11 @@ After installing the gem using &lt;code class=&quot;highlighter-rouge&quot;&gt;g
 &lt;span class=&quot;n&quot;&gt;gmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Gmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'GMAIL_ADDRESS'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'GMAIL_PASSWORD'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Inbox count: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3 id=&quot;heading-it-was-against-the-term-of-service&quot;&gt;It was against the “Term of service”&lt;/h3&gt;
+&lt;h3 id=&quot;heading-it-was-against-the-term-of-service&quot;&gt;It was against the &quot;Term of service&quot;&lt;/h3&gt;
 
 &lt;p&gt;Although this might no longer be true for Google applications&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; and nobody really cares about user agreement,
-it’s still worth noting that Google specifically had statement regarding automated access in their old versions
-of “&lt;a href=&quot;http://www.google.com/intl/en/policies/terms/archive/20070416-20120301/&quot;&gt;Term of Service&lt;/a&gt;”.
+it's still worth noting that Google specifically had statement regarding automated access in their old versions
+of &quot;&lt;a href=&quot;http://www.google.com/intl/en/policies/terms/archive/20070416-20120301/&quot;&gt;Term of Service&lt;/a&gt;&quot;.
 Same happens to Youtube as well, which still exists in current Youtube &lt;a href=&quot;https://www.youtube.com/static?template=terms&quot;&gt;Terms of Service 4-H&lt;/a&gt;.
 &lt;a class=&quot;button show-hidden&quot;&gt;Show&lt;/a&gt;&lt;/p&gt;
 
@@ -1829,17 +1829,17 @@ like private APIs to interact with certain front-end functionalities.&lt;/p&gt;
     &lt;p&gt;People with no other choice&lt;/p&gt;
 
     &lt;p&gt;Sometimes accessing from UI might be the only way to achieve a task that must be done.
-If Google doesn’t provide API for a particular product and it’s so important that must be done, then just do it from UI level.
+If Google doesn't provide API for a particular product and it's so important that must be done, then just do it from UI level.
 The project might be extremely difficult to implement and can be super fragile to maintain, but it should still be achievable.
-However, from my experience, I can’t think of any valid use cases for this.&lt;/p&gt;
+However, from my experience, I can't think of any valid use cases for this.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;heading-what-should-you-automate-then&quot;&gt;What should you automate then?&lt;/h2&gt;
 
-&lt;h3 id=&quot;your-own-applications&quot;&gt;Your own (or your company’s) applications&lt;/h3&gt;
+&lt;h3 id=&quot;your-own-applications&quot;&gt;Your own (or your company's) applications&lt;/h3&gt;
 
-&lt;p&gt;Don’t procrastinate.
+&lt;p&gt;Don't procrastinate.
   Instead of spending time poking around and looking for something easy enough,
   it is probably better to start from what you are supposed to do right away.
   While coding up the project gradually, many questions might be asked by yourself:&lt;/p&gt;
@@ -1861,7 +1861,7 @@ However, from my experience, I can’t think of any valid use cases for this.&lt
   as long as you are keen on getting the answers to those questions and willing to ask more.&lt;/p&gt;
 
 &lt;p&gt;Additionally, creating own demos could also be a good alternative for learning Selenium.
-  For example, &lt;a href=&quot;http://the-internet.herokuapp.com/&quot;&gt;“The Internet”&lt;/a&gt; is a demo application written for a similar purpose,
+  For example, &lt;a href=&quot;http://the-internet.herokuapp.com/&quot;&gt;&quot;The Internet&quot;&lt;/a&gt; is a demo application written for a similar purpose,
   which provides lots of examples for common web functionalities, like hovering, frames, JavaScript alerts, etc.&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-demos-of-javascript-ui-frameworks&quot;&gt;Demos of JavaScript UI frameworks&lt;/h3&gt;
@@ -1893,7 +1893,7 @@ To start with, even writing some code to automate their homepage would be fun, l
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;&lt;a href=&quot;http://docs.seleniumhq.org/&quot;&gt;“What is Selenium?”&lt;/a&gt; section.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;a href=&quot;http://docs.seleniumhq.org/&quot;&gt;&quot;What is Selenium?&quot;&lt;/a&gt; section.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
       &lt;p&gt;Comment about Gmail &lt;a href=&quot;http://stackoverflow.com/questions/13472062/can-we-use-web-driver-to-test-https-sites-i-am-trying-to-work-on-gmail-com-a#comment18552229_13472062&quot;&gt;here&lt;/a&gt; made by Ross Patterson.&amp;nbsp;&lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
@@ -1905,4 +1905,4 @@ To start with, even writing some code to automate their homepage would be fun, l
       &lt;p&gt;Current version of &lt;a href=&quot;http://www.google.com/intl/en/policies/terms/&quot;&gt;Google Terms of Service&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="selenium webdriver" /><summary type="html">Whenever I see questions on StackOverflow about UI automation against Google’s products (especially Gmail, Google maps, Youtube, etc.), the first thing pops up in my head would be - do those OPs work for Google? I guess not. Then why are there so many people interested in automating Google’s applications from UI?</summary></entry></feed>
+&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="selenium webdriver" /><summary type="html">Whenever I see questions on StackOverflow about UI automation against Google's products (especially Gmail, Google maps, Youtube, etc.), the first thing pops up in my head would be - do those OPs work for Google? I guess not. Then why are there so many people interested in automating Google's applications from UI?</summary></entry></feed>
