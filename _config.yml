@@ -48,9 +48,9 @@ author:
     - name: vk
       url: https://vk.com/yi.zeng
 home:
-  h1:
-  h2:
-  h3:
+  section1:
+  section2:
+  section3:
 blog:
   cc_license: http://creativecommons.org/licenses/by-sa/4.0/ # A link to CC License
   cc_license_image: /assets/images/theme/cc-by-sa.png # Choose one at https://creativecommons.org/choose/
