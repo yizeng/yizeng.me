@@ -22,7 +22,8 @@ sass:
   style: compressed
 
 # Site Data
-url: http://yizeng.me
+url: http://yizeng.me # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: # the subpath of your site, e.g. /blog
 title: Yi Zeng’s Blog
 description: "Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand."
 keywords: 'software,engineer,testing,full-stack,christchurch,newzealand'
