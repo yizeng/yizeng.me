@@ -33,11 +33,11 @@ For example, `Ruby 2.3.3-p222 (x64)` is the Windows installer for Ruby 2.3.3 x64
 
 4. Open up a command prompt window and type in the following command, to see if Ruby has been install correctly or not.
 
-        ruby -v
+    > ruby -v
 
     Example output:
 
-      > ruby 2.3.3p222 (2016-11-21 revision 56859) [x64-mingw32]
+    > ruby 2.3.3p222 (2016-11-21 revision 56859) [x64-mingw32]
 
 ## Install DevKit
 
@@ -62,46 +62,46 @@ For instance, `DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe` is for 64-bit Wind
 
     Insdie `C:/DevKit`, open up a command prompt window and execute the following commands:
 
-       ruby dk.rb init
-       notepad config.yml
+    > ruby dk.rb init<br />
+    > notepad config.yml
 
 5. In opened notepad window, if it's not already there, add a new line `- C:/Ruby23-x64` at the end, save and close.
 
 6. Back to the Command Prompt, review (optional) and install.
 
-       ruby dk.rb review
-       ruby dk.rb install
+    > ruby dk.rb review<br />
+    > ruby dk.rb install
 
 ## Install Jekyll and Bundler
 
 1. Install Jekyll and [Bundler](http://bundler.io/) gems
 
-       gem install jekyll bundler
+    > gem install jekyll bundler
 
 2. Verify that Jekyll gem has been installed properly
 
-       jekyll -v
+    > jekyll -v
 
     Example output:
 
-      > jekyll 3.3.1
+    > jekyll 3.3.1
 
 3. Verify that Bundler gem has been installed properly
 
-       bundle -v
+    > bundle -v
 
     Example output:
 
-      > Bundler version 1.13.7
+    > Bundler version 1.13.7
 
 ## Start Jekyll
 
 Following the commands on official [Jekyll Quick-start guide][Jekyll Quick-start guide],
 a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http://127.0.0.1:4000).
 
-    jekyll new myblog
-    cd myblog
-    bundle exec jekyll serve
+> jekyll new myblog<br />
+> cd myblog<br />
+> bundle exec jekyll serve
 
 <a class="post-image" href="/assets/images/posts/2013-05-11-new-jekyll-3-site.png">
 <img itemprop="image" data-src="/assets/images/posts/2013-05-11-new-jekyll-3-site.png" src="/assets/javascripts/unveil/loader.gif" alt="New Jekyll 3 Site" />
@@ -147,9 +147,9 @@ a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http:
 
 3. Error message:
 
-        New jekyll site installed in C:/Code/GitHub/blog.
-          Dependency Error: Yikes! It looks like you don't have bundler or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- bundler' If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/!
-        jekyll 3.3.1 | Error:  bundler
+       New jekyll site installed in C:/Code/GitHub/blog.
+           Dependency Error: Yikes! It looks like you don't have bundler or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- bundler' If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/!
+       jekyll 3.3.1 | Error:  bundler
 
      **Reason**: Bundler gem was not installed.
 
@@ -173,8 +173,8 @@ a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http:
 
     **Solution**: Downgrade pygments.rb gem from 0.5.1/0.5.2 to version 0.5.0.
 
-        gem uninstall pygments.rb --version 0.5.2
-        gem install pygments.rb --version 0.5.0
+    > gem uninstall pygments.rb --version 0.5.2<br />
+    > gem install pygments.rb --version 0.5.0
 
 6. Error message:
 
@@ -191,8 +191,8 @@ a new Jekyll blog should be created and can be browsed at [127.0.0.1:4000](http:
 
     **Solution**: Downgrade pygments.rb gem to version 0.4.2
 
-        gem uninstall pygments.rb --version 0.5.0
-        gem install pygments.rb --version 0.4.2
+    > gem uninstall pygments.rb --version 0.5.0<br />
+    > gem install pygments.rb --version 0.4.2
 
 7. Error message:
 
