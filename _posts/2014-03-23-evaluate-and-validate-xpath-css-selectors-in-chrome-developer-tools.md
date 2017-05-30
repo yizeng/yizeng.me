@@ -6,7 +6,11 @@ categories: [tutorials]
 tags: [chrome, css selectors, selenium webdriver, xpath]
 redirect_from:
   - /2014/03/23/
+last_updated: May 30, 2017
 ---
+
+> Recently Updated - May 30, 2017
+
 Google Chrome provides a built-in debugging tool called "[Chrome DevTools][Chrome DevTools]" out of the box,
 which includes a handy feature that can evaluate or validate XPath/CSS selectors without any third party extensions.
 
@@ -81,7 +85,7 @@ Advantages of one approach are pretty much considered as the cons of another met
 </tr>
 <tr>
 	<td>Result count is displayed</td>
-	<td>Only a list of matching nodes are displayed</td>
+	<td><del>Only a list of matching nodes are displayed</del><br />(Lastest Chrome DevTools can show the count now)</td>
 </tr>
 <tr class="center bold">
 	<td>Cons</td>
