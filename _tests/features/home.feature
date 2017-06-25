@@ -7,9 +7,6 @@ Feature: Test home page
     Then I should see page url "/" (with slashes)
     And I should see the correct homepage title
 
-  Scenario: All external links should be opened in a new window
-    Then I should see all external links set to "target='_blank'"
-
   Scenario Outline: Top bar links should work for small screens
     When I set window width to <width>px
     When I click the expander icon

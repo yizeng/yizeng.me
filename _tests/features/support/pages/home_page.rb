@@ -51,9 +51,5 @@ module Pages
     def header_social_link_buttons
       @driver.find_elements(css: '.banner-social-buttons .btn')
     end
-
-    def all_external_links
-      @driver.find_elements(css: 'a.external')
-    end
   end
 end
