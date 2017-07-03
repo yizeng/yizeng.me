@@ -18,13 +18,6 @@ Then(/^I should see the correct homepage title$/) do
   assert_equal(SITE_TITLE, @driver.title)
 end
 
-Then(/^I should see all external links set to "target='_blank'"$/) do
-  external_links = @page.all_external_links
-  external_links.each do |link|
-    assert_equal('_blank', link.attribute('target'))
-  end
-end
-
 Then(/^I should (not have|have) clickable top bar links$/) do |target|
   assert_equal(true, is_link_clickable(@page.navbar_brand))
   assert_equal('YI ZENG', @page.navbar_brand.text)
