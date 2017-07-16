@@ -1,4 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.4.4">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2017-07-03T23:40:55+12:00</updated><id>http://yizeng.me/</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand.</subtitle><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+12:00</published><updated>2017-05-20T00:00:00+12:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;p&gt;As I'm currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.4.4">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2017-07-16T15:53:34+12:00</updated><id>http://yizeng.me/</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a software engineer based in Christchurch, New Zealand.</subtitle><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><entry><title type="html">Generate Rails test fixtures yaml from database dump</title><link href="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/" rel="alternate" type="text/html" title="Generate Rails test fixtures yaml from database dump" /><published>2017-07-16T00:00:00+12:00</published><updated>2017-07-16T00:00:00+12:00</updated><id>http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump</id><content type="html" xml:base="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/">&lt;p&gt;I came across a problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
+(A Visualizer for Strava Estimated Best Efforts and Races),
+that how to generate Ruby on Rails test fixtures yaml files from a development database dump.&lt;/p&gt;
+
+&lt;p&gt;After some Googling, &lt;a href=&quot;http://www.austinstory.com/script-to-generate-fixtures-from-a-database/&quot;&gt;this article&lt;/a&gt; gave me directions and therefore made my own version of it.&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:db&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Convert development DB to Rails test fixtures'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;to_fixtures: :environment&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;TABLES_TO_SKIP&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%w[ar_internal_metadata delayed_jobs schema_info schema_migrations]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;freeze&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;establish_connection&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TABLES_TO_SKIP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'000'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/test/fixtures/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.yml&quot;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SELECT * FROM &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each_with_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({})&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;suffix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blank?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;succ!&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;singularize&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;suffix&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+          &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Writing table '&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;' to '&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;'&quot;&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_yaml&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then it can be used just like any other Rake tasks:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rake db:to_fixtures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;All generated &lt;code class=&quot;highlighter-rouge&quot;&gt;*.yml&lt;/code&gt; files will be fully compaitible with Rails and can be loaded to tests.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;country_1&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;New Zealand&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455'&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455'&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;country_2&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;United States&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189'&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189'&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;country_3&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;3&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deutschland&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761'&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="database" /><category term="ruby on rails" /><summary type="html">I came across a problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to generate Ruby on Rails test fixtures yaml files from a development database dump.</summary></entry><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+12:00</published><updated>2017-05-20T00:00:00+12:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;p&gt;As I'm currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
 I wondered if I could apply it to my little &lt;a href=&quot;http://rubyonrails.org/&quot;&gt;Ruby on Rails&lt;/a&gt; project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 so that I could use this real world project to help me learning TypeScript quickly.&lt;/p&gt;
@@ -1648,261 +1709,4 @@ By default, it should be &lt;code class=&quot;highlighter-rouge&quot;&gt;/Librar
 
 &lt;blockquote&gt;
   &lt;p&gt;rake db:create &amp;amp;&amp;amp; rake db:migrate&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="mac os" /><category term="postgresql" /><category term="ruby on rails" /><summary type="html">A brief note on how to install and setup PostgreSQL for Ruby on Rails on Mac OS.</summary></entry><entry><title type="html">Why you shouldn't start learning Selenium by automating Google's products?</title><link href="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/" rel="alternate" type="text/html" title="Why you shouldn't start learning Selenium by automating Google's products?" /><published>2014-07-19T00:00:00+12:00</published><updated>2014-07-19T00:00:00+12:00</updated><id>http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products</id><content type="html" xml:base="http://yizeng.me/2014/07/19/why-you-shouldnt-start-learning-selenium-by-automating-googles-products/">&lt;p&gt;Whenever I see questions on StackOverflow about UI automation
-against Google's products (especially Gmail, Google maps, Youtube, etc.),
-the first thing pops up in my head would be - do those OPs work for Google? I guess not.
-Then why are there so many people interested in automating Google's applications from UI?&lt;/p&gt;
-
-&lt;p&gt;My wild guess is that this mainly includes two situations:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Someone who starts off learning Selenium and has decided to automate Google search as a starting point.
-Since Google homepage has a reasonably clean and simple UI,
-people have the reason to believe that Google could be the best site for learning Selenium.
-After playing with &quot;Google Search&quot; scenario, they might continue to try out automating Gmail or Youtube.&lt;/li&gt;
-  &lt;li&gt;Someone who needs to access Google services like Gmail, Google maps as part of the job,
-which can be either testing projects or applications involving browser automation.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Well, for whatever the reason is, people should rarely need to automated Google's applications from UI level,
-especially for those who have just started learning Selenium.&lt;/p&gt;
-
-&lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-dont-automate-googles-products&quot; id=&quot;markdown-toc-heading-dont-automate-googles-products&quot;&gt;Don't automate Google's products&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-google-search-use-case-is-too-easy&quot; id=&quot;markdown-toc-heading-google-search-use-case-is-too-easy&quot;&gt;Google search use case is too easy&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-everything-else-is-too-difficult&quot; id=&quot;markdown-toc-heading-everything-else-is-too-difficult&quot;&gt;Everything else is too difficult&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-there-are-apis&quot; id=&quot;markdown-toc-heading-there-are-apis&quot;&gt;There are APIs&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-it-was-against-the-term-of-service&quot; id=&quot;markdown-toc-heading-it-was-against-the-term-of-service&quot;&gt;It was against the &quot;Term of service&quot;&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-who-might-still-do-it&quot; id=&quot;markdown-toc-heading-who-might-still-do-it&quot;&gt;Who might still do it?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-what-should-you-automate-then&quot; id=&quot;markdown-toc-heading-what-should-you-automate-then&quot;&gt;What should you automate then?&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#your-own-applications&quot; id=&quot;markdown-toc-your-own-applications&quot;&gt;Your own (or your company's) applications&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#heading-demos-of-javascript-ui-frameworks&quot; id=&quot;markdown-toc-heading-demos-of-javascript-ui-frameworks&quot;&gt;Demos of JavaScript UI frameworks&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-further-reading&quot; id=&quot;markdown-toc-heading-further-reading&quot;&gt;Further reading&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;heading-dont-automate-googles-products&quot;&gt;Don't automate Google's products&lt;/h2&gt;
-
-&lt;h3 id=&quot;heading-google-search-use-case-is-too-easy&quot;&gt;Google search use case is too easy&lt;/h3&gt;
-
-&lt;p&gt;Almost all Selenium 101 tutorials use Google search scenario, which seems like one the of easiest use cases.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;Send keys to Google's search box&lt;/li&gt;
-    &lt;li&gt;Submit&lt;/li&gt;
-    &lt;li&gt;Check the title in browser window&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;This is indeed a reasonable starting point for people who have just started coding with Selenium,
-as it provides an intuitive way to demonstrate what Selenium does - &quot;Selenium automates browsers&quot;&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;p&gt;However, considering the fact that it looks so easy
-purely because it was deliberately simplified for educational purposes,
-this use case doesn't have to be the first Selenium program recommended for novice users to learn.
-More importantly, the dynamic DOM structure and the instant search feature
-have made Google homepage definitely not the easiest thing for them.
-Without revealing what's under the hood, it might give newbies the false impressions that&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Selenium projects are like some auto-generated scripts - let's copy n' paste these statements.&lt;/li&gt;
-  &lt;li&gt;Google's products are extremely straightforward to automate - let's try automating Gmail or Youtube next.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Instead of giving a use case that could potentially cause trouble,
-it might be better to find a scenario as simple as below for learning purposes.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;Search &lt;code class=&quot;highlighter-rouge&quot;&gt;[selenium]&lt;/code&gt; on StackOverflow&lt;/li&gt;
-    &lt;li&gt;Find out how many questions are tagged with &quot;selenium&quot;&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;heading-everything-else-is-too-difficult&quot;&gt;Everything else is too difficult&lt;/h3&gt;
-
-&lt;p&gt;Even though Google's products are technically automatable, it requires certain amount of time and effort to achieve&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.
-Learning Selenium or performing certain tasks by automating them from UI would certainly be a poor choice.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;DOM is too complex&lt;/p&gt;
-
-    &lt;p&gt;Google is well-known for its meaningless, minimized DOM structures.
-Not only straightforward approaches like &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; won't work well,
-but also advanced XPath/CSS selectors can merely be used because most of the things in DOM are not human readable.
-Difficulties in element locating could be really common in UI automation sometimes,
-while automating Google's products makes it inevitable.
-Strong XPath/CSS selector skills are crucial to get the job done.&lt;/p&gt;
-
-    &lt;p&gt;What about text-free XPaths based on position relationship, like &lt;code class=&quot;highlighter-rouge&quot;&gt;//div[3]/div[1]/div[3]/span[10]/a&lt;/code&gt;?
-They are even worse and likely to be changed frequently by Google.
-Brittle XPaths shouldn't be used in any kind of programs in the first place anyway.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Some are Ajax powered&lt;/p&gt;
-
-    &lt;p&gt;Dynamic content handling techniques like waiting system &lt;code class=&quot;highlighter-rouge&quot;&gt;WebDriverWait&lt;/code&gt; are essential for UI automation,
-but Ajax powered Google products (Google Maps, Youtube, etc.) would be definitely considered as one of the hardest.
-For those JavaScript and Ajax heavy applications,
-wait time might vary and debugging them are difficult due to other constraints, like dynamic DOM structures.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;DOM changes too frequently&lt;/p&gt;
-
-    &lt;p&gt;Just like many other active-developing web applications,
-the DOM of Google's products are constantly changed either deliberately in order to prevent scripting or as part of the development process.
-Assuming best-available locators have been used,
-it may still frequently break the existing Selenium code and make it highly unmaintainable,&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Source code is unavailable&lt;/p&gt;
-
-    &lt;p&gt;Having both read and write access to internal issue tracker,
-source code, documentation, private APIs can be extremely useful during UI automation process.
-On one hand, modifying source code for testing purpose, like adding class names, is a common practice for making elements locating easier.
-On the other hand, monitoring UI related bug/feature tickets would greatly help developers track down what has been changed.
-Unfortunately, external automators outside Google won't be able to take advantage of this.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;heading-there-are-apis&quot;&gt;There are APIs&lt;/h3&gt;
-
-&lt;p&gt;What if you are not only learning Selenium, but also trying to achieve something from those Google services,
-for instance, to verify emails in Gmail at part of the testing process?&lt;/p&gt;
-
-&lt;p&gt;The answer is to use APIs or existing libraries that wraps around the APIs.
-Google provides APIs for &lt;a href=&quot;https://developers.google.com/gmail/&quot;&gt;Gmail&lt;/a&gt;, &lt;a href=&quot;https://developers.google.com/youtube/&quot;&gt;Youtube&lt;/a&gt;,
-&lt;a href=&quot;https://developers.google.com/drive/&quot;&gt;Drive&lt;/a&gt;, &lt;a href=&quot;https://developers.google.com/maps/&quot;&gt;Maps&lt;/a&gt; and more&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.
-This is the intended and more correct way to access data.
-People who have just started UI automation might think and solve problems in a way that end users will do.
-However, using Selenium doesn't mean that absolutely all actions have to be performed from UI level,
-which, most of the time, would be an inefficient approach.&lt;/p&gt;
-
-&lt;p&gt;For example, &lt;a href=&quot;https://github.com/dcparker/ruby-gmail&quot;&gt;ruby-gmail&lt;/a&gt; is a Ruby library that allows accessing emails in Gmail.
-After installing the gem using &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install ruby-gmail&lt;/code&gt;, writing a program to get inbox count would be just a matter of seconds:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'gmail'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;gmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Gmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'GMAIL_ADDRESS'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'GMAIL_PASSWORD'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Inbox count: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;heading-it-was-against-the-term-of-service&quot;&gt;It was against the &quot;Term of service&quot;&lt;/h3&gt;
-
-&lt;p&gt;Although this might no longer be true for Google applications&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; and nobody really cares about user agreement,
-it's still worth noting that Google specifically had statement regarding automated access in their old versions
-of &quot;&lt;a href=&quot;http://www.google.com/intl/en/policies/terms/archive/20070416-20120301/&quot;&gt;Term of Service&lt;/a&gt;&quot;.
-Same happens to Youtube as well, which still exists in current Youtube &lt;a href=&quot;https://www.youtube.com/static?template=terms&quot;&gt;Terms of Service 4-H&lt;/a&gt;.
-&lt;a class=&quot;button show-hidden&quot;&gt;Show&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;hidden&quot;&gt;
-
-&lt;p&gt;Google&lt;/p&gt;
-&lt;blockquote&gt;
-5.3 You agree not to access (or attempt to access) any of the Services by any means other than through the interface that is provided by Google, unless you have been specifically allowed to do so in a separate agreement with Google. You specifically agree not to access (or attempt to access) any of the Services through any automated means (including use of scripts or web crawlers) and shall ensure that you comply with the instructions set out in any robots.txt file present on the Services.
-&lt;/blockquote&gt;
-
-&lt;p&gt;Youtube&lt;/p&gt;
-&lt;blockquote&gt;
-You agree not to use or launch any automated system, including without limitation, &quot;robots,&quot; &quot;spiders,&quot; or &quot;offline readers,&quot; that accesses the Service in a manner that sends more request messages to the YouTube servers in a given period of time than a human can reasonably produce in the same period by using a conventional on-line web browser. Notwithstanding the foregoing, YouTube grants the operators of public search engines permission to use spiders to copy materials from the site for the sole purpose of and solely to the extent necessary for creating publicly available searchable indices of the materials, but not caches or archives of such materials. YouTube reserves the right to revoke these exceptions either generally or in specific cases. You agree not to collect or harvest any personally identifiable information, including account names, from the Service, nor to use the communication systems provided by the Service (e.g., comments, email) for any commercial solicitation purposes. You agree not to solicit, for commercial purposes, any users of the Service with respect to their Content.
-&lt;/blockquote&gt;
-
-&lt;/div&gt;
-
-&lt;h2 id=&quot;heading-who-might-still-do-it&quot;&gt;Who might still do it?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;UI automation team within Google&lt;/p&gt;
-
-    &lt;p&gt;If such team exists, the biggest advantage for them is the accessibility to source code.
-With ability to modify source code, UI automation can be a lot easier without fighting against nasty DOM structure.
-Additionally, they can easily track down which feature/bug ticket has changed DOM structure that causing previous Selenium WebDriver code failing.
-On the other hand, instead of automating from UI level, they might also use something at lower levels,
-like private APIs to interact with certain front-end functionalities.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;People with no other choice&lt;/p&gt;
-
-    &lt;p&gt;Sometimes accessing from UI might be the only way to achieve a task that must be done.
-If Google doesn't provide API for a particular product and it's so important that must be done, then just do it from UI level.
-The project might be extremely difficult to implement and can be super fragile to maintain, but it should still be achievable.
-However, from my experience, I can't think of any valid use cases for this.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;heading-what-should-you-automate-then&quot;&gt;What should you automate then?&lt;/h2&gt;
-
-&lt;h3 id=&quot;your-own-applications&quot;&gt;Your own (or your company's) applications&lt;/h3&gt;
-
-&lt;p&gt;Don't procrastinate.
-  Instead of spending time poking around and looking for something easy enough,
-  it is probably better to start from what you are supposed to do right away.
-  While coding up the project gradually, many questions might be asked by yourself:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;How can I find elements with dynamic ID?&lt;/li&gt;
-    &lt;li&gt;How can I find elements with absolutely nothing identifiable?&lt;/li&gt;
-    &lt;li&gt;How can I avoid unnecessary waiting?&lt;/li&gt;
-    &lt;li&gt;How can I create more generic expected conditions?&lt;/li&gt;
-    &lt;li&gt;How can I DRY up my code?&lt;/li&gt;
-    &lt;li&gt;How can I make my classes more extensible?&lt;/li&gt;
-    &lt;li&gt;How can I abstract my pages?&lt;/li&gt;
-    &lt;li&gt;How can I …&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;As time goes by, you will be more familiar with Selenium API and the quality of the project will be improving automatically,
-  as long as you are keen on getting the answers to those questions and willing to ask more.&lt;/p&gt;
-
-&lt;p&gt;Additionally, creating own demos could also be a good alternative for learning Selenium.
-  For example, &lt;a href=&quot;http://the-internet.herokuapp.com/&quot;&gt;&quot;The Internet&quot;&lt;/a&gt; is a demo application written for a similar purpose,
-  which provides lots of examples for common web functionalities, like hovering, frames, JavaScript alerts, etc.&lt;/p&gt;
-
-&lt;h3 id=&quot;heading-demos-of-javascript-ui-frameworks&quot;&gt;Demos of JavaScript UI frameworks&lt;/h3&gt;
-
-&lt;p&gt;There are common JavaScript frameworks for building web user interface, like &lt;a href=&quot;http://www.sencha.com/products/extjs/&quot;&gt;Ext JS&lt;/a&gt;, &lt;a href=&quot;http://dojotoolkit.org/&quot;&gt;Dojo Toolkit&lt;/a&gt; and &lt;a href=&quot;http://qooxdoo.org/&quot;&gt;qooxdoo&lt;/a&gt;.
-They provide heaps of interesting demos on their websites which can be used for learning Selenium WebDriver.
-More importantly, you can download and create your own playground to have a better understanding of how DOM is generated and structured.
-To start with, even writing some code to automate their homepage would be fun, like navigating, searching, etc.&lt;/p&gt;
-
-&lt;h2 id=&quot;heading-further-reading&quot;&gt;Further reading&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;StackOverflow
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/23084078/selenium-c-sharp-webdriver-unable-to-find-element#comment35284360_23084078&quot;&gt;Selenium - C# - Webdriver - Unable to find element&lt;/a&gt; (Arran)&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/a/8394306/1177636&quot;&gt;Webdriver to open a mail in Gmail&lt;/a&gt; (nilesh)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Selenium Users Group
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;https://groups.google.com/d/msg/selenium-users/Yd-OLaFxgCU/rE4-OWxVufYJ&quot;&gt;How can i start automate the google map using selenium webdriver ?&lt;/a&gt; (Mike Riley)&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://groups.google.com/d/msg/selenium-users/8jR6Fw5ndxU/7peVDuzkNN4J&quot;&gt;Stop trying to automate GMail&lt;/a&gt; (Jim Evans)&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://groups.google.com/d/msg/selenium-users/RfNvNAbLyLs/5-SJ5dmoELMJ&quot;&gt;Unable to handle the elements after login to gmail acount&lt;/a&gt; (Arran)&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://groups.google.com/d/msg/selenium-users/aT465o3OEfQ/NT4LDgzj-YUJ&quot;&gt;Selenium IDE &amp;amp; try to record Gmail login test case&lt;/a&gt;  (Krishnan)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;&lt;a href=&quot;http://docs.seleniumhq.org/&quot;&gt;&quot;What is Selenium?&quot;&lt;/a&gt; section.&amp;nbsp;&lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;Comment about Gmail &lt;a href=&quot;http://stackoverflow.com/questions/13472062/can-we-use-web-driver-to-test-https-sites-i-am-trying-to-work-on-gmail-com-a#comment18552229_13472062&quot;&gt;here&lt;/a&gt; made by Ross Patterson.&amp;nbsp;&lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;&lt;a href=&quot;https://developers.google.com/products/&quot;&gt;Products — Google Developers&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;Current version of &lt;a href=&quot;http://www.google.com/intl/en/policies/terms/&quot;&gt;Google Terms of Service&lt;/a&gt;.&amp;nbsp;&lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="selenium webdriver" /><summary type="html">Whenever I see questions on StackOverflow about UI automation against Google's products (especially Gmail, Google maps, Youtube, etc.), the first thing pops up in my head would be - do those OPs work for Google? I guess not. Then why are there so many people interested in automating Google's applications from UI?</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name>Yi Zeng</name><email>yi.zeng.dev@gmail.com</email></author><category term="mac os" /><category term="postgresql" /><category term="ruby on rails" /><summary type="html">A brief note on how to install and setup PostgreSQL for Ruby on Rails on Mac OS.</summary></entry></feed>
