@@ -150,9 +150,14 @@ test:
 
   > rake db:create && rake db:migrate
 
+## Further Reading
+
+[PostgreSQL Introduction: How To Insert Data Into A PostgreSQL Database - Nicholas Brown][External Tutorial]
+
 [PostgreSQL]: http://www.postgresql.org/
 [SQLite]: http://www.sqlite.org/
 [Homebrew]: http://brew.sh/
 [Postgres.app]: http://postgresapp.com/
 [EnterpriseDB]: https://www.enterprisedb.com/software-downloads-postgres
 [pgAdmin]: http://www.pgadmin.org/
+[External Tutorial]: https://www.kompulsa.com/postgresql-introduction-insert-data-postgresql-database/
