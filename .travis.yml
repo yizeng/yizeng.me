@@ -20,7 +20,7 @@ bundler_args: --without production
 
 before_install:
   - wget -N https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip -P ~/Downloads
-  - unzip ~/chromedriver_linux64.zip -d ~/Downloads
+  - unzip ~/Downloads/chromedriver_linux64.zip -d ~/Downloads
   - sudo mv -f ~/Downloads/chromedriver /usr/local/share/
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
