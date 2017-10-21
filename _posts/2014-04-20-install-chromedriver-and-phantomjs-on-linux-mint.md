@@ -19,18 +19,18 @@ to run against Chrome/PhantomJS directly without specifying paths in code.
 
 1. Install unzip
 
-	   sudo apt-get install p7zip-full
+	   sudo apt-get install unzip
 
 2. Download latest version from [official website](http://chromedriver.storage.googleapis.com/index.html)
    and upzip it (here for instance, verson `2.29` to `~/Downloads`)
 
 	   wget -N http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip -P ~/Downloads
-	   7z x ~/Downloads/chromedriver_linux64.zip -o~/Downloads
+	   unzip ~/Downloads/chromedriver_linux64.zip -d ~/Downloads
 
-3. Make it executable and move to `/usr/local/share`
+3. Move to `/usr/local/share` and make it executable
 
-	   chmod +x ~/Downloads/chromedriver
-	   sudo mv -f ~/Downloads/chromedriver /usr/local/share/chromedriver
+	   sudo mv -f ~/Downloads/chromedriver /usr/local/share/
+	   sudo chmod +x /usr/local/share/chromedriver
 
 4. Create symbolic links
 
