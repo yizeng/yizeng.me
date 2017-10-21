@@ -3,15 +3,16 @@ When(/^I click the expander icon$/) do
 end
 
 When(/^I click navbar brand link$/) do
+  @driver.execute_script('$.fx.off = true;')
+  wait_til_clickable(@page.navbar_brand)
   @page.navbar_brand.click
-  sleep 1 # Wait jQuery animation.
 end
 
 When(/^I click navbar link "(.*?)"$/) do |name|
+  @driver.execute_script('$.fx.off = true;')
   link = @page.get_navbar_link(name)
   wait_til_clickable(link)
   link.click
-  sleep 1 # Wait jQuery animation.
 end
 
 Then(/^I should see the correct homepage title$/) do
