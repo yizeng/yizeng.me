@@ -1,6 +1,9 @@
 language: ruby
 
-sudo: false
+sudo: required
+dist: trusty
+addons:
+  chrome: stable
 
 cache:
   bundler: true
@@ -16,7 +19,15 @@ rvm:
 bundler_args: --without production
 
 before_install:
-  - phantomjs --version
+  - sudo apt-get install p7zip-full
+  - wget -N https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip -P ~/Downloads
+  - 7z x ~/Downloads/chromedriver_linux64.zip -o~/Downloads
+  - chmod +x ~/Downloads/chromedriver
+  - sudo mv -f ~/Downloads/chromedriver /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+  # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 before_script:
   - "export DISPLAY=:99.0"
