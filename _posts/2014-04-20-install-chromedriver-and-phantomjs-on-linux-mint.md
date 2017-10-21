@@ -25,7 +25,7 @@ to run against Chrome/PhantomJS directly without specifying paths in code.
    and upzip it (here for instance, verson `2.29` to `~/Downloads`)
 
 	   wget -N http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip -P ~/Downloads
-	   7z x ~/Downloads/chromedriver_linux64.zip -o~/Downloads
+	   7z x ~/Downloads/chromedriver_linux64.zip -o ~/Downloads
 
 3. Make it executable and move to `/usr/local/share`
 
