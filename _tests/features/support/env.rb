@@ -22,9 +22,15 @@ WINDOW_HEIGHT = 800
 # timeout
 TIMEOUT = 5 # seconds
 
+def initialize_headless_chrome
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  Selenium::WebDriver.for :chrome, options: options
+end
+
 # Determine browser. Example: cucumber BROWSER=chrome
 if ENV['BROWSER'].nil?
-  driver = Selenium::WebDriver.for :phantomjs
+  driver = initialize_headless_chrome
 else
   case ENV['BROWSER'].downcase
   when 'chrome', 'debug'
@@ -32,7 +38,7 @@ else
   when 'ff', 'firefox'
     driver = Selenium::WebDriver.for :firefox
   else
-    driver = Selenium::WebDriver.for :phantomjs
+    driver = initialize_headless_chrome
   end
 end
 

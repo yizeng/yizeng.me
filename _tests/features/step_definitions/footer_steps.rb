@@ -12,8 +12,8 @@ Then(/^I should see footer's social icons in (\d+)px square$/) do |size|
   @page.footer.social_links.each do |img|
     assert_equal(true, is_link_clickable(img))
 
-    assert_equal(size, img.attribute('clientWidth'))
-    assert_equal(size, img.attribute('clientHeight'))
+    assert_equal(size, img.attribute('clientWidth').to_i)
+    assert_equal(size, img.attribute('clientHeight').to_i)
   end
 end
 

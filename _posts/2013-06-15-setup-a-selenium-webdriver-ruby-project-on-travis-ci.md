@@ -2,10 +2,10 @@
 layout: post
 title: "Setup a Selenium WebDriver Ruby project on Travis CI"
 description: "How to setup an automated UI testing project on Travis CI
-using Selenium WebDriver Ruby binding with headless PhantomJS."
+using Selenium WebDriver Ruby binding with headless Chrome."
 categories: [tutorials]
-tags: [github, phantomjs, ruby, selenium webdriver, travis-ci]
-last_updated: April 20, 2014
+tags: [github, ruby, selenium webdriver, travis-ci]
+last_updated: October 21, 2017
 redirect_from:
   - /2013/06/15/
 ---
@@ -14,7 +14,7 @@ It is free of charge for open source GitHub projects in various languages,
 including C, C++, Java, JavaScript, Python, Ruby and few more[^1].
 
 This article will demonstrate how to setup an automated UI testing project
-using Selenium WebDriver Ruby binding with headless PhantomJS browser.
+using Selenium WebDriver Ruby binding with headless Chrome browser (as PhantomJS has been deprecated as of 2017).
 
 * Kramdown table of contents
 {:toc .toc}
@@ -41,9 +41,7 @@ Hence here is how this sample Selenium Ruby project is structured:
 ### Create a UI test
 
 - `Test::Unit` framework is used as the testing framework in this example.
-- Headless WebKit [PhantomJS][PhantomJS] will be the browser to run the UI tests.
-- PhantomJS binary should be installed by default on
-[Travis CI servers][Travis CI servers], which is `1.9.7` as of 20/04/2014.
+- Headless Chrome browser will be the browser to run the UI tests.
 - Travis CI supports tests which require GUI, where some setup for `xvfb` are needed[^2].
 
 Here is a sample test file called `test_home_page.rb`:
@@ -55,7 +53,9 @@ module Test
   class TestHomePage < Test::Unit::TestCase
 
     def setup
-      @driver = Selenium::WebDriver.for :phantomjs
+      options = Selenium::WebDriver::Chrome::Options.new
+      options.add_argument('--headless')
+      @driver = Selenium::WebDriver.for :chrome, options: options
       @driver.navigate.to('http://yizeng.me')
     end
 
@@ -208,7 +208,6 @@ The sample project's current status is: <a class="post-image" href="https://trav
 [Travis CI]: https://travis-ci.org/
 [CI]: http://en.wikipedia.org/wiki/Continuous_integration
 [Create a New Repository]: https://github.com/repositories/new
-[PhantomJS]: http://phantomjs.org/
 [Travis CI servers]: http://about.travis-ci.org/docs/user/ci-environment/
 [Travis Lint]: http://about.travis-ci.org/docs/user/travis-lint/
 [Travis WebLint]: http://lint.travis-ci.org/

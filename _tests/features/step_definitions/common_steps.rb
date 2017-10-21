@@ -38,7 +38,7 @@ Then(/^I should see page title "(.*?)"$/) do |title|
   assert_equal(title, @driver.title)
 end
 
-Then(/^I should see page url "(.*?)" \(with slashes\)$/) do |url|
+Then(/^I should see page url "(.*?)" with slashes$/) do |url|
   assert_equal(SITE_URL + url, @driver.current_url)
 end
 

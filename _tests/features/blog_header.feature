@@ -44,7 +44,7 @@ Feature: Test blog page header
 
   Scenario Outline: Header's navigation links should be working as intended
     When I click header navigation link text "<link_text>"
-    Then I should see page url "<page_url>" (with slashes)
+    Then I should see page url "<page_url>" with slashes
     And I should see page title "<page_title>"
     And I should see title header "<title_header>"
 

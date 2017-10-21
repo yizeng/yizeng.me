@@ -4,7 +4,7 @@ Feature: Test home page
     Given I visit home page
 
   Scenario: Page title and url should be correct
-    Then I should see page url "/" (with slashes)
+    Then I should see page url "/" with slashes
     And I should see the correct homepage title
 
   Scenario Outline: Top bar links should work for small screens
