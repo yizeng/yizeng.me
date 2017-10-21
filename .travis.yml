@@ -19,11 +19,10 @@ rvm:
 bundler_args: --without production
 
 before_install:
-  - sudo apt-get install p7zip-full
   - wget -N https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip -P ~/Downloads
-  - 7z x ~/Downloads/chromedriver_linux64.zip -o~/Downloads
-  - chmod +x ~/Downloads/chromedriver
-  - sudo mv -f ~/Downloads/chromedriver /usr/local/share/chromedriver
+  - unzip ~/chromedriver_linux64.zip -d ~/Downloads
+  - sudo mv -f ~/Downloads/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
   # start your web application and listen on `localhost`
