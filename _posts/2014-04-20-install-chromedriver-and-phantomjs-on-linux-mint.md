@@ -9,7 +9,7 @@ redirect_from:
 last_updated: May 27, 2017
 ---
 
-> Recently Updated - May 27, 2017
+> Recently Updated - May 27, 2017. Note that Chrome now also supports headless mode.
 
 A note on how to install ChromeDriver and PhantomJS on Linux Mint (Ubuntu),
 which would be handy for writing Selenium WebDriver tests

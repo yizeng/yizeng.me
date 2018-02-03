@@ -7,6 +7,9 @@ tags: [javascript, typescript, ruby on rails, yarn]
 redirect_from:
   - /2017/05/20/
 ---
+
+> For a proper and comprehensive integration of TypeScript in Rails, please see [Webpacker][Webpacker] gem.
+
 As I'm currently learning [TypeScript][TypeScript],
 I wondered if I could apply it to my little [Ruby on Rails][Ruby on Rails] project [Strafforts][Strafforts]
 (A Visualizer for Strava Estimated Best Efforts and Races),
@@ -14,6 +17,7 @@ so that I could use this real world project to help me learning TypeScript quick
 
 Even though there is a gem called [typescript-rails][typescript-rails]
 which is a Rails asset pipeline wrapper for the TypeScript,
+or a proper and comprehensive integration of TypeScript in Rails like [Webpacker][Webpacker] gem.
 I have decided to create my own quick and hacky way of introducing TypeScipt to my Ruby on Rails project,
 mostly due to the following reasons:
 
@@ -21,6 +25,7 @@ mostly due to the following reasons:
 as I'm not trying to create a nice and complete solution for everyone.
 - `typescript-rails` project hasn't been updated for almost a year.
 Is it well maintained and fully compatible with the latest Rails 5.1.x?
+- `webpacker` is a whole solution which is too heavy for TypeScript learning purpose.
 - [Rails 5.1.x supports Yarn now][Rails 5-1 Release].
 Why not try the traditional Node.js way instead of the Rails way?
 
@@ -154,6 +159,7 @@ The more complicated example that was actually applied to [Strafforts][Straffort
 can also be viewed on [GitHub][Strafforts Source Code],
 which contains separate `tsconfig.json` files for compiling different pages/projects.
 
+[Webpacker]: https://github.com/rails/webpacker
 [TypeScript]: https://www.typescriptlang.org/
 [Ruby on Rails]: http://rubyonrails.org/
 [Strafforts]: http://www.strafforts.com/
