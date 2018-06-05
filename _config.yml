@@ -59,7 +59,7 @@ blog:
 disqus:
   shortname: yizeng
   public_key: ULZ0b9TFdfCUJSKQd4WCKv2v3u25YoG7YG8zXPewkWrT35lZ0Se9YnxLzoV6VM8W
-google_analytics: 'UA-42466615-1'
+google_tag_manager: 'GTM-P5NFP45'
 addthis_public_id: ra-53819e27689934f9 # AddThis sharing plugin. See http://www.addthis.com/
 
 paths:
