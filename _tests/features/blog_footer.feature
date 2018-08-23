@@ -47,7 +47,7 @@ Feature: Test blog page footer
 
     Examples:
       | title          | social_site_url                 |
-      | Email          | mailto:yi.zeng.dev@gmail.com    |
+      | Email          | mailto:dev.yizeng.me            |
       | Feed           | feed.xml                        |
       | GitHub         | github.com/yizeng               |
       | Instagram      | instagram.com/yizeng.me         |
