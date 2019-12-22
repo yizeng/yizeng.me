@@ -25,6 +25,13 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+defaults:
+  -
+    scope:
+      path: "assets/**/*.*"
+    values:
+      sitemap: false
+
 markdown: kramdown
 kramdown:
   auto_id_prefix: 'heading-'
