@@ -18,7 +18,7 @@ the [previous post](/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-
 ## Add Sidekiq to Gemfile
 
 ```ruby
-gem 'sidekiq'
+gem 'sidekiq' # Simple, efficient background processing for Ruby
 ```
 
 ## Build project

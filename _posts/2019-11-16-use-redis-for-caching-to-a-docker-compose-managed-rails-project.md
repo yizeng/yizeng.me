@@ -13,7 +13,7 @@ in additional to the default memcache.
 ## Add Redis to Gemfile
 
 ```ruby
-gem 'redis'
+gem 'redis' # A Ruby client library for Redis
 ```
 
 ## Build project
@@ -24,20 +24,24 @@ docker-compose build
 
 ## Setup Redis for caching
 
-1. Update `config/application.rb`.
+1. Update `config/environments/production.rb`.
 
    ```ruby
    # Use Redis store for caching.
    config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://redis:6379/0" }
    ```
 
-2. Update `config/envrionments/development.rb`.
+2. Update `config/environments/development.rb`.
 
    Change `memory_store` to `redis_cache_store` and caching can be toggled by `bundle exec rails dev:cache`.
 
    ```ruby
    config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://redis:6379/0" }
    ```
+
+3. Customize Redis URL
+
+   Please refer to the previous blog post [here](/2019/11/12/load-environment-variables-with-docker-compose/){:target="_blank"}.
 
 ## Add Redis to docker-compose.yml
 

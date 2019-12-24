@@ -54,13 +54,14 @@ To verify the successful installation:
 To create a new Ruby on Rails 6 API project, run:
 
 ```bash
-rails new rails-6-api-docker-demo --api --database=postgresql -T
+rails new rails-6-api-docker-demo --api --database=postgresql -T -C
 ```
 
 - `rails-6-api-docker-demo`: The name of the new project.
 - `--api`: Create an API only project.
 - `--database=postgresql`: Use [PostgresQL][PostgresQL]{:target="_blank"} as the default database adapter.
 - `-T`: (Optional) Skip test files. [RSpec][Rspec]{:target="_blank"} would be a more common option.
+- `-C`: (Optional) Skip ActionCable if no WebSockets is needed for the project.
 
 ## Setup Docker
 
