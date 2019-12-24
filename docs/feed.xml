@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2019-12-22T18:35:47+01:00</updated><id>http://yizeng.me/feed.xml</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a senior Ruby on Rails developer based in Berlin, Germany.</subtitle><author><name>Yi Zeng</name></author><entry><title type="html">Add Sidekiq to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Add Sidekiq to a Docker Compose managed Rails project" /><published>2019-11-17T00:00:00+01:00</published><updated>2019-11-17T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/">&lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot; target=&quot;_blank&quot;&gt;Sidekiq&lt;/a&gt; is a simple, efficient background processing for Ruby
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2019-12-24T23:11:10+01:00</updated><id>http://yizeng.me/feed.xml</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a senior Ruby on Rails developer based in Berlin, Germany.</subtitle><author><name>Yi Zeng</name></author><entry><title type="html">Add Sidekiq to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Add Sidekiq to a Docker Compose managed Rails project" /><published>2019-11-17T00:00:00+01:00</published><updated>2019-11-17T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/">&lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot; target=&quot;_blank&quot;&gt;Sidekiq&lt;/a&gt; is a simple, efficient background processing for Ruby
 that has a lot of advantage over delayed_job or Resque&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;p&gt;Here are the few simple steps to integrate Sidekiq into a Dockerized Rails project:&lt;/p&gt;
@@ -8,7 +8,7 @@ the &lt;a href=&quot;/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker
 
 &lt;h2 id=&quot;heading-add-sidekiq-to-gemfile&quot;&gt;Add Sidekiq to Gemfile&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sidekiq'&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sidekiq'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Simple, efficient background processing for Ruby&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;heading-build-project&quot;&gt;Build project&lt;/h2&gt;
@@ -192,7 +192,7 @@ in additional to the default memcache.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-add-redis-to-gemfile&quot;&gt;Add Redis to Gemfile&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'redis'&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'redis'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# A Ruby client library for Redis&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;heading-build-project&quot;&gt;Build project&lt;/h2&gt;
@@ -204,19 +204,24 @@ in additional to the default memcache.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/application.rb&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/environments/production.rb&lt;/code&gt;.&lt;/p&gt;
 
     &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Use Redis store for caching.&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache_store&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redis_cache_store&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;REDIS_URL_CACHING&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;redis://redis:6379/0&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/envrionments/development.rb&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/environments/development.rb&lt;/code&gt;.&lt;/p&gt;
 
     &lt;p&gt;Change &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;memory_store&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;redis_cache_store&lt;/code&gt; and caching can be toggled by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec rails dev:cache&lt;/code&gt;.&lt;/p&gt;
 
     &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache_store&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redis_cache_store&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;REDIS_URL_CACHING&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;redis://redis:6379/0&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Customize Redis URL&lt;/p&gt;
+
+    &lt;p&gt;Please refer to the previous blog post &lt;a href=&quot;/2019/11/12/load-environment-variables-with-docker-compose/&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -380,7 +385,7 @@ $ Rails 6.0.2.1&lt;/p&gt;
 
 &lt;p&gt;To create a new Ruby on Rails 6 API project, run:&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rails new rails-6-api-docker-demo &lt;span class=&quot;nt&quot;&gt;--api&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;postgresql &lt;span class=&quot;nt&quot;&gt;-T&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rails new rails-6-api-docker-demo &lt;span class=&quot;nt&quot;&gt;--api&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;postgresql &lt;span class=&quot;nt&quot;&gt;-T&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -388,6 +393,7 @@ $ Rails 6.0.2.1&lt;/p&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--api&lt;/code&gt;: Create an API only project.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--database=postgresql&lt;/code&gt;: Use &lt;a href=&quot;https://www.postgresql.org/&quot; target=&quot;_blank&quot;&gt;PostgresQL&lt;/a&gt; as the default database adapter.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-T&lt;/code&gt;: (Optional) Skip test files. &lt;a href=&quot;https://rspec.info/&quot; target=&quot;_blank&quot;&gt;RSpec&lt;/a&gt; would be a more common option.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-C&lt;/code&gt;: (Optional) Skip ActionCable if no WebSockets is needed for the project.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;heading-setup-docker&quot;&gt;Setup Docker&lt;/h2&gt;
