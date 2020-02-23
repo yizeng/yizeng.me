@@ -1,6 +1,20 @@
 [
   
     {
+      "title"      : "Benchmark converting string keys of a hash to symbols",
+      "url"        : "/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/",
+      "date"       : "2020-02-04 00:00:00 +0100",
+      "shortdate"  : "February 04, 2020"
+    } ,
+  
+    {
+      "title"      : "Reduce GraphQL Ruby mutation arguments in resolve method",
+      "url"        : "/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method/",
+      "date"       : "2020-01-05 00:00:00 +0100",
+      "shortdate"  : "January 05, 2020"
+    } ,
+  
+    {
       "title"      : "Add Sidekiq to a Docker Compose managed Rails project",
       "url"        : "/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/",
       "date"       : "2019-11-17 00:00:00 +0100",
