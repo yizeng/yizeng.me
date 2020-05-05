@@ -98,14 +98,14 @@ Full documentation can be found [here][Dockerfile reference]{:target="_blank"}.
 ```bash
 FROM ruby:alpine
 
-RUN apk update && apk add build-base nodejs postgresql-dev tzdata
+RUN apk update && apk add bash build-base nodejs postgresql-dev tzdata
 
 RUN mkdir /project
 WORKDIR /project
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler
-RUN bundle install
+RUN gem install bundler --no-document
+RUN bundle install --no-binstubs --jobs $(nproc) --retry 3
 
 COPY . .
 
@@ -129,15 +129,6 @@ A specific version can be set like `RUN gem install bundler -v 2.0.2`.
 
 ## Setup Docker Compose
 
-### Create .env
-
-First, create a `.env` file at the root of the project,
-so that any environment variables can be put into it and loaded in containers.
-
-```bash
-touch .env
-```
-
 ### Create docker-compose.yml
 
 ```bash
@@ -160,6 +151,8 @@ services:
       - 'postgres:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
 
   redis:
     image: 'redis:5-alpine'
@@ -168,20 +161,17 @@ services:
       - '6379:6379'
     volumes:
       - 'redis:/data'
-    env_file:
-      - '.env'
 
   web:
     depends_on:
       - 'db'
       - 'redis'
     build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - '3000:3000'
-    volumes:
-      - '.:/project'
-    env_file:
-      - '.env'
+    environment:
+      - DATABASE_HOST=db
 
 volumes:
   redis:
@@ -208,9 +198,10 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: db
-  username: postgres
-  password:
+  host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
+  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { "" } %>
 
 development:
   <<: *default
@@ -223,8 +214,8 @@ test:
 production:
   <<: *default
   database: rails_6_api_docker_demo_production
-  username: rails_6_api_docker_demo
-  password: <%= ENV['RAILS_6_API_DOCKER_DEMO_DATABASE_PASSWORD'] %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { "rails_6_api_docker_demo" } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { "" } %>
 ```
 
 ## Start Rails Server

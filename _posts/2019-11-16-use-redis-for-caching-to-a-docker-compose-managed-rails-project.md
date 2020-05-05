@@ -28,7 +28,7 @@ docker-compose build
 
    ```ruby
    # Use Redis store for caching.
-   config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://redis:6379/0" }
+   config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://localhost:6379/0" }
    ```
 
 2. Update `config/environments/development.rb`.
@@ -36,7 +36,7 @@ docker-compose build
    Change `memory_store` to `redis_cache_store` and caching can be toggled by `bundle exec rails dev:cache`.
 
    ```ruby
-   config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://redis:6379/0" }
+   config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL_CACHING"] ||= "redis://localhost:6379/0" }
    ```
 
 3. Customize Redis URL
@@ -69,10 +69,13 @@ services:
       - 'db'
       - 'redis'
     build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - '3000:3000'
     volumes:
       - '.:/project'
+    environment:
+      - REDIS_URL_CACHING=redis://redis:6379/0
 
 volumes:
   redis:

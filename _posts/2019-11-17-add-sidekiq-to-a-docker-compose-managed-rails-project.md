@@ -64,11 +64,11 @@ Follow the steps below to setup Sidekiq.
 
       ```ruby
       Sidekiq.configure_server do |config|
-        config.redis = { url: ENV['REDIS_URL_SIDEKIQ'] ||= 'redis://redis:6379/1' }
+        config.redis = { url: ENV['REDIS_URL_SIDEKIQ'] ||= 'redis://localhost:6379/1' }
       end
 
       Sidekiq.configure_client do |config|
-        config.redis = { url: ENV['REDIS_URL_SIDEKIQ'] ||= 'redis://redis:6379/1' }
+        config.redis = { url: ENV['REDIS_URL_SIDEKIQ'] ||= 'redis://localhost:6379/1' }
       end
       ```
 
@@ -102,12 +102,15 @@ Follow the steps below to setup Sidekiq.
          volumes:
            - '.:/project'
            - '/project/tmp' # don't mount tmp directory
+         environment:
+           - REDIS_URL_SIDEKIQ=redis://redis:6379/1
 
        web:
          depends_on:
            - 'db'
            - 'redis'
          build: .
+         command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0' -e ${RAILS_ENV}"
          ports:
            - '3000:3000'
          volumes:

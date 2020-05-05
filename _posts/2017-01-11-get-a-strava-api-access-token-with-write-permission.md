@@ -66,14 +66,14 @@ After some investigation, here are the steps as below.
      </table>
      </div>
 
-        http://www.strava.com/oauth/authorize?client_id=[REPLACE_WITH_YOUR_CLIENT_ID]&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=profile:write,activity:write
+        http://www.strava.com/oauth/authorize?client_id=[REPLACE_WITH_YOUR_CLIENT_ID]&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read_all,profile:read_all,activity:read_all
 
 2.  Go to above URL in browser. (HTTP GET)
 3.  Login to Strava then click 'Authorize' and tick the required permissions if needed.
 4.  Browser should go to 404 as `http://localhost/exchange_token` doesn't exist.
 5.  Copy the authorization code from URL. For example,
 
-         http://localhost/exchange_token?state=&code=c498932e64136c8991a3fb31e3d1dfdf2f859357&scope=read,profile:write,activity:write
+         http://localhost/exchange_token?state=&code=c498932e64136c8991a3fb31e3d1dfdf2f859357&scope=read_all,profile:read_all,activity:read_all
 
     The authorization code for next step is `c498932e64136c8991a3fb31e3d1dfdf2f859357`.
 
