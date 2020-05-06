@@ -6,11 +6,11 @@
 </code></pre></div> </div> </li> <li> <p>If ActiveJob is not used, delete <code class="language-plaintext highlighter-rouge">app/jobs</code> folder.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-r</span> app/jobs/
 </code></pre></div> </div> </li> <li> <p>Set the Sidekiq Redis URL.</p> <p>By default, Sidekiq tries to connect to Redis at localhost:6379, which needs to be changed the Redis URL in Docker.</p> <ul> <li> <p>Create <code class="language-plaintext highlighter-rouge">config/initializers/sidekiq.rb</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>config/initializers/sidekiq.rb
 </code></pre></div> </div> </li> <li> <p>Set URL in initializer.</p> <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Sidekiq</span><span class="p">.</span><span class="nf">configure_server</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'REDIS_URL_SIDEKIQ'</span><span class="p">]</span> <span class="o">||=</span> <span class="s1">'redis://localhost:6379/1'</span> <span class="p">}</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="s1">'REDIS_URL_SIDEKIQ'</span><span class="p">,</span> <span class="s1">'redis://localhost:6379/1'</span><span class="p">)</span> <span class="p">}</span>
 <span class="k">end</span>
 
 <span class="no">Sidekiq</span><span class="p">.</span><span class="nf">configure_client</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'REDIS_URL_SIDEKIQ'</span><span class="p">]</span> <span class="o">||=</span> <span class="s1">'redis://localhost:6379/1'</span> <span class="p">}</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="s1">'REDIS_URL_SIDEKIQ'</span><span class="p">,</span> <span class="s1">'redis://localhost:6379/1'</span><span class="p">)</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre></div> </div> </li> </ul> </li> <li> <p>Add Sidekiq and Redis to docker-compose.yml</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
 
@@ -52,6 +52,8 @@
       <span class="pi">-</span> <span class="s1">'</span><span class="s">3000:3000'</span>
     <span class="na">volumes</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s1">'</span><span class="s">.:/project'</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">REDIS_URL_SIDEKIQ=redis://redis:6379/1</span>
 
 <span class="na">volumes</span><span class="pi">:</span>
   <span class="na">redis</span><span class="pi">:</span>
