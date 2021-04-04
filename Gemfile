@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'jekyll-theme-simple-texture'
+gem 'jekyll-theme-simple-texture', tag: 'v0.5.1'
 gem "github-pages", group: :jekyll_plugins
 
 group :development, :test do
