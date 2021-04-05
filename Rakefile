@@ -47,10 +47,11 @@ end
 
 desc 'Start Jekyll locally'
 task :jekyll do
-  puts 'Usage: rake jekyll [port=4000]'
+  port = ENV['PORT'] || '4000'
+  drafts = ENV['DRAFTS'] == 'true' ? '--drafts' : ''
+  trace = ENV['TRACE'] == 'true' ? '--trace' : ''
 
-  port = ENV['port'] || '4000'
-  trace = ENV['trace'] == 'true' ? '--trace' : ''
+  puts "Usage: rake jekyll [port=#{port}]"
 
   # Set active code page to avoid encoding issues on Windows
   platforms = %w(mswin mingw32)
@@ -58,7 +59,7 @@ task :jekyll do
     system 'chcp 65001'
   end
 
-  system "bundle exec jekyll serve --watch --safe --drafts --trace --port=#{port}"
+  system "bundle exec jekyll serve --incremental --livereload --safe #{drafts} #{trace} --port=#{port}"
   sleep 3
 end
 
