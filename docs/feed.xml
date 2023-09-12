@@ -1,5 +1,493 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-05-06T22:25:08+02:00</updated><id>http://yizeng.me/feed.xml</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a senior Ruby on Rails developer based in Berlin, Germany.</subtitle><author><name>Yi Zeng</name></author><entry><title type="html">Benchmark converting string keys of a hash to symbols</title><link href="http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/" rel="alternate" type="text/html" title="Benchmark converting string keys of a hash to symbols" /><published>2020-02-04T00:00:00+01:00</published><updated>2020-02-04T00:00:00+01:00</updated><id>http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols</id><content type="html" xml:base="http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/">&lt;p&gt;There are several ways of converting string keys to symbols in hash.
-But ever wondered how fast they are and what's the difference?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://yizeng.me/feed.xml" rel="self" type="application/atom+xml" /><link href="http://yizeng.me/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-09-12T17:36:38+02:00</updated><id>http://yizeng.me/feed.xml</id><title type="html">Yi Zeng’s Blog</title><subtitle>Personal blog for Yi Zeng, a senior software engineer based in Berlin, Germany.</subtitle><author><name>Yi Zeng</name></author><entry><title type="html">Truthy, Falsey, nil?, any?, empty?, blank? and present? in Ruby and Ruby on Rails</title><link href="http://yizeng.me/2021/04/04/truhty-falsey-nil-any-empty-blank-present-in-ruby-and-ruby-on-rails/" rel="alternate" type="text/html" title="Truthy, Falsey, nil?, any?, empty?, blank? and present? in Ruby and Ruby on Rails" /><published>2021-04-04T00:00:00+02:00</published><updated>2021-04-04T00:00:00+02:00</updated><id>http://yizeng.me/2021/04/04/truhty-falsey-nil-any-empty-blank-present-in-ruby-and-ruby-on-rails</id><content type="html" xml:base="http://yizeng.me/2021/04/04/truhty-falsey-nil-any-empty-blank-present-in-ruby-and-ruby-on-rails/">&lt;p&gt;Here&apos;s a quick comparison of Ruby&apos;s truthy, falsey, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt;
+against Ruby on Rails&apos; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt;.&lt;/p&gt;
+
+&lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-tldr&quot; id=&quot;markdown-toc-heading-tldr&quot;&gt;TL;DR&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-ruby&quot; id=&quot;markdown-toc-heading-ruby&quot;&gt;Ruby&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-rails&quot; id=&quot;markdown-toc-heading-rails&quot;&gt;Rails&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-summary&quot; id=&quot;markdown-toc-heading-summary&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-difference-between-any-and-empty&quot; id=&quot;markdown-toc-heading-difference-between-any-and-empty&quot;&gt;Difference between any? and empty?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-difference-between-empty-and-blank&quot; id=&quot;markdown-toc-heading-difference-between-empty-and-blank&quot;&gt;Difference between empty? and blank?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-difference-between-blank-and-present&quot; id=&quot;markdown-toc-heading-difference-between-blank-and-present&quot;&gt;Difference between blank? and present?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-the-presence-method&quot; id=&quot;markdown-toc-heading-the-presence-method&quot;&gt;The presence method&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-bonus-logical-operators&quot; id=&quot;markdown-toc-heading-bonus-logical-operators&quot;&gt;[Bonus] Logical Operators&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-sample-code&quot; id=&quot;markdown-toc-heading-sample-code&quot;&gt;Sample Code&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-example&quot; id=&quot;markdown-toc-heading-example&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heading-results&quot; id=&quot;markdown-toc-heading-results&quot;&gt;Results&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;heading-tldr&quot;&gt;TL;DR&lt;/h2&gt;
+
+&lt;h3 id=&quot;heading-ruby&quot;&gt;Ruby&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Truthy&lt;/td&gt;
+      &lt;td&gt;Used to evaluate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unless&lt;/code&gt; conditions. Everything is truthy except for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Falsey&lt;/td&gt;
+      &lt;td&gt;The negation of truthy. Only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt; are falsey in Ruby.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Defined on Ruby&apos;s &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Object.html#method-i-nil-3F&quot; target=&quot;_blank&quot;&gt;Object&lt;/a&gt; class.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Defined only for certain objects of &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Array.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Array&lt;/a&gt;, &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Hash.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Hash&lt;/a&gt;, &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/String.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;String&lt;/a&gt; etc. It throws &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NoMethodError&lt;/code&gt; for nil, TrueClass, FalseClass, Integer etc.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Defined in the mixin module &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Enumerable.html#method-i-any-3F&quot; target=&quot;_blank&quot;&gt;Enumerable&lt;/a&gt;, which is included in classes like Array and Hash.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;heading-rails&quot;&gt;Rails&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Defined in Ruby on Rails&apos; &lt;a href=&quot;https://api.rubyonrails.org/classes/Object.html#method-i-blank-3F&quot; target=&quot;_blank&quot;&gt;ActiveSupport&lt;/a&gt;, which can also be installed independently without Rails.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;, empty/whitespace strings, empty arrays, hashes and any other objects with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object.empty?&lt;/code&gt; is true.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The negation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt;, i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!blank?&lt;/code&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;is not blank (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.present? # =&amp;gt; true&lt;/code&gt;).&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;heading-summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Methods&lt;/th&gt;
+      &lt;th&gt;Values&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Truthy&lt;/td&gt;
+      &lt;td&gt;true, &quot;&quot;, &quot;\n&quot;, &quot;Hello&quot;, 0, 1.25, [], [nil, false], [1, 2], {}, {:colour=&amp;gt;nil}&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Falsey&lt;/td&gt;
+      &lt;td&gt;nil, false&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;nil?&lt;/td&gt;
+      &lt;td&gt;nil&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;any?&lt;/td&gt;
+      &lt;td&gt;[1, 2], {:colour=&amp;gt;nil}&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;empty?&lt;/td&gt;
+      &lt;td&gt;&quot;&quot;, [], {}&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;blank?&lt;/td&gt;
+      &lt;td&gt;nil, false, &quot;&quot;, &quot;\n&quot;, [], {}&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;present?&lt;/td&gt;
+      &lt;td&gt;true, &quot;Hello&quot;, 0, 1.25, [nil, false], [1, 2], {:colour=&amp;gt;nil}&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;truthy&lt;/th&gt;
+      &lt;th&gt;falsey&lt;/th&gt;
+      &lt;th&gt;nil?&lt;/th&gt;
+      &lt;th&gt;any?&lt;/th&gt;
+      &lt;th&gt;empty?&lt;/th&gt;
+      &lt;th&gt;blank?&lt;/th&gt;
+      &lt;th&gt;present?&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;nil&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;false&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;true&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&quot;&quot;&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&quot;\n&quot;&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&quot;Hello&quot;&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1.25&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt;NoMethodError&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;[]&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;[nil, false]&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;[1, 2]&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;{}&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;{ colour: nil }&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Object responds to empty? and evaluate to true&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt;✓&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;heading-difference-between-any-and-empty&quot;&gt;Difference between any? and empty?&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt; is defined in the mixin module &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Enumerable.html#method-i-any-3F&quot; target=&quot;_blank&quot;&gt;Enumerable&lt;/a&gt;
+to check if the enumberable contains the values evaluated from a given block.
+When no block is given,
+it returns &lt;strong&gt;true&lt;/strong&gt; if the object contains a value other than false or nil.&lt;/p&gt;
+
+&lt;p&gt;Since &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Array.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Array&lt;/a&gt;, &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Hash.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Hash&lt;/a&gt; both include the Enumerable module,
+both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt; methods become available.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For Hashes, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt; is an antonym of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt;, i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}.any?&lt;/code&gt; is false and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{}.empty?&lt;/code&gt; is true.&lt;/li&gt;
+  &lt;li&gt;For Arrays, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;any?&lt;/code&gt; is almost the antonym of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt;, except for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;, that &lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[nil, false].any?&lt;/code&gt; is false, while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[nil, false].empty?&lt;/code&gt; is also false&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;heading-difference-between-empty-and-blank&quot;&gt;Difference between empty? and blank?&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;empty?&lt;/code&gt; is simply a Ruby method defined on certain classes,
+e.g. &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Array.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Array&lt;/a&gt;, &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/Hash.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;Hash&lt;/a&gt;, &lt;a href=&quot;https://ruby-doc.org/core-3.0.0/String.html#method-i-empty-3F&quot; target=&quot;_blank&quot;&gt;String&lt;/a&gt;,
+while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt; are Ruby on Rails methods defined in
+&lt;a href=&quot;https://api.rubyonrails.org/classes/Object.html#method-i-blank-3F&quot; target=&quot;_blank&quot;&gt;ActiveSupport&lt;/a&gt;, which can also be installed independently with Rails.&lt;/p&gt;
+
+&lt;p&gt;By definition, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt; includes:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nil&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;empty/whitespace strings&lt;/li&gt;
+  &lt;li&gt;empty arrays, hashes&lt;/li&gt;
+  &lt;li&gt;any other objects with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object.empty?&lt;/code&gt; is true&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;heading-difference-between-blank-and-present&quot;&gt;Difference between blank? and present?&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://api.rubyonrails.org/classes/Object.html#method-i-present-3F&quot; target=&quot;_blank&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt;&lt;/a&gt; is just a negation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blank?&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# File activesupport/lib/active_support/core_ext/object/blank.rb, line 25&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;present?&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blank?&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;heading-the-presence-method&quot;&gt;The presence method&lt;/h2&gt;
+
+&lt;p&gt;Defined together with &lt;a href=&quot;https://api.rubyonrails.org/classes/Object.html#method-i-present-3F&quot; target=&quot;_blank&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;present?&lt;/code&gt;&lt;/a&gt;,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;presence&lt;/code&gt; method returns the receiver if it&apos;s present otherwise returns nil.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object.presence&lt;/code&gt; is equivalent to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object.present? ? object : nil&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For example, something like&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def display_name
+  return user.name if user.name.present?
+
+  &quot;Demo User&quot;
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;becomes&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def display_name
+  user.name.presence || &quot;Demo User&quot;
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;heading-bonus-logical-operators&quot;&gt;[Bonus] Logical Operators&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Operator&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Example&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;!&lt;/td&gt;
+      &lt;td&gt;Logical Not&lt;/td&gt;
+      &lt;td&gt;Negates the truthy or falsey value of an object&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!user.active?&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;!!&lt;/td&gt;
+      &lt;td&gt;Logical Truthy&lt;/td&gt;
+      &lt;td&gt;Returns the truthy or falsey of an object&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!![]&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&amp;amp;&amp;amp;&lt;/td&gt;
+      &lt;td&gt;Logical And&lt;/td&gt;
+      &lt;td&gt;Returns true if both statements are truthy&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user.name.present? &amp;amp;&amp;amp; user.active?&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;||&lt;/td&gt;
+      &lt;td&gt;Logicall Or&lt;/td&gt;
+      &lt;td&gt;Returns true if one of the statements is truthy&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user.name.blank? || user.discarded?&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; nil&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; nil&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; true&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.25&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; 1.25&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.25&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; 0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;heading-sample-code&quot;&gt;Sample Code&lt;/h2&gt;
+
+&lt;h3 id=&quot;heading-example&quot;&gt;Example&lt;/h3&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;active_support&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;active_support/core_ext/object/blank&quot;&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;colour: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`ruby -v`&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`rails -v`&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;All Values: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Truthy: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Falsey: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;nil?: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;any?: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;respond_to?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:any?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;any?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;empty?: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;respond_to?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:empty?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;blank?: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blank?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;present?: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;present?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; }&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;heading-results&quot;&gt;Results&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin18]
+Rails 6.0.3.5
+
+All Values: nil, false, true, &quot;&quot;, &quot;\n&quot;, &quot;Hello&quot;, 0, 1.25, [], [nil, false], [1, 2], {}, {:colour=&amp;gt;nil}
+
+Truthy: true, &quot;&quot;, &quot;\n&quot;, &quot;Hello&quot;, 0, 1.25, [], [nil, false], [1, 2], {}, {:colour=&amp;gt;nil}
+Falsey: nil, false
+nil?: nil
+any?: [1, 2], {:colour=&amp;gt;nil}
+empty?: &quot;&quot;, [], {}
+
+blank?: nil, false, &quot;&quot;, &quot;\n&quot;, [], {}
+present?: true, &quot;Hello&quot;, 0, 1.25, [nil, false], [1, 2], {:colour=&amp;gt;nil}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="articles" /><category term="ruby" /><category term="ruby on rails" /><summary type="html">Here&apos;s a quick comparison of Ruby&apos;s truthy, falsey, nil?, any?, empty? against Ruby on Rails&apos; blank? and present?.</summary></entry><entry><title type="html">Benchmark converting string keys of a hash to symbols</title><link href="http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/" rel="alternate" type="text/html" title="Benchmark converting string keys of a hash to symbols" /><published>2020-02-04T00:00:00+01:00</published><updated>2020-02-04T00:00:00+01:00</updated><id>http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols</id><content type="html" xml:base="http://yizeng.me/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/">&lt;p&gt;There are several ways of converting string keys to symbols in hash.
+But ever wondered how fast they are and what&apos;s the difference?&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-tldr&quot;&gt;TL;DR&lt;/h2&gt;
 
@@ -37,7 +525,7 @@ which can be used to convert string keys to symbols.&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-ruby-on-rails&quot;&gt;Ruby on Rails&lt;/h3&gt;
 
-&lt;p&gt;Ruby on Rails' active support provides &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;symbolize_keys&lt;/code&gt;
+&lt;p&gt;Ruby on Rails&apos; active support provides &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;symbolize_keys&lt;/code&gt;
 on Hash class to symbolize keys.&lt;/p&gt;
 
 &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dimensions&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;height&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;symbolize_keys&lt;/span&gt;
@@ -45,7 +533,7 @@ on Hash class to symbolize keys.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-deep-symbolizing&quot;&gt;Deep Symbolizing&lt;/h2&gt;
 
-&lt;p&gt;Ruby on Rails' active_support provides two ways of achieving this.&lt;/p&gt;
+&lt;p&gt;Ruby on Rails&apos; active_support provides two ways of achieving this.&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-with_indifferent_access&quot;&gt;with_indifferent_access&lt;/h3&gt;
 
@@ -55,7 +543,7 @@ on Hash class to symbolize keys.&lt;/p&gt;
 
 &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dimensions&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;height&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;with_indifferent_access&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# hash.dig(:dimensions, :height) # =&amp;gt; 10&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# hash.dig('dimensions', 'height') # =&amp;gt; 10&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# hash.dig(&apos;dimensions&apos;, &apos;height&apos;) # =&amp;gt; 10&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;heading-deep_symbolize_keys&quot;&gt;deep_symbolize_keys&lt;/h3&gt;
@@ -70,15 +558,15 @@ the keys in the new hash can no longer be retrieved via original string format.&
 
 &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dimensions&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;height&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;deep_symbolize_keys&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# hash.dig(:dimensions, :height) # =&amp;gt; 10&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# hash.dig('dimensions', 'height') # =&amp;gt; nil&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# hash.dig(&apos;dimensions&apos;, &apos;height&apos;) # =&amp;gt; nil&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;heading-benchmarking&quot;&gt;Benchmarking&lt;/h2&gt;
 
 &lt;h3 id=&quot;heading-code&quot;&gt;Code&lt;/h3&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'benchmark'&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'active_support/all'&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;benchmark&apos;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;active_support/all&apos;&lt;/span&gt;
 
 &lt;span class=&quot;no&quot;&gt;TIMES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50_000_000&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;HASH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -115,7 +603,7 @@ symbolize_keys:             7.628721    0.018207    7.646928  (  7.665882)
 
 with_indifferent_access:  107.970348    0.446824  108.417172  (109.052287)
 deep_symbolize_keys:       95.842033    0.551120   96.393153  ( 97.145661)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="benchmarking" /><category term="ruby" /><category term="ruby on rails" /><summary type="html">There are several ways of converting string keys to symbols in hash. But ever wondered how fast they are and what's the difference?</summary></entry><entry><title type="html">Reduce GraphQL Ruby mutation arguments in resolve method</title><link href="http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method/" rel="alternate" type="text/html" title="Reduce GraphQL Ruby mutation arguments in resolve method" /><published>2020-01-05T00:00:00+01:00</published><updated>2020-01-05T00:00:00+01:00</updated><id>http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method</id><content type="html" xml:base="http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method/">&lt;p&gt;&lt;a href=&quot;https://graphql-ruby.org/&quot; target=&quot;_blank&quot;&gt;GraphQL Ruby gem&lt;/a&gt; helps to add GraphQL support to Ruby or Ruby on Rails applications.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="articles" /><category term="benchmarking" /><category term="ruby" /><category term="ruby on rails" /><summary type="html">There are several ways of converting string keys to symbols in hash. But ever wondered how fast they are and what&apos;s the difference?</summary></entry><entry><title type="html">Reduce GraphQL Ruby mutation arguments in resolve method</title><link href="http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method/" rel="alternate" type="text/html" title="Reduce GraphQL Ruby mutation arguments in resolve method" /><published>2020-01-05T00:00:00+01:00</published><updated>2020-01-05T00:00:00+01:00</updated><id>http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method</id><content type="html" xml:base="http://yizeng.me/2020/01/05/reduce-graphql-ruby-mutation-arguments-in-resolve-method/">&lt;p&gt;&lt;a href=&quot;https://graphql-ruby.org/&quot; target=&quot;_blank&quot;&gt;GraphQL Ruby gem&lt;/a&gt; helps to add GraphQL support to Ruby or Ruby on Rails applications.&lt;/p&gt;
 
 &lt;p&gt;The &lt;a href=&quot;https://graphql-ruby.org/guides&quot; target=&quot;_blank&quot;&gt;official guides&lt;/a&gt;
 or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot;&gt;How to GraphQL&lt;/a&gt; website would be a good starting point.&lt;/p&gt;
@@ -124,7 +612,7 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
 
 &lt;p&gt;Here is a basic sign up mutation that handles the sign up process:&lt;/p&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations::SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;argument&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;required: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
@@ -141,13 +629,13 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
 
 &lt;h2 id=&quot;heading-the-problem&quot;&gt;The Problem&lt;/h2&gt;
 
-&lt;p&gt;But what if it's a third party client calling this mutation endpoint with a lot of parameters?&lt;/p&gt;
+&lt;p&gt;But what if it&apos;s a third party client calling this mutation endpoint with a lot of parameters?&lt;/p&gt;
 
 &lt;p&gt;Here is an example (the parameters are illustrative only, which may not make total sense).&lt;/p&gt;
 
-&lt;p&gt;Mutation's &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resolve&lt;/code&gt; function would now have 10+ parameters.&lt;/p&gt;
+&lt;p&gt;Mutation&apos;s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resolve&lt;/code&gt; function would now have 10+ parameters.&lt;/p&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations::SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;argument&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;required: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
@@ -177,7 +665,7 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
 
 &lt;p&gt;Ruby 2.0 introduced double splat operator captures all keyword arguments.&lt;/p&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations::SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;argument&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;required: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
@@ -196,7 +684,7 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
 
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;# create your user with data passed in.&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# arguments is a hash like this: { email: '', password: '', expires_at: 1234556, ... }&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# arguments is a hash like this: { email: &apos;&apos;, password: &apos;&apos;, expires_at: 1234556, ... }&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;# use arguments[:email] to access them.&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
@@ -221,7 +709,7 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mutations::SignUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mutations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BaseMutation&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;argument&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;required: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
@@ -236,8 +724,8 @@ or &lt;a href=&quot;https://www.howtographql.com/&quot; target=&quot;_blank&quot
     &lt;span class=&quot;c1&quot;&gt;# sign_up_details.to_h =&amp;gt; { expires_at: 1234556, ... }&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="graphql" /><category term="ruby" /><category term="ruby on rails" /><summary type="html">GraphQL Ruby gem helps to add GraphQL support to Ruby or Ruby on Rails applications.</summary></entry><entry><title type="html">Add Sidekiq to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Add Sidekiq to a Docker Compose managed Rails project" /><published>2019-11-17T00:00:00+01:00</published><updated>2019-11-17T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/">&lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot; target=&quot;_blank&quot;&gt;Sidekiq&lt;/a&gt; is a simple, efficient background processing for Ruby
-that has a lot of advantage over delayed_job or Resque&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="articles" /><category term="graphql" /><category term="ruby" /><category term="ruby on rails" /><summary type="html">GraphQL Ruby gem helps to add GraphQL support to Ruby or Ruby on Rails applications.</summary></entry><entry><title type="html">Add Sidekiq to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Add Sidekiq to a Docker Compose managed Rails project" /><published>2019-11-17T00:00:00+01:00</published><updated>2019-11-17T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/17/add-sidekiq-to-a-docker-compose-managed-rails-project/">&lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot; target=&quot;_blank&quot;&gt;Sidekiq&lt;/a&gt; is a simple, efficient background processing for Ruby
+that has a lot of advantage over delayed_job or Resque&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;p&gt;Here are the few simple steps to integrate Sidekiq into a Dockerized Rails project:&lt;/p&gt;
 
@@ -246,7 +734,7 @@ the &lt;a href=&quot;/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker
 
 &lt;h2 id=&quot;heading-add-sidekiq-to-gemfile&quot;&gt;Add Sidekiq to Gemfile&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sidekiq'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Simple, efficient background processing for Ruby&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;sidekiq&apos;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Simple, efficient background processing for Ruby&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;heading-build-project&quot;&gt;Build project&lt;/h2&gt;
@@ -294,11 +782,11 @@ the &lt;a href=&quot;/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker
         &lt;p&gt;Set URL in initializer.&lt;/p&gt;
 
         &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_server&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'REDIS_URL_SIDEKIQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'redis://localhost:6379/1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;REDIS_URL_SIDEKIQ&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;redis://localhost:6379/1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
 &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_client&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'REDIS_URL_SIDEKIQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'redis://localhost:6379/1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;REDIS_URL_SIDEKIQ&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;redis://localhost:6379/1&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
       &lt;/li&gt;
@@ -307,46 +795,46 @@ the &lt;a href=&quot;/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker
   &lt;li&gt;
     &lt;p&gt;Add Sidekiq and Redis to docker-compose.yml&lt;/p&gt;
 
-    &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3'&lt;/span&gt;
+    &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;redis-server&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;sidekiq&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec sidekiq&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/project/tmp'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# don't mount tmp directory&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/project/tmp&apos;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# don&apos;t mount tmp directory&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;REDIS_URL_SIDEKIQ=redis://redis:6379/1&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b '0.0.0.0' -e ${RAILS_ENV}&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b &apos;0.0.0.0&apos; -e ${RAILS_ENV}&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;REDIS_URL_SIDEKIQ=redis://redis:6379/1&lt;/span&gt;
 
@@ -362,12 +850,12 @@ the &lt;a href=&quot;/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker
 
     &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;sidekiq&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec sidekiq&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;REDIS_URL_SIDEKIQ=redis://redis:6379/12&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
@@ -380,21 +868,21 @@ REDIS_URL_SIDEKIQ=redis://redis:6379/12
 
     &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;sidekiq&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec sidekiq&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;env_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env&apos;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Add UI page to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;routes.rb&lt;/code&gt;.&lt;/p&gt;
 
-    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sidekiq/web'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mount&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Web&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/sidekiq'&lt;/span&gt;
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;sidekiq/web&apos;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mount&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Web&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/sidekiq&apos;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -414,28 +902,28 @@ REDIS_URL_SIDEKIQ=redis://redis:6379/12
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;: Two processes are trying to load the /app/tmp directory at the same time&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;: Two processes are trying to load the /app/tmp directory at the same time&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- '/project/tmp'&lt;/code&gt; to Sidekiq volumes in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- &apos;/project/tmp&apos;&lt;/code&gt; to Sidekiq volumes in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/FAQ#how-does-sidekiq-compare-to-resque-or-delayed_job&quot; target=&quot;_blank&quot;&gt;Sidekiq Comparison&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/FAQ#how-does-sidekiq-compare-to-resque-or-delayed_job&quot; target=&quot;_blank&quot;&gt;Sidekiq Comparison&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;See &lt;a href=&quot;https://github.com/Shopify/bootsnap/issues/177#issuecomment-491711481&quot; target=&quot;_blank&quot;&gt;this&lt;/a&gt; GitHub Comment. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;See &lt;a href=&quot;https://github.com/Shopify/bootsnap/issues/177#issuecomment-491711481&quot; target=&quot;_blank&quot;&gt;this&lt;/a&gt; GitHub Comment. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="docker" /><category term="redis" /><category term="ruby on rails" /><category term="sidekiq" /><summary type="html">Sidekiq is a simple, efficient background processing for Ruby that has a lot of advantage over delayed_job or Resque1. Sidekiq Comparison &amp;#8617;</summary></entry><entry><title type="html">Use Redis for caching to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Use Redis for caching to a Docker Compose managed Rails project" /><published>2019-11-16T00:00:00+01:00</published><updated>2019-11-16T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project/">&lt;p&gt;Since Rails 5.2, Redis cache has been added to Rails for caching,
+&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="docker" /><category term="redis" /><category term="ruby on rails" /><category term="sidekiq" /><summary type="html">Sidekiq is a simple, efficient background processing for Ruby that has a lot of advantage over delayed_job or Resque1. Sidekiq Comparison &amp;#8617;</summary></entry><entry><title type="html">Use Redis for caching to a Docker Compose managed Rails project</title><link href="http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project/" rel="alternate" type="text/html" title="Use Redis for caching to a Docker Compose managed Rails project" /><published>2019-11-16T00:00:00+01:00</published><updated>2019-11-16T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project</id><content type="html" xml:base="http://yizeng.me/2019/11/16/use-redis-for-caching-to-a-docker-compose-managed-rails-project/">&lt;p&gt;Since Rails 5.2, Redis cache has been added to Rails for caching,
 in additional to the default memcache.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-add-redis-to-gemfile&quot;&gt;Add Redis to Gemfile&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'redis'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# A Ruby client library for Redis&lt;/span&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;redis&apos;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# A Ruby client library for Redis&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;heading-build-project&quot;&gt;Build project&lt;/h2&gt;
@@ -470,34 +958,34 @@ in additional to the default memcache.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-add-redis-to-docker-composeyml&quot;&gt;Add Redis to docker-compose.yml&lt;/h2&gt;
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3'&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;redis-server&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b '0.0.0.0'&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b &apos;0.0.0.0&apos;&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;REDIS_URL_CACHING=redis://redis:6379/0&lt;/span&gt;
 
@@ -509,7 +997,7 @@ in additional to the default memcache.&lt;/p&gt;
 &lt;h2 id=&quot;heading-start-server&quot;&gt;Start Server&lt;/h2&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-compose up &lt;span class=&quot;nt&quot;&gt;--build&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="docker" /><category term="redis" /><category term="ruby on rails" /><category term="sidekiq" /><summary type="html">Since Rails 5.2, Redis cache has been added to Rails for caching, in additional to the default memcache.</summary></entry><entry><title type="html">Load environment variables with Docker Compose</title><link href="http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose/" rel="alternate" type="text/html" title="Load environment variables with Docker Compose" /><published>2019-11-12T00:00:00+01:00</published><updated>2019-11-12T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose</id><content type="html" xml:base="http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose/">&lt;p&gt;Generally there are two ways to load environment variables with Docker Compose in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="docker" /><category term="redis" /><category term="ruby on rails" /><category term="sidekiq" /><summary type="html">Since Rails 5.2, Redis cache has been added to Rails for caching, in additional to the default memcache.</summary></entry><entry><title type="html">Load environment variables with Docker Compose</title><link href="http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose/" rel="alternate" type="text/html" title="Load environment variables with Docker Compose" /><published>2019-11-12T00:00:00+01:00</published><updated>2019-11-12T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose</id><content type="html" xml:base="http://yizeng.me/2019/11/12/load-environment-variables-with-docker-compose/">&lt;p&gt;Generally there are two ways to load environment variables with Docker Compose in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;heading-set-directly&quot;&gt;Set directly&lt;/h2&gt;
 
@@ -517,10 +1005,10 @@ in additional to the default memcache.&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000'&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000&apos;&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;RAILS_LOG_TO_STDOUT=enabled&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -532,28 +1020,28 @@ then the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3'&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;env_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.:/project&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;env_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.env&apos;&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;postgres&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
@@ -562,7 +1050,7 @@ then the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RAILS_LOG_TO_STDOUT=enabled
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="docker" /><category term="ruby on rails" /><summary type="html">Generally there are two ways to load environment variables with Docker Compose in docker-compose.yml.</summary></entry><entry><title type="html">Setup a Ruby on Rails 6 API project with Docker Compose</title><link href="http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose/" rel="alternate" type="text/html" title="Setup a Ruby on Rails 6 API project with Docker Compose" /><published>2019-11-09T00:00:00+01:00</published><updated>2019-11-09T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose</id><content type="html" xml:base="http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose/">&lt;p&gt;Here is a quick rundown on how to setup a Ruby on Rails 6 API project with Docker Compose.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="docker" /><category term="ruby on rails" /><summary type="html">Generally there are two ways to load environment variables with Docker Compose in docker-compose.yml.</summary></entry><entry><title type="html">Setup a Ruby on Rails 6 API project with Docker Compose</title><link href="http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose/" rel="alternate" type="text/html" title="Setup a Ruby on Rails 6 API project with Docker Compose" /><published>2019-11-09T00:00:00+01:00</published><updated>2019-11-09T00:00:00+01:00</updated><id>http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose</id><content type="html" xml:base="http://yizeng.me/2019/11/09/setup-a-ruby-on-rails-6-api-project-with-docker-compose/">&lt;p&gt;Here is a quick rundown on how to setup a Ruby on Rails 6 API project with Docker Compose.&lt;/p&gt;
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-prerequisites&quot; id=&quot;markdown-toc-heading-prerequisites&quot;&gt;Prerequisites&lt;/a&gt;    &lt;ul&gt;
@@ -606,9 +1094,9 @@ $ docker-compose version 1.24.1, build 4667896b&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-ruby&quot;&gt;Ruby&lt;/h3&gt;
 
-&lt;p&gt;Rails 6 requires Ruby 2.5.0 or newer&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Rails 6 requires Ruby 2.5.0 or newer&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
-&lt;p&gt;If the local machine hasn't got Ruby installed,
+&lt;p&gt;If the local machine hasn&apos;t got Ruby installed,
 &lt;a href=&quot;https://rvm.io/&quot; target=&quot;_blank&quot;&gt;RVM&lt;/a&gt; would be a common solution to consider.&lt;/p&gt;
 
 &lt;p&gt;For installing RVM with default Ruby and Rails in one command, run:&lt;/p&gt;
@@ -657,7 +1145,7 @@ You may just use the content from &lt;code class=&quot;language-plaintext highli
 For example, &lt;a href=&quot;https://www.gitignore.io/api/git,rails,rubymine&quot; target=&quot;_blank&quot;&gt;https://www.gitignore.io/api/git,rails,rubymine&lt;/a&gt;
 gives an example of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; file for git, rails and rubymine IDE.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Here's a complete example&lt;/strong&gt;: &lt;a href=&quot;https://gist.github.com/yizeng/eeeb48d6823801061791cc5581f7e1fc&quot; target=&quot;_blank&quot;&gt;https://gist.github.com/yizeng/eeeb48d6823801061791cc5581f7e1fc&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Here&apos;s a complete example&lt;/strong&gt;: &lt;a href=&quot;https://gist.github.com/yizeng/eeeb48d6823801061791cc5581f7e1fc&quot; target=&quot;_blank&quot;&gt;https://gist.github.com/yizeng/eeeb48d6823801061791cc5581f7e1fc&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;heading-create-dockerfile&quot;&gt;Create Dockerfile&lt;/h3&gt;
 
@@ -691,7 +1179,7 @@ CMD &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FROM ruby:alpine&lt;/code&gt;: Select the base image to build from.
 Here uses the latest alpine version of Ruby.
 Note that the version needs to match the Ruby version in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;.
-If there is a mismatch (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby '2.6.5'&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;), then here would be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FROM ruby:2.6.5-alpine&lt;/code&gt;.
+If there is a mismatch (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby &apos;2.6.5&apos;&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;), then here would be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FROM ruby:2.6.5-alpine&lt;/code&gt;.
 More versions can be found at the &lt;a href=&quot;https://hub.docker.com/_/ruby&quot; target=&quot;_blank&quot;&gt;Docker Hub&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN apk update &amp;amp;&amp;amp; apk add build-base nodejs postgresql-dev tzdata&lt;/code&gt;: Install the required packages inside Docker.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN mkdir /project&lt;/code&gt;: Create a folder called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;project&lt;/code&gt; to host the codebase.&lt;/li&gt;
@@ -717,34 +1205,34 @@ tells Docker Compose how to build the containers together.&lt;/p&gt;
 
 &lt;p&gt;A more detailed documentation can be found &lt;a href=&quot;https://docs.docker.com/compose/compose-file/&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3'&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:10-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postgres:/var/lib/postgresql/data&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5432:5432&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;POSTGRES_HOST_AUTH_METHOD=trust&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;redis&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:5-alpine&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;redis-server&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;6379:6379&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis:/data&apos;&lt;/span&gt;
 
   &lt;span class=&quot;na&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db'&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;db&apos;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;redis&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b '0.0.0.0'&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bash -c &quot;rm -f tmp/pids/server.pid &amp;amp;&amp;amp; bundle exec rails s -p 3000 -b &apos;0.0.0.0&apos;&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000'&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3000:3000&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_HOST=db&lt;/span&gt;
 
@@ -767,7 +1255,7 @@ It depends on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt
 
 &lt;h3 id=&quot;heading-config-databaseyml&quot;&gt;Config database.yml&lt;/h3&gt;
 
-&lt;p&gt;The default Ruby on Rails' &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;database.yml&lt;/code&gt; needs to be configed with
+&lt;p&gt;The default Ruby on Rails&apos; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;database.yml&lt;/code&gt; needs to be configed with
 the Docker database URL by adding &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;host&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;password&lt;/code&gt; to it.&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;&amp;amp;default&lt;/span&gt;
@@ -830,7 +1318,7 @@ a testing framework would be needed for the project.&lt;/p&gt;
   &lt;span class=&quot;c1&quot;&gt;# some existing gems...&lt;/span&gt;
   &lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'rspec-rails'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;rspec-rails&apos;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
@@ -865,7 +1353,7 @@ a testing framework would be needed for the project.&lt;/p&gt;
     &lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;: Port 6379 is already in use on local machine.This is most likely that there is another Redis server running locally.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Either stop the Redis on local machine or map to another port in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- '6380:6379'&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Either stop the Redis on local machine or map to another port in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- &apos;6380:6379&apos;&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -878,13 +1366,13 @@ a testing framework would be needed for the project.&lt;/p&gt;
     &lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;: Port 5432 is already in use on local machine. This is most likely that there is another PostgreSQL server running locally.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Either stop the PostgreSQL on local machine or map to another port in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- '5434:5432'&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Either stop the PostgreSQL on local machine or map to another port in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- &apos;5434:5432&apos;&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Your Ruby version is 2.6.5, but your Gemfile specified 2.6.3&lt;br /&gt;
-ERROR: Service 'web' failed to build: The command '/bin/sh -c bundle install' returned a non-zero code: 18&lt;/p&gt;
+ERROR: Service &apos;web&apos; failed to build: The command &apos;/bin/sh -c bundle install&apos; returned a non-zero code: 18&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
@@ -898,9 +1386,9 @@ ERROR: Service 'web' failed to build: The command '/bin/sh -c bundle install' re
 
 &lt;blockquote&gt;
   &lt;p&gt;/usr/local/bundle/ruby/2.6.0/gems/activesupport-6.0.2.1/lib/active_support/railtie.rb:39:in&lt;br /&gt;
-rescue in block in &amp;lt;class:Railtie&amp;gt;': tzinfo-data is not present.&lt;br /&gt;
-Please add gem 'tzinfo-data' to your Gemfile and run bundle install (TZInfo::DataSourceNotFound)&lt;br /&gt;
-/usr/local/bundle/ruby/2.6.0/gems/tzinfo-1.2.5/lib/tzinfo/zoneinfo_data_source.rb:180:in `initialize':&lt;br /&gt;
+rescue in block in &amp;lt;class:Railtie&amp;gt;&apos;: tzinfo-data is not present.&lt;br /&gt;
+Please add gem &apos;tzinfo-data&apos; to your Gemfile and run bundle install (TZInfo::DataSourceNotFound)&lt;br /&gt;
+/usr/local/bundle/ruby/2.6.0/gems/tzinfo-1.2.5/lib/tzinfo/zoneinfo_data_source.rb:180:in `initialize&apos;:&lt;br /&gt;
 None of the paths included in TZInfo::ZoneinfoDataSource.search_path are valid zoneinfo directories. (TZInfo::ZoneinfoDirectoryNotFound)&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -909,14 +1397,14 @@ None of the paths included in TZInfo::ZoneinfoDataSource.search_path are valid z
     &lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;: Required &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tzdata&lt;/code&gt; package was not installed in Docker container.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Include &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tzdata&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;'s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN apk add&lt;/code&gt; command (see details above).&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Include &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tzdata&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt;&apos;s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN apk add&lt;/code&gt; command (see details above).&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;/usr/local/lib/ruby/2.6.0/rubygems.rb:283:in `find_spec_for_exe':&lt;br /&gt;
-Could not find 'bundler' (2.0.2) required by your /project/Gemfile.lock. (Gem::GemNotFoundException)&lt;br /&gt;
-ERROR: Service 'web' failed to build: The command '/bin/sh -c bundle install' returned a non-zero code: 1&lt;/p&gt;
+  &lt;p&gt;/usr/local/lib/ruby/2.6.0/rubygems.rb:283:in `find_spec_for_exe&apos;:&lt;br /&gt;
+Could not find &apos;bundler&apos; (2.0.2) required by your /project/Gemfile.lock. (Gem::GemNotFoundException)&lt;br /&gt;
+ERROR: Service &apos;web&apos; failed to build: The command &apos;/bin/sh -c bundle install&apos; returned a non-zero code: 1&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
@@ -928,20 +1416,20 @@ ERROR: Service 'web' failed to build: The command '/bin/sh -c bundle install' re
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#ruby-versions &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#ruby-versions &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="api" /><category term="docker" /><category term="ruby on rails" /><summary type="html">Here is a quick rundown on how to setup a Ruby on Rails 6 API project with Docker Compose.</summary></entry><entry><title type="html">Generate Rails test fixtures yaml from database dump</title><link href="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/" rel="alternate" type="text/html" title="Generate Rails test fixtures yaml from database dump" /><published>2017-07-16T00:00:00+02:00</published><updated>2017-07-16T00:00:00+02:00</updated><id>http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump</id><content type="html" xml:base="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/">&lt;p&gt;I came across a problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
+&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="api" /><category term="docker" /><category term="ruby on rails" /><summary type="html">Here is a quick rundown on how to setup a Ruby on Rails 6 API project with Docker Compose.</summary></entry><entry><title type="html">Generate Rails test fixtures yaml from database dump</title><link href="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/" rel="alternate" type="text/html" title="Generate Rails test fixtures yaml from database dump" /><published>2017-07-16T00:00:00+02:00</published><updated>2017-07-16T00:00:00+02:00</updated><id>http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump</id><content type="html" xml:base="http://yizeng.me/2017/07/16/generate-rails-test-fixtures-yaml-from-database-dump/">&lt;p&gt;I came across a problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 that how to generate Ruby on Rails test fixtures yaml files from a development database dump.&lt;/p&gt;
 
 &lt;p&gt;After some Googling, &lt;a href=&quot;http://www.austinstory.com/script-to-generate-fixtures-from-a-database/&quot;&gt;this article&lt;/a&gt; gave me directions and therefore made my own version of it.&lt;/p&gt;
 
 &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:db&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Convert development DB to Rails test fixtures'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Convert development DB to Rails test fixtures&apos;&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;to_fixtures: :environment&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
     &lt;span class=&quot;no&quot;&gt;TABLES_TO_SKIP&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%w[ar_internal_metadata delayed_jobs schema_info schema_migrations]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;freeze&lt;/span&gt;
 
@@ -950,15 +1438,15 @@ that how to generate Ruby on Rails test fixtures yaml files from a development d
       &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TABLES_TO_SKIP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-        &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'000'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;000&apos;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/test/fixtures/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.yml&quot;&lt;/span&gt;
-        &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;w&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
           &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SELECT * FROM &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
           &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each_with_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({})&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;suffix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blank?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;succ!&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;suffix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blank?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;succ!&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
             &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;singularize&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;suffix&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;
           &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-          &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Writing table '&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;' to '&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;'&quot;&lt;/span&gt;
+          &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Writing table &apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&apos; to &apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&apos;&quot;&lt;/span&gt;
           &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_yaml&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
       &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
@@ -980,23 +1468,23 @@ that how to generate Ruby on Rails test fixtures yaml files from a development d
 &lt;span class=&quot;na&quot;&gt;country_1&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;New Zealand&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455'&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455'&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455&apos;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;08:56:18.481455&apos;&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;country_2&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;United States&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189'&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189'&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189&apos;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:51:23.430189&apos;&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;country_3&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deutschland&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761'&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="database" /><category term="ruby on rails" /><summary type="html">I came across a problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to generate Ruby on Rails test fixtures yaml files from a development database dump.</summary></entry><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+02:00</published><updated>2017-05-20T00:00:00+02:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;blockquote&gt;
+  &lt;span class=&quot;na&quot;&gt;created_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761&apos;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;updated_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2017-02-20&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;09:53:23.819761&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="database" /><category term="ruby on rails" /><summary type="html">I came across a problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to generate Ruby on Rails test fixtures yaml files from a development database dump.</summary></entry><entry><title type="html">Add TypeScript support to Ruby on Rails - A quick and hacky example</title><link href="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/" rel="alternate" type="text/html" title="Add TypeScript support to Ruby on Rails - A quick and hacky example" /><published>2017-05-20T00:00:00+02:00</published><updated>2017-05-20T00:00:00+02:00</updated><id>http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example</id><content type="html" xml:base="http://yizeng.me/2017/05/20/add-typescript-support-to-ruby-on-rails-a-quick-and-hacky-example/">&lt;blockquote&gt;
   &lt;p&gt;For a proper and comprehensive integration of TypeScript in Rails, please see &lt;a href=&quot;https://github.com/rails/webpacker&quot;&gt;Webpacker&lt;/a&gt; gem.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;As I'm currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
+&lt;p&gt;As I&apos;m currently learning &lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;TypeScript&lt;/a&gt;,
 I wondered if I could apply it to my little &lt;a href=&quot;http://rubyonrails.org/&quot;&gt;Ruby on Rails&lt;/a&gt; project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 so that I could use this real world project to help me learning TypeScript quickly.&lt;/p&gt;
@@ -1009,8 +1497,8 @@ mostly due to the following reasons:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;The purpose is to learn TypeScript with all its setup process, so why not start from scratch by myself
-as I'm not trying to create a nice and complete solution for everyone.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;typescript-rails&lt;/code&gt; project hasn't been updated for almost a year.
+as I&apos;m not trying to create a nice and complete solution for everyone.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;typescript-rails&lt;/code&gt; project hasn&apos;t been updated for almost a year.
 Is it well maintained and fully compatible with the latest Rails 5.1.x?&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webpacker&lt;/code&gt; is a whole solution which is too heavy for TypeScript learning purpose.&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1.x supports Yarn now&lt;/a&gt;.
@@ -1069,12 +1557,12 @@ But for users with older Rails versions, &lt;code class=&quot;language-plaintext
 
 &lt;p&gt;To do so, add the following line to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/initializers/assets.rb&lt;/code&gt;:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'node_modules'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;node_modules&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;heading-update-gitignore&quot;&gt;Update .gitignore&lt;/h3&gt;
 
 &lt;p&gt;For users with Rails 5.0 or under, once &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node_modules&lt;/code&gt; folder is created,
-remember to add it together with Yarn's error log file to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;,
+remember to add it together with Yarn&apos;s error log file to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;,
 so that they will not be commited to the repository.&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -1089,9 +1577,9 @@ For example, create a TypeScript file &lt;code class=&quot;language-plaintext hi
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HelloWorld&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-    &lt;span class=&quot;kr&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-    &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -1100,7 +1588,7 @@ For example, create a TypeScript file &lt;code class=&quot;language-plaintext hi
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;John Doe&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;John Doe&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;heading-add-tsconfigjson&quot;&gt;Add tsconfig.json&lt;/h2&gt;
 
@@ -1130,17 +1618,17 @@ where everything in &lt;code class=&quot;language-plaintext highlighter-rouge&qu
 &lt;h2 id=&quot;heading-add-rake-build-task&quot;&gt;Add Rake build task&lt;/h2&gt;
 
 &lt;p&gt;Finally create a new Rake task to compile to TypeScript files to JavaScript.
-Note that this new task can be added to Rails' &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; task,
+Note that this new task can be added to Rails&apos; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; task,
 so that every time &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rake assets:precompile&lt;/code&gt; is executed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets:tsc&lt;/code&gt; will be run first.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:assets&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Compile TypeScript Files'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Compile TypeScript Files&apos;&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:tsc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'node_modules/.bin/tsc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;node_modules/.bin/tsc&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-&lt;span class=&quot;no&quot;&gt;Rake&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'assets:precompile'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;enhance&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'assets:tsc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;no&quot;&gt;Rake&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;assets:precompile&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;enhance&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;assets:tsc&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;For example, add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets.rake&lt;/code&gt; file to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lib/tasks&lt;/code&gt; folder with the content above,
 then call the following command to compile TypeScript.&lt;/p&gt;
@@ -1155,7 +1643,7 @@ then call the following command to compile TypeScript.&lt;/p&gt;
 
 &lt;p&gt;The more complicated example that was actually applied to &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 can also be viewed on &lt;a href=&quot;https://github.com/yizeng/strafforts&quot;&gt;GitHub&lt;/a&gt;,
-which contains separate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tsconfig.json&lt;/code&gt; files for compiling different pages/projects.&lt;/p&gt;</content><author><name>Yi Zeng</name></author><category term="javascript" /><category term="typescript" /><category term="ruby on rails" /><category term="yarn" /><summary type="html">For a proper and comprehensive integration of TypeScript in Rails, please see Webpacker gem.</summary></entry><entry><title type="html">Use two different Pace.js progress bars on the same page</title><link href="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/" rel="alternate" type="text/html" title="Use two different Pace.js progress bars on the same page" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page</id><content type="html" xml:base="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/">&lt;p&gt;I came across this problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
+which contains separate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tsconfig.json&lt;/code&gt; files for compiling different pages/projects.&lt;/p&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="javascript" /><category term="typescript" /><category term="ruby on rails" /><category term="yarn" /><summary type="html">For a proper and comprehensive integration of TypeScript in Rails, please see Webpacker gem.</summary></entry><entry><title type="html">Use two different Pace.js progress bars on the same page</title><link href="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/" rel="alternate" type="text/html" title="Use two different Pace.js progress bars on the same page" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page</id><content type="html" xml:base="http://yizeng.me/2017/04/15/use-two-different-pacejs-progress-bars-on-the-same-page/">&lt;p&gt;I came across this problem while working on my little side project &lt;a href=&quot;http://www.strafforts.com/&quot;&gt;Strafforts&lt;/a&gt;
 (A Visualizer for Strava Estimated Best Efforts and Races),
 that how to have two different &lt;a href=&quot;http://github.hubspot.com/pace/docs/welcome/&quot;&gt;Pace.js&lt;/a&gt; progress bars on the same page within a single page application.&lt;/p&gt;
 
@@ -1163,14 +1651,14 @@ that how to have two different &lt;a href=&quot;http://github.hubspot.com/pace/d
 while the other is a default progress bar when any Ajax is triggered without hiding any content.&lt;/p&gt;
 
 &lt;p&gt;After some Googling, I found &lt;a href=&quot;https://github.com/HubSpot/pace/issues/135&quot;&gt;this answer&lt;/a&gt; works like a charm.
-Hence I'm turning it into a simple working demo for anyone is interested.&lt;/p&gt;
+Hence I&apos;m turning it into a simple working demo for anyone is interested.&lt;/p&gt;
 
 &lt;ul class=&quot;toc&quot; id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-demo&quot; id=&quot;markdown-toc-heading-demo&quot;&gt;Demo&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-add-first-progress-bar&quot; id=&quot;markdown-toc-heading-add-first-progress-bar&quot;&gt;Add first progress bar&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-add-second-progress-bar&quot; id=&quot;markdown-toc-heading-add-second-progress-bar&quot;&gt;Add second progress bar&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#heading-make-them-working-together&quot; id=&quot;markdown-toc-heading-make-them-working-together&quot;&gt;Make them working together&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#heading-demos-source-code&quot; id=&quot;markdown-toc-heading-demos-source-code&quot;&gt;Demo's source code&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#heading-demos-source-code&quot; id=&quot;markdown-toc-heading-demos-source-code&quot;&gt;Demo&apos;s source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;heading-demo&quot;&gt;Demo&lt;/h2&gt;
@@ -1239,7 +1727,7 @@ when there are Ajax calls, state changes, etc.&lt;/p&gt;
 add a class name on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;body&lt;/code&gt; element of the page.&lt;/p&gt;
 
 &lt;p&gt;For example, add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.content-loading&lt;/code&gt; class to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;body&lt;/code&gt; in HTML markup,
-which indicates the page hasn't been loaded and is in the initial state.&lt;/p&gt;
+which indicates the page hasn&apos;t been loaded and is in the initial state.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;...
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;content-loading&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Add class name for initial state. --&amp;gt;&lt;/span&gt;
@@ -1254,9 +1742,9 @@ Once this is executed, the in-app progress bar will be shown from then on for Aj
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
     ...
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;Pace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;hide&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;content-loading&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;content-loaded&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;Pace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;hide&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;content-loading&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;content-loaded&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -1336,61 +1824,8 @@ So that content in the application will still be visible during Ajax calls.&lt;/
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;heading-demos-source-code&quot;&gt;Demo's source code&lt;/h2&gt;
+&lt;h2 id=&quot;heading-demos-source-code&quot;&gt;Demo&apos;s source code&lt;/h2&gt;
 
-&lt;p&gt;See demo's on JSFiddle &lt;a href=&quot;https://jsfiddle.net/yizeng/39oar0bw/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;See demo&apos;s on JSFiddle &lt;a href=&quot;https://jsfiddle.net/yizeng/39oar0bw/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;script async=&quot;&quot; src=&quot;//jsfiddle.net/yizeng/39oar0bw/embed/&quot;&gt;&lt;/script&gt;</content><author><name>Yi Zeng</name></author><category term="javascript" /><summary type="html">I came across this problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to have two different Pace.js progress bars on the same page within a single page application.</summary></entry><entry><title type="html">Convert speed to pace programmatically using Ruby</title><link href="http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby/" rel="alternate" type="text/html" title="Convert speed to pace programmatically using Ruby" /><published>2017-02-25T00:00:00+01:00</published><updated>2017-02-25T00:00:00+01:00</updated><id>http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby</id><content type="html" xml:base="http://yizeng.me/2017/02/25/convert-speed-to-pace-programmatically-using-ruby/">&lt;p&gt;I came across a problem while working on my little side project &lt;a href=&quot;http://strafforts.yizeng.me&quot;&gt;Strafforts&lt;/a&gt;
-(A Visualizer for Strava Estimated Best Efforts and Races),
-that how to convert speed (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;m/s&lt;/code&gt; in this case) to pace (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min/km&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min/mile&lt;/code&gt;) programmatically using Ruby.&lt;/p&gt;
-
-&lt;h2 id=&quot;heading-calculate-time-spend-per-distance-kilometremile&quot;&gt;Calculate time spend per distance (kilometre/mile)&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://strava.github.io/api/v3/activities/&quot;&gt;Strava Activity API&lt;/a&gt; provides a field for athlete's average speed during this activity.
-It is a float number for meters per seconds (i.e. the unit of the speed is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;m/s&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;For example, if the speed is 4 meters per seconds and the target pace unit is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min/km&lt;/code&gt;.
-Then the first step is to find out how long does it take reach the target distance (one kilometre) with this speed.&lt;/p&gt;
-
-&lt;p&gt;This is simple math: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1000 / 4 = 250 (seconds)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;If the target pace unit is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min/mile&lt;/code&gt; (minutes per mile), then it's &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1609.344 / 4 = 402.336 (seconds)&lt;/code&gt; for one mile.&lt;/p&gt;
-
-&lt;h2 id=&quot;heading-convert-seconds-to-pace&quot;&gt;Convert seconds to pace&lt;/h2&gt;
-
-&lt;p&gt;The second step is to convert the total seconds used per distance into pace.
-Note that time is base 60, while meter is base 10.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;divmod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Output: '4:10'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;heading-complete-solution&quot;&gt;Complete solution&lt;/h2&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Convert speed (m/s) to pace (min/mile or min/km) in the format of 'x:xx'&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;convert_meters_per_second_to_pace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'mile'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1609.344&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;divmod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;round&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;heading-what-about-speed-unit-is-mph-or-kmh&quot;&gt;What about speed unit is mph or km/h?&lt;/h2&gt;
-
-&lt;p&gt;The concept will be exactly the same:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Figure out the time per distance.&lt;/li&gt;
-  &lt;li&gt;Convert time to pace.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;For example, to convert 12 km/h to pace:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;12 km/h is 12 kilometres (7.45645 miles) per 3600 seconds.&lt;br /&gt;
-So it's 3600 / 12 = 300 (seconds per km), 3600 / 7.45645 = 482.803 (seconds per mile).&lt;br /&gt;
-Then use the modulo logic above to convert seconds into pace, which is 5:00 min/km or 8:03 min/mile.&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Yi Zeng</name></author><category term="ruby" /><category term="strava" /><summary type="html">I came across a problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to convert speed (m/s in this case) to pace (min/km or min/mile) programmatically using Ruby.</summary></entry></feed>
+&lt;script async=&quot;&quot; src=&quot;//jsfiddle.net/yizeng/39oar0bw/embed/&quot;&gt;&lt;/script&gt;</content><author><name>Yi Zeng</name></author><category term="tutorials" /><category term="javascript" /><summary type="html">I came across this problem while working on my little side project Strafforts (A Visualizer for Strava Estimated Best Efforts and Races), that how to have two different Pace.js progress bars on the same page within a single page application.</summary></entry></feed>

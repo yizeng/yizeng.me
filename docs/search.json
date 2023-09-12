@@ -1,6 +1,13 @@
 [
   
     {
+      "title"      : "Truthy, Falsey, nil?, any?, empty?, blank? and present? in Ruby and Ruby on Rails",
+      "url"        : "/2021/04/04/truhty-falsey-nil-any-empty-blank-present-in-ruby-and-ruby-on-rails/",
+      "date"       : "2021-04-04 00:00:00 +0200",
+      "shortdate"  : "April 04, 2021"
+    } ,
+  
+    {
       "title"      : "Benchmark converting string keys of a hash to symbols",
       "url"        : "/2020/02/04/benchmark-converting-string-keys-of-a-hash-to-symbols/",
       "date"       : "2020-02-04 00:00:00 +0100",

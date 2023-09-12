@@ -45,7 +45,7 @@ sass:
 url: http://yizeng.me # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: # the subpath of your site, e.g. /blog
 title: Yi Zeng’s Blog
-description: 'Personal blog for Yi Zeng, a senior Ruby on Rails developer based in Berlin, Germany.'
+description: 'Personal blog for Yi Zeng, a senior software engineer based in Berlin, Germany.'
 keywords: 'software,engineer,testing,full-stack,christchurch,newzealand,berlin,germany'
 author:
   name: Yi Zeng
@@ -74,7 +74,7 @@ home:
 blog:
   cc_license: http://creativecommons.org/licenses/by-sa/4.0/ # A link to CC License
   cc_license_image: /assets/images/theme/cc-by-sa.png # Choose one at https://creativecommons.org/choose/
-  footer_content: Yi Zeng, a senior Rails developer based in Berlin, Germany.
+  footer_content: Yi Zeng, a senior software engineer based in Berlin, Germany.
 
 disqus:
   shortname: yizeng
